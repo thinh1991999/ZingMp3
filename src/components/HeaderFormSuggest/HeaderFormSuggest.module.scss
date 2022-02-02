@@ -1,0 +1,135 @@
+.searchSuggest {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 100%;
+  background-color: var(--primary-bg);
+  padding: 10px;
+  border-radius: 0 0 20px 20px;
+
+  .searchSuggestWrap {
+    z-index: 99999;
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+}
+
+.searchSuggestWrap::-webkit-scrollbar {
+  width: 6px;
+}
+
+.searchSuggestWrap::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}
+
+.searchBegin {
+  h4 {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 10px 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  ul {
+    padding: 0 10px;
+    list-style: none;
+    li {
+      display: flex;
+      align-items: baseline;
+      border-radius: 4px;
+      padding: 8px 10px;
+      position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--alpha-bg);
+      }
+
+      span {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+/* searchMv */
+
+.searchMv {
+  h4 {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 10px 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ul {
+    list-style: none;
+    margin: unset;
+    padding: 0 10px;
+    li {
+      padding: 5px 10px;
+      border-radius: 4px;
+      &:hover {
+        background-color: var(--alpha-bg);
+      }
+    }
+  }
+}
+
+.searchMvSinger {
+  cursor: pointer;
+  .searchMvWrap {
+    display: flex;
+    align-items: center;
+
+    .searchMvLeft {
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+    .seachMvRight {
+      margin-left: 10px;
+      p {
+        margin: unset;
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+}
+
+.searchSong {
+  cursor: pointer;
+  .searchSongWrap {
+    display: flex;
+    align-items: center;
+
+    .searchSongLeft {
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+      }
+    }
+    .searchSongRight {
+      margin-left: 10px;
+      p {
+        margin: unset;
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+}
+
+.loadingSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

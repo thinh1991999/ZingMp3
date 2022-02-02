@@ -1,0 +1,109 @@
+.setting {
+  display: inline-block;
+  min-width: 300px;
+  .wrap {
+    padding: 10px 0;
+    background-color: #292929;
+    border-radius: 10px;
+    ul {
+      list-style: none;
+      padding: unset;
+      margin: unset;
+      li {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 40px;
+        align-items: center;
+        padding: 10px 15px;
+        color: var(--white);
+
+        &:hover {
+          background-color: var(--alpha-bg);
+          color: var(--text-item-hover);
+        }
+
+        .labelFirst {
+          margin-right: 40px;
+        }
+
+        label {
+          cursor: pointer;
+        }
+
+        input[name="bg"] {
+          display: none;
+        }
+
+        input[name="size"] {
+          display: none;
+        }
+
+        .checkbox {
+          width: 30px;
+          height: 15px;
+          background: gray;
+          border-radius: 15px;
+          position: relative;
+
+          .toggleWrap {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 15px;
+            .checkboxToggle {
+              position: relative;
+              width: 0%;
+              height: 100%;
+              background-color: var(--purple-primary);
+              border-radius: 15px;
+            }
+
+            .checkboxToggle::before {
+              position: absolute;
+              height: 15px;
+              width: 15px;
+              left: 0;
+              top: 0;
+              display: block;
+              content: "";
+              border-radius: 50%;
+              background-color: var(--white);
+            }
+          }
+        }
+
+        .checkbox.checkboxActive {
+          .toggleWrap {
+            .checkboxToggle {
+              width: 100%;
+            }
+            .checkboxToggle::before {
+              right: 0;
+              left: unset;
+            }
+          }
+        }
+
+        .label {
+          // padding: 5px;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: var(--alpha-bg);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 10px;
+        }
+
+        .label.activeLabel {
+          background-color: var(--purple-primary);
+        }
+      }
+    }
+  }
+}

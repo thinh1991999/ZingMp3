@@ -1,0 +1,28 @@
+.album {
+  padding: 100px 0;
+  height: 100vh;
+  overflow-y: scroll;
+  .albumContainer {
+    padding: 15px 40px 0;
+  }
+}
+
+.album::-webkit-scrollbar {
+  width: 6px;
+}
+
+.album::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}
+
+.album__ani-run {
+  width: 50px;
+  height: 50px;
+  //   background-image: url(./image/icon-playing.gif);
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid var(--text-primary);
+  border-radius: 50%;
+  opacity: 0;
+}

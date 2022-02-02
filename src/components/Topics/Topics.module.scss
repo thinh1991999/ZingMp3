@@ -1,0 +1,16 @@
+.topics {
+  padding: 15px;
+  margin-top: 20px;
+  color: var(--text-primary);
+
+  .topicsTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .topicsContainer {
+    /* width: 100%; */
+    display: flex;
+    justify-content: space-between;
+  }
+}

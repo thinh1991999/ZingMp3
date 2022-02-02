@@ -1,0 +1,35 @@
+.headerBtn {
+  font-size: 24px;
+  margin: 0 5px;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--player-text);
+  background-color: transparent;
+  border: none;
+  position: relative;
+  transition: all 0.5s;
+}
+
+.headerBtn.headerBtnDisable {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.headerBtn.headerBtnCircle {
+  font-size: 20px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: var(--alpha-bg);
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.headerBtn.headerBtnWhite {
+  background-color: var(--progressbar-active-bg);
+  color: var(--text-black);
+}

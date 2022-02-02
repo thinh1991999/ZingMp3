@@ -1,0 +1,22 @@
+.singer {
+  width: calc(100% / 7);
+  padding: 0 15px;
+
+  .singerWrap {
+    width: 100%;
+    cursor: pointer;
+    transform: all 0.5s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+    .singerImg {
+      width: 100%;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+.kara {
+  width: 100%;
+  height: 100%;
+  .karaWrap {
+    height: 100%;
+    max-width: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 80px;
+    ul {
+      list-style: none;
+
+      li {
+        font-size: 48px;
+        font-weight: 700;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        .wrap {
+          position: relative;
+          margin: 0 10px;
+
+          .box {
+            color: var(--white);
+          }
+          .layer {
+            position: absolute;
+            width: 0;
+            height: 100%;
+            top: 0;
+            left: 0;
+            color: var(--yellow);
+            transition: all 0.5s linear;
+            overflow: hidden;
+          }
+        }
+        .wrap.wrapActive {
+          .layer {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

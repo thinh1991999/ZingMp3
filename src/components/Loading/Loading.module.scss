@@ -1,0 +1,91 @@
+:root {
+  --color-1: #2172b8;
+  --color-2: #18a39b;
+  --color-3: #82c545;
+  --color-4: #f8b739;
+  --color-5: #f06045;
+  --color-6: #ed2861;
+  --color-7: #c12680;
+  --color-8: #5d3191;
+  --size-circle: 30px;
+}
+
+.loading {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading.loadingNextPage {
+  width: 100%;
+  max-height: 240px;
+  margin-top: 20px;
+}
+
+@mixin define-emoji($name, $glyph) {
+  .loading.#{$name} {
+    width: 100vw;
+    height: 100vh;
+    // background-color: #313134;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: $glyph;
+  }
+}
+
+@include define-emoji("loadingFull", "");
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .spinnerOuter {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .spinnerInner {
+      width: 100px;
+      height: 100px;
+      animation: scroll 5s;
+      animation-iteration-count: infinite;
+      .spinnerTop {
+        width: 100%;
+        height: 50%;
+        border: 10px solid;
+        border-bottom: 0;
+      }
+      .spinnerBottom {
+        width: 100%;
+        height: 50%;
+        border: 10px solid transparent;
+        border-top: 0;
+      }
+    }
+  }
+}
+
+@keyframes scroll {
+  from {
+    transform: rotateZ(0);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}

@@ -1,0 +1,23 @@
+.hitSongs {
+  padding: 15px 30px;
+  .hitSongsContainer {
+    .hitSongsLeft {
+      width: calc(100% / 3);
+      padding: 0 15px;
+    }
+    .hitSongsRight {
+      width: calc(100% / 3 * 2);
+      padding: 0 15px;
+      max-height: 230px;
+      overflow-y: scroll;
+    }
+  }
+}
+
+.hitSongsRight::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hitSongsRight::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}

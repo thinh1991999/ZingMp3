@@ -1,0 +1,14 @@
+.artists {
+  margin-top: 40px;
+  padding: 15px;
+  .title {
+    font-size: 20px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-transform: capitalize;
+  }
+}
+
+.artists.noArtists {
+  display: none;
+}

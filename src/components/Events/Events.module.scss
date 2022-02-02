@@ -1,0 +1,31 @@
+.events {
+  padding: 15px;
+
+  .eventsTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn {
+      display: flex;
+      align-items: center;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 24px;
+
+      .btnChildActive {
+        cursor: pointer;
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  .eventsWrap {
+    overflow-x: hidden;
+    .eventsContainer {
+      flex-wrap: nowrap;
+      // overflow-x: hidden;
+      transition: all 0.5s linear;
+    }
+  }
+}

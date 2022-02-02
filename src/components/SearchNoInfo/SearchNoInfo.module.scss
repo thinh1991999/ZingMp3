@@ -1,0 +1,14 @@
+.content {
+  padding: 30px 0;
+  background-color: var(--alpha-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+  color: var(--text-secondary);
+  h3 {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+}

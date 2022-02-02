@@ -1,0 +1,48 @@
+.app__container > .row {
+  margin: unset !important;
+}
+
+.app__container > .row > div {
+  padding: unset;
+}
+
+.app__container {
+  background-color: var(--layout-bg);
+  position: relative;
+  max-width: 1536px;
+}
+
+.app__wrap {
+  /* height: 100vh; */
+}
+
+.app__outer {
+  /* padding: 100px 0; */
+}
+
+.pd-15-px {
+  padding: 15px;
+}
+
+.mr-10-px {
+  margin-right: 10px;
+}
+
+.is-40-px {
+  height: 40px;
+  width: 40px;
+}
+
+.is-60-px {
+  height: 60px;
+  width: 60px;
+}
+
+a {
+  transition: var(--transition-time);
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--link-text-hover) !important;
+}
