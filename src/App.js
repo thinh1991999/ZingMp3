@@ -19,6 +19,7 @@ function App() {
     loading,
     page,
     warning: { show, msg },
+    currentSong,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ function App() {
             </Col>
           </Row>
           <Lyric />
-          <Player />
+          {currentSong.encodeId && <Player />}
           <Warning msg={msg} />
         </div>
       </div>

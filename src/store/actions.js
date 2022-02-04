@@ -179,3 +179,31 @@ export const setWarning = (payLoad) => {
     payLoad,
   };
 };
+
+export const setSinger = (payLoad) => {
+  return {
+    type: "SET_SINGER",
+    payLoad,
+  };
+};
+
+export const setCurrentSinger = (payLoad) => {
+  return {
+    type: "SET_CURRENT_SINGER",
+    payLoad,
+  };
+};
+
+export const playSongSameSinger = (payLoad) => {
+  return {
+    type: "PLAY_SONG_SAME_SINGER",
+    payLoad,
+  };
+};
+
+export const playSongAnotherSinger = (payLoad) => {
+  return {
+    type: "PLAY_SONG_ANOTHER_SINGER",
+    payLoad,
+  };
+};

@@ -26,6 +26,7 @@ function Singer() {
       const respon = await fetch(`${SINGER_API}${SingerName}`);
       const values = await respon.json();
       const { data } = values;
+      dispatch(actions.setSinger(data));
       setDataSinger(data);
       setLoading(false);
     } catch (error) {
@@ -33,8 +34,6 @@ function Singer() {
       throw new Error(error);
     }
   };
-
-  console.log(dataSinger);
 
   const handleScroll = (e) => {
     if (e.target.scrollTop > 0) {

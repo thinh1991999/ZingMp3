@@ -85,10 +85,9 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   };
 
   const handleToAlbum = (e) => {
-    if (
-      e.target.classList.value === styles.playFeatures ||
-      e.target.classList.value === styles.wrap
-    ) {
+    const arr = Array.from([...e.target.classList]);
+
+    if (arr.includes(styles.playFeatures) || arr.includes(styles.wrap)) {
       navigate(`/Album/${currentAlbum}`);
     }
   };

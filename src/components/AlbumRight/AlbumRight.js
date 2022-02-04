@@ -34,6 +34,7 @@ function AlbumRight({ title, song }) {
               worldWide={isWorldWide}
               data={item}
               index={index}
+              albumSong={true}
             />
           );
         })}

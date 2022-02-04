@@ -46,3 +46,5 @@ export { default as SearchPlaylist } from "./SearchPlaylist/SearchPlaylist";
 export { default as SearchArtist } from "./SearchArtist/SearchArtist";
 export { default as SearchNoInfo } from "./SearchNoInfo/SearchNoInfo";
 export { default as Warning } from "./Warning/Warning";
+export { default as Chart } from "./Chart/Chart";
+export { default as ChartLine } from "./ChartLine/ChartLine";

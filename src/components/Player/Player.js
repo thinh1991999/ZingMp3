@@ -28,6 +28,7 @@ function Player() {
     invi,
     fetchSong,
     currentAlbum,
+    currentSinger,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -36,16 +37,29 @@ function Player() {
 
   const [volume, setVolume] = useState(50);
 
-  const { encodeId, title, thumbnail, artists = [], duration } = currentSong;
+  const {
+    encodeId,
+    title,
+    thumbnail,
+    artists = [],
+    duration,
+    album,
+  } = currentSong;
 
   const handleToAlbum = (e) => {
-    console.log(e.target.classList.value);
+    const arr = Array.from([...e.target.classList]);
+
     if (
-      e.target.classList.value === styles.playLeft ||
-      e.target.classList.value === styles.playInfo
+      arr.includes(styles.playLeft) ||
+      arr.includes(styles.playInfo) ||
+      arr.includes(styles.playRight)
     ) {
-      console.log(1);
-      navigate(`/Album/${currentAlbum}`);
+      if (currentAlbum) {
+        navigate(`/Album/${currentAlbum}`);
+      }
+      if (currentSinger) {
+        navigate(`/Singer/${currentSinger}`);
+      }
     }
   };
 

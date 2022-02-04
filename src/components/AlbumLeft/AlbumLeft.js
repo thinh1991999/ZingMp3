@@ -52,6 +52,7 @@ function AlbumLeft({ data }) {
     if (album.encodeId === currentAlbum) {
       dispatch(actions.setPlaying(!playing));
     } else {
+      console.log(123);
       dispatch(actions.playAlbum());
     }
   };

@@ -10,16 +10,26 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
 
-function AlbumItem({ data, status, worldWide, index }) {
+function AlbumItem({
+  data,
+  status,
+  worldWide,
+  index,
+  singer = false,
+  albumSong = false,
+}) {
   const {
     currentAlbum,
     currentIndexSong,
     album: albumCurrent,
     playing,
     songLoading,
+    currentSinger,
+    singer: singerCurrent,
   } = useSelector((state) => state);
 
-  const [activeSong, setActiveSong] = useState(false);
+  const [activeSongAlbum, setActiveSongAlbum] = useState(false);
+  const [activeSongSinger, setActiveSongSinger] = useState(false);
   const [playingSong, setPlayingSong] = useState(false);
   const [loadingSong, setLoadingSong] = useState(false);
 
@@ -28,17 +38,31 @@ function AlbumItem({ data, status, worldWide, index }) {
   const { artistsNames, title = " ", album = {}, thumbnailM, duration } = data;
   const { title: albumTitle } = album;
   const { encodeId } = albumCurrent;
+  const { id, alias } = singerCurrent;
   const newDuration = getTime(duration);
 
   const handlePlaySingleSong = () => {
-    if (encodeId === currentAlbum) {
-      if (index === currentIndexSong) {
-        dispatch(actions.setPlaying(!playing));
+    if (singer) {
+      if (alias === currentSinger) {
+        if (index === currentIndexSong) {
+          dispatch(actions.setPlaying(!playing));
+        } else {
+          dispatch(actions.playSongSameSinger(index));
+        }
       } else {
-        dispatch(actions.playSongSameAlbum(index));
+        dispatch(actions.playSongAnotherSinger(index));
       }
-    } else {
-      dispatch(actions.playSongAnotherAlbum(index));
+    }
+    if (albumSong) {
+      if (encodeId === currentAlbum) {
+        if (index === currentIndexSong) {
+          dispatch(actions.setPlaying(!playing));
+        } else {
+          dispatch(actions.playSongSameAlbum(index));
+        }
+      } else {
+        dispatch(actions.playSongAnotherAlbum(index));
+      }
     }
   };
 
@@ -54,32 +78,42 @@ function AlbumItem({ data, status, worldWide, index }) {
   };
 
   useEffect(() => {
-    if (index === currentIndexSong && encodeId === currentAlbum) {
-      setActiveSong(true);
+    if (index === currentIndexSong) {
+      if (encodeId === currentAlbum) {
+        setActiveSongAlbum(true);
+      }
+      if (alias === currentSinger) {
+        setActiveSongSinger(true);
+      }
     } else {
-      setActiveSong(false);
+      setActiveSongAlbum(false);
+      setActiveSongSinger(false);
     }
   }, [currentIndexSong, playing]);
 
   useEffect(() => {
-    if (activeSong) {
+    if (activeSongAlbum || activeSongSinger) {
       setPlayingSong(playing);
     } else {
       setPlayingSong(false);
     }
-  }, [playing, currentIndexSong]);
+  }, [playing, currentIndexSong, activeSongAlbum, activeSongSinger]);
 
   useEffect(() => {
-    if (activeSong && songLoading) {
+    if ((activeSongAlbum && songLoading) || (activeSongSinger && songLoading)) {
       setLoadingSong(true);
       setPlayingSong(false);
-    } else if (activeSong && !songLoading) {
+    } else if (
+      (activeSongAlbum && !songLoading) ||
+      (activeSongSinger && !songLoading)
+    ) {
       setLoadingSong(false);
     }
-  }, [activeSong, songLoading]);
+  }, [activeSongAlbum, songLoading, activeSongSinger]);
 
   const statusClass = status === 2 || !worldWide ? styles.itemStatus : "";
-  const activeClass = activeSong ? styles.itemActive : "";
+  const activeClass =
+    activeSongAlbum || activeSongSinger ? styles.itemActive : "";
   const playingClass = playingSong ? styles.itemPlaying : "";
   const finalClass = clsx(styles.item, statusClass, activeClass, playingClass);
 

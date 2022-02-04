@@ -1,3 +1,11 @@
+const lastestStorage = () => {
+  const data = JSON.parse(JSON.stringify(localStorage.getItem("lastest")));
+  if (typeof data !== "object") {
+    return [];
+  }
+  return data;
+};
+
 const initState = {
   loading: true,
   page: 1,
@@ -21,12 +29,14 @@ const initState = {
   showLyric: false,
   invi: false,
   fetchSong: false,
-  lastest: localStorage.getItem("lastest") || [],
+  lastest: lastestStorage(),
   activeSearch: false,
   warning: {
     show: false,
     msg: "",
   },
+  singer: {},
+  currentSinger: "",
 };
 
 const getRandomIndex = (arr, index) => {
@@ -35,6 +45,16 @@ const getRandomIndex = (arr, index) => {
     return getRandomIndex(arr, index);
   }
   return indexRD;
+};
+
+const getValidLastest = (arr, hint) => {
+  let valid = false;
+  arr.forEach((item) => {
+    if (item.encodeId === hint.encodeId) {
+      valid = true;
+    }
+  });
+  return valid;
 };
 
 const reducer = (state = initState, action) => {
@@ -46,9 +66,13 @@ const reducer = (state = initState, action) => {
       };
     }
     case "SET_DATA": {
+      const { lastest, data } = state;
+      const newData = Array.from([...data, ...action.payLoad]);
+      newData[2].items = lastest;
+
       return {
         ...state,
-        data: [...state.data, ...action.payLoad],
+        data: Array.from([...newData]),
       };
     }
     case "SET_BG_HEADER": {
@@ -157,6 +181,62 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         fetchSong: action.payLoad,
+      };
+    }
+    case "SET_SINGER": {
+      return {
+        ...state,
+        singer: Object.assign({}, action.payLoad),
+      };
+    }
+    case "SET_CURRENT_SINGER": {
+      return {
+        ...state,
+        currentSinger: action.payLoad,
+      };
+    }
+    case "PLAY_SONG_SAME_SINGER": {
+      const { singer } = state;
+      return {
+        ...state,
+      };
+    }
+    case "PLAY_SONG_ANOTHER_SINGER": {
+      const { singer } = state;
+      console.log(singer);
+      const newListSong = Array.from([...singer.sections[0].items]);
+
+      const indexArr = [];
+      newListSong.forEach((item, index) => {
+        const { streamingStatus: statusSong, isWorldWide } = item;
+        if (statusSong === 1 && isWorldWide) {
+          indexArr.push(index);
+        }
+      });
+      if (indexArr.includes(action.payLoad)) {
+        return {
+          ...state,
+          currentAlbum: "",
+          currentSinger: singer.alias,
+          indexValidSongs: indexArr,
+          listSong: newListSong,
+          currentIndexSong: action.payLoad,
+          currentSong: newListSong[action.payLoad],
+          fetchSong: true,
+          showLyric: true,
+        };
+      } else {
+        return {
+          ...state,
+          warning: {
+            show: true,
+            msg: "Bài hát này chưa được hỗ trợ",
+          },
+        };
+      }
+      return {
+        ...state,
+        // currentSinger: action.payLoad,
       };
     }
     case "PLAY_SONG_SAME_ALBUM": {
@@ -384,6 +464,15 @@ const reducer = (state = initState, action) => {
           indexArr.push(index);
         }
       });
+      if (indexArr.length === 0) {
+        return {
+          ...state,
+          warning: {
+            show: true,
+            msg: "Album này chưa được hỗ trợ",
+          },
+        };
+      }
       let newCurrentIndex = indexArr[0];
       let newSong = items[newCurrentIndex];
       if (randomSong) {
@@ -392,8 +481,11 @@ const reducer = (state = initState, action) => {
         newSong = items[newCurrentIndex];
       }
 
-      lastest.push(album);
-      localStorage.setItem("lastest", lastest);
+      if (!getValidLastest(lastest, album)) {
+        lastest.unshift(album);
+        localStorage.setItem("lastest", JSON.stringify(lastest));
+      }
+
       return {
         ...state,
         currentIndexSong: newCurrentIndex,

@@ -16,7 +16,7 @@ function Mv({ data }) {
   const { thumbnail: artistImage, alias: artistAlias, name } = artist;
 
   const newDuraton = getTime(duration);
-  console.log(artistImage);
+
   return (
     <div className={styles.mv}>
       <div className={styles.mvWrap}>

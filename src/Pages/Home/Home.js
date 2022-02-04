@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   Slider,
   Topics,
@@ -9,6 +9,7 @@ import {
   Choices,
   HotSongs,
   Events,
+  Chart,
 } from "../../components";
 import styles from "./Home.module.scss";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +19,8 @@ function Home() {
   const { data, page, scroll, nextPage, loadingHome, lastest } = useSelector(
     (state) => state
   );
+
+  const [mount, setMount] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -65,15 +68,16 @@ function Home() {
   }, [nextPage]);
 
   useEffect(() => {
-    if (page > 1 && scroll) {
+    if (page > 1 && scroll && mount) {
       fetchHomeDataNextPage();
     }
   }, [page, scroll]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
+    setMount(true);
   }, []);
-
+  // console.log(data);
   return (
     <div className={styles.home} ref={homeRef}>
       {data.map((item, index) => {
@@ -81,8 +85,15 @@ function Home() {
 
         if (sectionType === "banner") {
           return <Slider data={{ ...item }} key={`${sectionId}${index}`} />;
-        } else if (sectionType === "playlist") {
+        } else if (
+          sectionType === "playlist" ||
+          sectionType === "recentPlaylist"
+        ) {
+          const { items = [] } = item;
+          if (items.length === 0) return;
           return <Topics data={{ ...item }} key={`${sectionId}${index}`} />;
+        } else if (sectionType === "RTChart") {
+          return <Chart data={{ ...item }} key={`${sectionId}${index}`} />;
         } else if (sectionType === "livestream") {
           return <Radios data={{ ...item }} key={`${sectionId}${index}`} />;
         } else if (sectionType === "weekChart") {

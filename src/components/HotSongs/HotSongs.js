@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./HotSongs.module.scss";
 import { HomeTitle, HotSongSlide, AlbumItem } from "..";
 import { Row } from "react-bootstrap";
 
 function HotSongs({ data }) {
   const { title, items } = data;
+
   return (
     <div className={styles.hitSongs}>
       <HomeTitle msg={title} />
@@ -13,14 +14,16 @@ function HotSongs({ data }) {
           <HotSongSlide data={items} />
         </div>
         <div className={styles.hitSongsRight}>
-          {items.map((item) => {
+          {items.map((item, index) => {
             const { encodeId, isWorldWide, streamingStatus: status } = item;
             return (
               <AlbumItem
                 data={item}
+                index={index}
                 status={status}
                 worldWide={isWorldWide}
                 key={encodeId}
+                singer={true}
               />
             );
           })}

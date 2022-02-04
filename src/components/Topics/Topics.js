@@ -6,7 +6,7 @@ import { Topic } from "..";
 function Topics({ data }) {
   const [value, setValue] = useState(data);
 
-  const { title, items } = value;
+  const { title, items = [] } = value;
 
   return (
     <div className={styles.topics}>
