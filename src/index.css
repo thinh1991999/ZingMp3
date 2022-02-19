@@ -70,7 +70,9 @@
   --image-queue-video: url(https://zmp3-static.zadn.vn/skins/zmp3-v6.1/images/backgrounds/dark-queue-playing-video.svg);
   --playing-mix-icon: url(https://zmp3-static.zadn.vn/skins/zmp3-v6.1/images/icons/icon-playing.gif);
   --img-logo-mp3: url(https://zmp3-static.zadn.vn/skins/zmp3-v6.1/images/backgrounds/logo-dark.svg);
+  --img-logo-mp3-small: url(https://zjs.zadn.vn/zmp3-desktop/releases/v1.5.13/static/media/icon_zing_mp3_60.f6b51045.svg);
   --transition-time: all 0.5s;
+  --chart-box-bg-alpha: hsla(0, 0%, 100%, 0.05);
 }
 
 body {

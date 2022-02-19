@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styles from "./Player.module.scss";
 import { actions, SONG_API } from "../../store";
 import { Row, Col } from "react-bootstrap";

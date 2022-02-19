@@ -76,8 +76,9 @@ function Home() {
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
     setMount(true);
+    dispatch(actions.setCurrentNav(1));
   }, []);
-  // console.log(data);
+
   return (
     <div className={styles.home} ref={homeRef}>
       {data.map((item, index) => {

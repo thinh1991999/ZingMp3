@@ -12,6 +12,13 @@ export const setData = (payLoad) => {
   };
 };
 
+export const setCurrentNav = (payLoad) => {
+  return {
+    type: "SET_CURRENT_NAV",
+    payLoad,
+  };
+};
+
 export const setBGHeader = (payLoad) => {
   return {
     type: "SET_BG_HEADER",

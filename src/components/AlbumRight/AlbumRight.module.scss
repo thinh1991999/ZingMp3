@@ -67,7 +67,7 @@
   .albumWrap::-webkit-scrollbar-thumb {
     background-color: var(--scroll-thumb-bg);
   }
-  p {
+  > p {
     color: var(--text-secondary);
     margin-top: 10px;
   }

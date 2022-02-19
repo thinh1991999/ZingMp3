@@ -1,0 +1,115 @@
+.container {
+  position: absolute;
+  background-color: #4a90e2;
+  padding: 4px;
+  border-radius: 4px;
+  transform: translateX(calc(-50% - 20px));
+  min-width: 200px;
+  .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    .img {
+      border-radius: 4px;
+      overflow: hidden;
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 8px;
+      h4 {
+        margin: unset;
+        padding: unset;
+        font-size: 14px;
+        color: var(--text-primary);
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-width: 96%;
+      }
+      span {
+        font-size: 12px;
+        color: var(--text-primary);
+        opacity: 0.8;
+      }
+    }
+    .percent {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        font-size: 16px;
+        color: var(--text-primary);
+      }
+    }
+  }
+}
+
+.container.first {
+  background-color: #4a90e2;
+  .wrap::before {
+    border-color: #4a90e2 transparent transparent transparent;
+  }
+}
+
+.container.second {
+  background-color: #50e3c2;
+  .wrap::before {
+    border-color: #50e3c2 transparent transparent transparent;
+  }
+}
+
+.container.third {
+  background-color: #e35050;
+  .wrap::before {
+    border-color: #e35050 transparent transparent transparent;
+  }
+}
+.container.left1 {
+  transform: translateX(-20%);
+  .wrap::before {
+    left: 10%;
+  }
+}
+
+.container.left2 {
+  transform: translateX(-30%);
+  .wrap::before {
+    left: 20%;
+  }
+}
+
+.container.right1 {
+  transform: translateX(-100%);
+  .wrap::before {
+    left: 92%;
+  }
+}
+
+.container.right2 {
+  transform: translateX(-80%);
+  .wrap::before {
+    left: 72%;
+  }
+}
+
+.wrap::before {
+  content: "";
+  display: block;
+  border-width: 10px 10px;
+  border-style: solid;
+  border-color: #4a90e2 transparent transparent transparent;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation, HashRouter } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { HeaderButton, HeaderFormSuggest } from "..";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { actions, SEARCH_API } from "../../store";
 
 function Header() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { blackHeader, activeSearch } = useSelector((state) => state);
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
@@ -22,12 +25,12 @@ function Header() {
     "em đừng đi",
     "zing choice",
   ]);
+  const [leftDisable, setLeftDisable] = useState(true);
+  const [rightDisable, setRightDisable] = useState(true);
 
   const inputRef = useRef(null);
   const formRef = useRef(null);
   const deleteBtnRef = useRef(null);
-
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -45,9 +48,13 @@ function Header() {
     }
   };
 
-  const handlePrevPage = () => {};
+  const handlePrevPage = () => {
+    navigate(-1);
+  };
 
-  const handleNextPage = () => {};
+  const handleNextPage = () => {
+    navigate(+1);
+  };
 
   const handleSearchForm = () => {
     dispatch(actions.setActiveSearch(true));
@@ -84,6 +91,16 @@ function Header() {
   };
 
   useEffect(() => {
+    const {
+      length,
+      state: { idx },
+    } = window.history;
+    console.log(idx === length - 1);
+    idx === 0 ? setLeftDisable(true) : setLeftDisable(false);
+    idx === length - 1 ? setRightDisable(true) : setRightDisable(false);
+  }, [location]);
+
+  useEffect(() => {
     if (searchText.trim().length > 0) {
       fetchSearch();
     }
@@ -112,12 +129,12 @@ function Header() {
       <div className={styles.featuresLeft}>
         <div className={styles.featuresLeftBtn}>
           <div className={styles.leftBtn} onClick={handlePrevPage}>
-            <HeaderButton disable={true}>
+            <HeaderButton disable={leftDisable}>
               <HiOutlineArrowLeft />
             </HeaderButton>
           </div>
           <div className={styles.rightBtn} onClick={handleNextPage}>
-            <HeaderButton disable={true}>
+            <HeaderButton disable={rightDisable}>
               <HiOutlineArrowRight />
             </HeaderButton>
           </div>

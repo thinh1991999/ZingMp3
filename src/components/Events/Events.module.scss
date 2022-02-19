@@ -21,11 +21,12 @@
   }
 
   .eventsWrap {
-    overflow-x: hidden;
+    // overflow-x: scroll;
     .eventsContainer {
+      overflow-x: scroll;
       flex-wrap: nowrap;
-      // overflow-x: hidden;
-      transition: all 0.5s linear;
+      transition: all 1s linear;
+      scroll-behavior: smooth;
     }
   }
 }

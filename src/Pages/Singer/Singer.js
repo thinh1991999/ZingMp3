@@ -45,6 +45,7 @@ function Singer() {
 
   useEffect(() => {
     fetchSingerData();
+    dispatch(actions.setCurrentNav(""));
   }, [SingerName]);
 
   if (loading) {

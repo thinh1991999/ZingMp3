@@ -3,17 +3,17 @@ import React from "react";
 import styles from "./PrimaryButton.module.scss";
 
 function PrimaryButton({ children, info }) {
-  const { msg, bgGray, mr = 0 } = info;
+  const { msg, bgGray, mr = 0, chart } = info;
 
   const grayClass = bgGray ? styles.wrapGray : "";
 
-  const finalClass = clsx(styles.wrap, grayClass);
+  const finalClass = clsx(styles.wrap, grayClass, chart && styles.wrapChart);
 
   return (
-    <button className={finalClass} style={{ marginRight: `${mr}px` }}>
+    <div className={finalClass} style={{ marginRight: `${mr}px` }}>
       {children}
       <span>{msg}</span>
-    </button>
+    </div>
   );
 }
 

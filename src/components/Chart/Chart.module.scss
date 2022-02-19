@@ -4,7 +4,7 @@
   .box {
     position: relative;
     border-radius: 4px;
-    overflow: hidden;
+    // overflow: hidden;
     padding: 20px;
     .blur {
       position: absolute;
@@ -145,6 +145,9 @@
             -webkit-text-stroke: 1px #e35050;
           }
         }
+        .leftItem.leftItemActive {
+          background-color: hsla(0, 0%, 100%, 0.2);
+        }
         .leftBtnWrap {
           margin-top: 20px;
           text-align: center;
@@ -159,6 +162,37 @@
               background-color: var(--alpha-bg);
             }
           }
+        }
+      }
+    }
+  }
+}
+
+.content.homeContent {
+  .box {
+    .blur {
+      display: none;
+    }
+    .alpha {
+      display: none;
+    }
+    h2 {
+      display: none;
+    }
+  }
+  .wrap {
+    .left {
+      display: none;
+    }
+  }
+}
+@media only screen and(max-width:1200px) {
+  .content {
+    .box {
+      .wrap {
+        flex-direction: column-reverse;
+        .left {
+          margin-top: 20px;
         }
       }
     }

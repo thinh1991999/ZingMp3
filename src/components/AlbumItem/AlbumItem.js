@@ -6,6 +6,8 @@ import { HiOutlineMusicNote } from "react-icons/hi";
 import { BsFillPlayFill, BsThreeDots } from "react-icons/bs";
 import { GiMicrophone } from "react-icons/gi";
 import { AiOutlineHeart } from "react-icons/ai";
+import { MdOutlineHorizontalRule } from "react-icons/md";
+import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
@@ -17,6 +19,8 @@ function AlbumItem({
   index,
   singer = false,
   albumSong = false,
+  small,
+  chartHome,
 }) {
   const {
     currentAlbum,
@@ -35,7 +39,14 @@ function AlbumItem({
 
   const dispatch = useDispatch();
 
-  const { artistsNames, title = " ", album = {}, thumbnailM, duration } = data;
+  const {
+    artistsNames,
+    title = " ",
+    album = {},
+    thumbnailM,
+    duration,
+    rakingStatus,
+  } = data;
   const { title: albumTitle } = album;
   const { encodeId } = albumCurrent;
   const { id, alias } = singerCurrent;
@@ -54,6 +65,7 @@ function AlbumItem({
       }
     }
     if (albumSong) {
+      console.log(index);
       if (encodeId === currentAlbum) {
         if (index === currentIndexSong) {
           dispatch(actions.setPlaying(!playing));
@@ -115,11 +127,39 @@ function AlbumItem({
   const activeClass =
     activeSongAlbum || activeSongSinger ? styles.itemActive : "";
   const playingClass = playingSong ? styles.itemPlaying : "";
-  const finalClass = clsx(styles.item, statusClass, activeClass, playingClass);
+  const finalClass = clsx(
+    styles.item,
+    statusClass,
+    activeClass,
+    playingClass,
+    chartHome && styles.itemChart,
+    chartHome && index === 0 && styles.spanFirst,
+    chartHome && index === 1 && styles.spanSecond,
+    chartHome && index === 2 && styles.spanThird,
+    small && styles.itemSmall
+  );
 
   return (
     <div className={finalClass}>
       <div className={styles.left}>
+        <div className={styles.ranking}>
+          <span>{index + 1}</span>
+        </div>
+        <div className={styles.hint}>
+          <span>{rakingStatus === 0 && <MdOutlineHorizontalRule />}</span>
+          {rakingStatus > 0 && (
+            <span className={styles.hintUp}>
+              <BiUpArrow />
+              <p>{Math.abs(rakingStatus)}</p>
+            </span>
+          )}
+          {rakingStatus < 0 && (
+            <span className={styles.hintDown}>
+              <BiDownArrow />
+              <p>{Math.abs(rakingStatus)}</p>
+            </span>
+          )}
+        </div>
         <div className={styles.icon}>
           <HiOutlineMusicNote className={styles.musicIcon} />
           <input type="checkbox" id="checkbox" className={styles.checkbox} />

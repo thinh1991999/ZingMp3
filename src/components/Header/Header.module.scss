@@ -102,3 +102,9 @@
     color: white;
   }
 }
+
+@media only screen and(max-width:1200px) {
+  .features {
+    left: calc(100% / 12 * 1);
+  }
+}

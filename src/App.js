@@ -9,10 +9,20 @@ import {
   Lyric,
   Warning,
 } from "./components";
-import { Home, Album, Singer, Search } from "./Pages";
+import {
+  Home,
+  Album,
+  Singer,
+  Search,
+  ZingChartPage,
+  ListMV,
+  Top100,
+} from "./Pages";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { HOME_API, actions } from "./store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const {
@@ -52,10 +62,10 @@ function App() {
         <div className="app__container">
           <Header />
           <Row>
-            <Col lg={2}>
+            <Col lg={1} xl={2} md={1}>
               <Nav />
             </Col>
-            <Col lg={10} className="app__wrap">
+            <Col lg={11} xl={10} md={11} className="app__wrap">
               <div className="app__outer">
                 <Routes>
                   <Route path={"/"} element={<Home />}></Route>
@@ -65,15 +75,22 @@ function App() {
                     element={<Singer />}
                   ></Route>
                   <Route path={"/Search/:Keyword"} element={<Search />}></Route>
+                  <Route
+                    path={"/ZingChartHome"}
+                    element={<ZingChartPage />}
+                  ></Route>
+                  <Route path={"/ListMV"} element={<ListMV />}></Route>
+                  <Route path={"/Top100"} element={<Top100 />}></Route>
                 </Routes>
               </div>
             </Col>
           </Row>
           <Lyric />
           {currentSong.encodeId && <Player />}
-          <Warning msg={msg} />
+          {/* <Warning msg={msg} /> */}
         </div>
       </div>
+      <ToastContainer autoClose={3000} />
     </GlobalStyles>
   );
 }

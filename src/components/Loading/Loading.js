@@ -2,7 +2,12 @@ import react, { useState } from "react";
 import clsx from "clsx";
 import styles from "./Loading.module.scss";
 
-function Loading({ loadFull = false, size = 80, nextPage = false }) {
+function Loading({
+  loadFull = false,
+  size = 80,
+  nextPage = false,
+  mv = false,
+}) {
   const [colors, setColors] = useState([
     "2172b8",
     "18a39b",
@@ -19,6 +24,7 @@ function Loading({ loadFull = false, size = 80, nextPage = false }) {
       className={clsx(styles.loading, {
         [styles.loadingFull]: loadFull,
         [styles.loadingNextPage]: nextPage,
+        [styles.loadingMV]: mv,
       })}
     >
       <section className={styles.wrapper}>

@@ -71,6 +71,8 @@ function Slider({ data }) {
           return (
             <Col
               lg={4}
+              xl={4}
+              md={6}
               key={`${encodeId}${indexSlider}`}
               className={classNameSlider}
             >

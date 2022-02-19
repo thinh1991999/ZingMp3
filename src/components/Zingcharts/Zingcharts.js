@@ -6,6 +6,7 @@ import clsx from "clsx";
 
 function Zingcharts({ data }) {
   const { items } = data;
+
   return (
     <div className={clsx(styles.zingcharts, "pd-15-px")}>
       <Row className="zingchartsContainer">

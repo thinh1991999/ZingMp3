@@ -49,6 +49,7 @@ function Search() {
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
+    dispatch(actions.setCurrentNav(""));
   }, []);
 
   if (loading) {

@@ -8,14 +8,13 @@
   border-radius: 4px;
   animation: popperShow 1s;
   color: var(--text-primary);
-  p {
+  > p {
     padding: 2px 0;
     font-size: 12px;
     color: var(--text-primary);
     display: block;
     background-color: var(--popper-bg);
     border-radius: 4px;
-
     margin: unset;
   }
 }
@@ -35,12 +34,12 @@
 }
 
 .popperRightUp {
-  right: 100%;
+  right: 140%;
 }
 
 .popperRightUp::after {
   top: 100%;
-  left: 65%;
+  left: 75%;
 }
 
 .popper.popperCenterDown {

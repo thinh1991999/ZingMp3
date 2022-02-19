@@ -4,6 +4,8 @@ import styles from "./Popper.module.scss";
 
 function Popper({ properties }) {
   const { msg, popperDisplay, position } = properties;
+  const arrMsg = msg.split(" ");
+  const size = msg.length * (11 - arrMsg.length);
   let className = styles.popper;
   switch (position) {
     case "CenterUp":
@@ -22,7 +24,7 @@ function Popper({ properties }) {
     <div
       className={className}
       style={{
-        width: `${msg.length * 8}px`,
+        width: `${size}px`,
         display: `${popperDisplay ? "block" : "none"}`,
       }}
     >

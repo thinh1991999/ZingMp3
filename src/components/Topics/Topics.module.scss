@@ -4,13 +4,29 @@
   color: var(--text-primary);
 
   .topicsTitle {
-    font-size: 20px;
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn {
+      display: flex;
+      align-items: center;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 24px;
+
+      .btnChildActive {
+        cursor: pointer;
+        color: var(--text-primary);
+      }
+    }
   }
 
-  .topicsContainer {
-    /* width: 100%; */
+  .topicContainer {
+    // width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: nowrap !important;
+    overflow: scroll;
+    scroll-behavior: smooth;
   }
 }

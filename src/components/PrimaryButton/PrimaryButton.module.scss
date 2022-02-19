@@ -19,6 +19,19 @@
   }
 }
 
+.wrap.wrapChart {
+  border: 1px solid var(--text-primary);
+  text-transform: capitalize;
+}
+
 .wrap.wrapGray {
   background-color: var(--alpha-bg);
+}
+
+@media only screen and(max-width:1100px) and (min-width: 1000px) {
+  .wrap {
+    span {
+      font-size: 14px;
+    }
+  }
 }

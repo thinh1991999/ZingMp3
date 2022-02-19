@@ -1,7 +1,7 @@
 .list {
-  padding: 40px 0;
+  // padding: 40px 0;
   position: relative;
-
+  overflow: hidden;
   &:hover .listBtnLeft {
     display: block;
   }

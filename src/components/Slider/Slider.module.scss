@@ -102,3 +102,11 @@
 .sliderBtnNext {
   right: 20px;
 }
+@media only screen and(max-width:992px) {
+  .sliderItemRight {
+    right: 100%;
+  }
+  .sliderItemCenter {
+    left: 75%;
+  }
+}

@@ -24,13 +24,14 @@ function Album() {
       throw new Error(error);
     }
   };
-
+  console.log("album");
   useEffect(() => {
     fetchAlbum();
   }, [id]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
+    dispatch(actions.setCurrentNav(""));
   }, []);
 
   if (loading) {

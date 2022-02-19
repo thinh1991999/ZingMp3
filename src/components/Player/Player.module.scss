@@ -12,7 +12,6 @@
 // End anmations
 
 .play {
-  padding: 0px 20px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -23,7 +22,7 @@
   cursor: pointer;
   .playWrap {
     background-color: var(--player-bg);
-
+    padding: 0px 20px;
     .playLeft {
       display: flex;
       align-items: center;

@@ -10,6 +10,7 @@ const initState = {
   loading: true,
   page: 1,
   data: [],
+  currentNav: 1,
   currentAlbum: "",
   playing: false,
   blackHeader: false,
@@ -85,6 +86,12 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         scroll: action.payLoad,
+      };
+    }
+    case "SET_CURRENT_NAV": {
+      return {
+        ...state,
+        currentNav: action.payLoad,
       };
     }
     case "SET_LOADING_HOME": {
