@@ -70,7 +70,7 @@
             overflow: hidden;
             position: relative;
             cursor: pointer;
-            img {
+            > img {
               width: 60px;
               height: 60px;
             }
@@ -79,7 +79,7 @@
               opacity: 0.2;
             }
 
-            &:hover .imgBtn {
+            &:hover .play {
               opacity: 1;
             }
 
@@ -93,7 +93,7 @@
               opacity: 0;
             }
 
-            .imgBtn {
+            .play {
               position: absolute;
               width: 100%;
               height: 100%;
@@ -105,6 +105,18 @@
               color: white;
               font-size: 20px;
               opacity: 0;
+              .playing {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+              .imgBtn {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
             }
           }
           .info {
@@ -128,6 +140,16 @@
             color: var(--text-primary);
             margin: unset;
             font-size: 20px;
+          }
+        }
+        .leftItem.leftItemPlaying {
+          .img {
+            .play {
+              opacity: 1;
+            }
+            .imgLayer {
+              opacity: 0.4;
+            }
           }
         }
         .leftItem.topFirst {
@@ -157,6 +179,7 @@
             padding: 3px 20px;
             border-radius: 20px;
             color: var(--text-primary);
+            text-decoration: none;
             margin: 0;
             &:hover {
               background-color: var(--alpha-bg);
@@ -193,6 +216,32 @@
         flex-direction: column-reverse;
         .left {
           margin-top: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:426px) {
+  .content {
+    .box {
+      .wrap {
+        .left {
+          .leftItem {
+            .img {
+              display: none;
+            }
+            .info {
+              h4 {
+                font-size: 10px;
+              }
+              span {
+                a {
+                  font-size: 8px;
+                }
+              }
+            }
+          }
         }
       }
     }

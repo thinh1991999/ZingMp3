@@ -77,6 +77,7 @@ function Home() {
     dispatch(actions.setBGHeader(true));
     setMount(true);
     dispatch(actions.setCurrentNav(1));
+    dispatch(actions.setShowNavMobile(false));
   }, []);
 
   return (

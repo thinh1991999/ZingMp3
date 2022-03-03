@@ -1,10 +1,8 @@
 .popper {
   position: absolute;
   background-color: var(--popper-bg);
-  bottom: calc(100% + 8px);
-  right: 50%;
-  transform: translateX(50%);
-  z-index: 9999;
+  transform: translateX(-50%);
+  z-index: 99999;
   border-radius: 4px;
   animation: popperShow 1s;
   color: var(--text-primary);
@@ -31,10 +29,6 @@
   left: 50%;
   animation: popperShow 1s;
   transform: translateX(-50%);
-}
-
-.popperRightUp {
-  right: 140%;
 }
 
 .popperRightUp::after {

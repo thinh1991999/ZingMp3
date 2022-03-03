@@ -61,3 +61,13 @@
 .top100::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg);
 }
+
+@media only screen and (max-width: 679px) {
+  .top100 {
+    .container {
+      .content {
+        padding: 0 20px 100px;
+      }
+    }
+  }
+}

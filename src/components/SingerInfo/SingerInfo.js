@@ -4,8 +4,12 @@ import { PrimaryButton, SingerModal } from "..";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BsPlayFill } from "react-icons/bs";
 import { getNumberText } from "../../funtions";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../store";
 
 function SingerInfo({ data }) {
+  const dispatch = useDispatch();
+
   const [readMore, setReadMore] = useState(true);
   const [modal, setModal] = useState(false);
 
@@ -17,6 +21,10 @@ function SingerInfo({ data }) {
 
   const handleModal = () => {
     setModal(true);
+  };
+
+  const handlePlaySingerSong = () => {
+    dispatch(actions.playSinger());
   };
 
   return (
@@ -45,14 +53,16 @@ function SingerInfo({ data }) {
                 </p>
 
                 <div className={styles.infoBtnWrap}>
-                  <PrimaryButton
-                    info={{
-                      msg: "phát nhạc",
-                      mr: 10,
-                    }}
-                  >
-                    <BsPlayFill />
-                  </PrimaryButton>
+                  <button onClick={handlePlaySingerSong}>
+                    <PrimaryButton
+                      info={{
+                        msg: "phát nhạc",
+                        mr: 10,
+                      }}
+                    >
+                      <BsPlayFill />
+                    </PrimaryButton>
+                  </button>
                   <PrimaryButton
                     info={{
                       msg: "quan tâm",

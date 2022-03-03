@@ -11,7 +11,7 @@
     padding-bottom: 80px;
     ul {
       list-style: none;
-
+      padding: unset;
       li {
         font-size: 48px;
         font-weight: 700;
@@ -41,6 +41,69 @@
           .layer {
             width: 100%;
           }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1200px) and (min-width: 1000px) {
+  .kara {
+    .karaWrap {
+      ul {
+        li {
+          font-size: 32px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1000px) and (min-width: 768px) {
+  .kara {
+    .karaWrap {
+      ul {
+        li {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .kara {
+    .karaWrap {
+      max-width: unset;
+      ul {
+        li {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:500px) {
+  .kara {
+    .karaWrap {
+      max-width: unset;
+      ul {
+        li {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:321px) {
+  .kara {
+    .karaWrap {
+      max-width: unset;
+      ul {
+        li {
+          font-size: 12px;
         }
       }
     }

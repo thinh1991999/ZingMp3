@@ -76,7 +76,10 @@
         display: flex;
         align-items: center;
         margin-top: 20px;
-
+        button {
+          background-color: transparent;
+          border: none;
+        }
         span {
           font-size: 12px;
           text-transform: uppercase;
@@ -168,6 +171,86 @@
         width: 260px;
         height: 260px;
         border-radius: 50%;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1000px) {
+  .info {
+    .infoWrap {
+      .infoInfo {
+        .inforWrap {
+          .inforContainer {
+            .infoLeft {
+              p {
+                max-width: 80%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:769px) {
+  .info {
+    .infoWrap {
+      .infoInfo {
+        .inforWrap {
+          padding: 80px 20px 50px;
+          .inforContainer {
+            .infoLeft {
+              p {
+                max-width: 100%;
+              }
+            }
+            .infoRight {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:424px) {
+  .info {
+    .infoWrap {
+      .infoInfo {
+        .inforWrap {
+          .inforContainer {
+            .infoLeft {
+              .infoBtnWrap {
+                > span {
+                  display: none;
+                }
+              }
+              .infoNewSong {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:322px) {
+  .info {
+    .infoWrap {
+      .infoInfo {
+        .inforWrap {
+          .inforContainer {
+            .infoLeft {
+              .infoBtnWrap {
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 const lastestStorage = () => {
   const data = JSON.parse(JSON.stringify(localStorage.getItem("lastest")));
   if (typeof data !== "object") {
@@ -22,6 +23,7 @@ const initState = {
   indexValidSongs: [],
   currentSong: {},
   currentIndexSong: null,
+  idCurrentSong: "",
   randomSong: false,
   repeatSong: 0,
   songLoading: true,
@@ -38,6 +40,20 @@ const initState = {
   },
   singer: {},
   currentSinger: "",
+  showNavMobile: false,
+  btnMobile: null,
+  popperInfo: {
+    show: false,
+    left: 0,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    width: 0,
+    height: 0,
+    msg: "",
+    position: "",
+  },
+  currentChart: "",
 };
 
 const getRandomIndex = (arr, index) => {
@@ -88,10 +104,28 @@ const reducer = (state = initState, action) => {
         scroll: action.payLoad,
       };
     }
+    case "SET_POPPER_INFO": {
+      return {
+        ...state,
+        popperInfo: action.payLoad,
+      };
+    }
     case "SET_CURRENT_NAV": {
       return {
         ...state,
         currentNav: action.payLoad,
+      };
+    }
+    case "SET_SHOW_NAV_MOBILE": {
+      return {
+        ...state,
+        showNavMobile: action.payLoad,
+      };
+    }
+    case "SET_BTN_MOBILE": {
+      return {
+        ...state,
+        btnMobile: action.payLoad,
       };
     }
     case "SET_LOADING_HOME": {
@@ -202,66 +236,135 @@ const reducer = (state = initState, action) => {
         currentSinger: action.payLoad,
       };
     }
-    case "PLAY_SONG_SAME_SINGER": {
+    case "PLAY_SINGER": {
       const { singer } = state;
-      return {
-        ...state,
-      };
+      const newListSong = Array.from([...singer.sections[0].items]);
+      const indexArr = [];
+      newListSong.forEach((item) => {
+        const { encodeId, streamingStatus: statusSong } = item;
+        if (statusSong === 1) {
+          indexArr.push(encodeId);
+        }
+      });
+
+      const newSong = newListSong.filter((item) => {
+        const { encodeId } = item;
+        return encodeId === indexArr[0];
+      })[0];
+
+      const newIndex = newListSong.findIndex((item) => {
+        const { encodeId } = item;
+        return encodeId === indexArr[0];
+      });
+
+      if (indexArr.length === 0) {
+        toast.error("List nhạc không có bài được hỗ trợ");
+        return {
+          ...state,
+        };
+      } else {
+        return {
+          ...state,
+          currentIndexSong: newIndex,
+          currentSong: newSong,
+          currentSinger: singer.alias,
+          idCurrentSong: indexArr[0],
+          currentAlbum: "",
+          listSong: newListSong,
+          playing: true,
+          indexValidSongs: indexArr,
+          showLyric: true,
+          fetchSong: true,
+          randomSong: false,
+        };
+      }
+    }
+    case "PLAY_SONG_SAME_SINGER": {
+      const { indexValidSongs, listSong } = state;
+
+      const indexCurrent = listSong.findIndex(
+        (item) => item.encodeId === action.payLoad
+      );
+
+      if (indexValidSongs.includes(action.payLoad)) {
+        return {
+          ...state,
+          idCurrentSong: action.payLoad,
+          currentSong: listSong.filter(
+            (item) => item.encodeId === action.payLoad
+          )[0],
+          currentIndexSong: indexCurrent,
+          fetchSong: true,
+        };
+      } else {
+        toast.error("Bài hát này chưa được hỗ trợ!");
+        return {
+          ...state,
+        };
+      }
     }
     case "PLAY_SONG_ANOTHER_SINGER": {
       const { singer } = state;
-      console.log(singer);
       const newListSong = Array.from([...singer.sections[0].items]);
 
       const indexArr = [];
-      newListSong.forEach((item, index) => {
-        const { streamingStatus: statusSong, isWorldWide } = item;
-        if (statusSong === 1 && isWorldWide) {
-          indexArr.push(index);
+      newListSong.forEach((item) => {
+        const { encodeId, streamingStatus: statusSong } = item;
+        if (statusSong === 1) {
+          indexArr.push(encodeId);
         }
       });
+
+      const newSong = newListSong.filter((item) => {
+        const { encodeId } = item;
+        return encodeId === action.payLoad;
+      })[0];
+
+      const newIndex = newListSong.findIndex((item) => {
+        const { encodeId } = item;
+        return encodeId === action.payLoad;
+      });
+
       if (indexArr.includes(action.payLoad)) {
         return {
           ...state,
           currentAlbum: "",
+          idCurrentSong: action.payLoad,
           currentSinger: singer.alias,
           indexValidSongs: indexArr,
           listSong: newListSong,
-          currentIndexSong: action.payLoad,
-          currentSong: newListSong[action.payLoad],
+          currentIndexSong: newIndex,
+          currentSong: newSong,
           fetchSong: true,
           showLyric: true,
         };
       } else {
+        toast.error('"Bài hát này chưa được hỗ trợ"');
         return {
           ...state,
-          warning: {
-            show: true,
-            msg: "Bài hát này chưa được hỗ trợ",
-          },
         };
       }
-      return {
-        ...state,
-        // currentSinger: action.payLoad,
-      };
     }
     case "PLAY_SONG_SAME_ALBUM": {
       const { indexValidSongs, listSong } = state;
+      const indexCurrent = listSong.findIndex(
+        (item) => item.encodeId === action.payLoad
+      );
+
       if (indexValidSongs.includes(action.payLoad)) {
         return {
           ...state,
-          currentSong: listSong[action.payLoad],
-          currentIndexSong: action.payLoad,
+          idCurrentSong: action.payLoad,
+          currentSong: listSong.filter(
+            (item) => item.encodeId === action.payLoad
+          )[0],
+          currentIndexSong: indexCurrent,
           fetchSong: true,
         };
       } else {
+        toast.error("Bài hát này chưa được hỗ trợ!");
         return {
           ...state,
-          warning: {
-            show: true,
-            msg: "Bài hát này chưa được hỗ trợ",
-          },
         };
       }
     }
@@ -272,33 +375,106 @@ const reducer = (state = initState, action) => {
         song: { items },
       } = album;
       const indexArr = [];
-      items.forEach((item, index) => {
-        const { streamingStatus: statusSong, isWorldWide } = item;
-        if (statusSong === 1 && isWorldWide) {
-          indexArr.push(index);
+      items.forEach((item) => {
+        const { encodeId, streamingStatus: statusSong } = item;
+        if (statusSong === 1) {
+          indexArr.push(encodeId);
         }
       });
+      const indexCurrent = items.findIndex(
+        (item) => item.encodeId === action.payLoad
+      );
+
       if (indexArr.includes(action.payLoad)) {
         return {
           ...state,
           currentAlbum: encodeId,
           indexValidSongs: indexArr,
+          idCurrentSong: action.payLoad,
           listSong: items,
-          currentIndexSong: action.payLoad,
-          currentSong: items[action.payLoad],
+          currentIndexSong: indexCurrent,
+          currentSong: items.filter(
+            (item) => item.encodeId === action.payLoad
+          )[0],
           fetchSong: true,
           showLyric: true,
+          currentSinger: "",
         };
       } else {
+        toast.error("Bài hát này chưa được hỗ trợ!");
         return {
           ...state,
-          warning: {
-            show: true,
-            msg: "Bài hát này chưa được hỗ trợ",
-          },
         };
       }
     }
+    case "PLAY_SONG_ANOTHER_CHART_HOME": {
+      const { id, album, items } = action.payLoad;
+      const indexArr = [];
+      items.forEach((item) => {
+        const { encodeId, streamingStatus: statusSong } = item;
+        if (statusSong === 1) {
+          indexArr.push(encodeId);
+        }
+      });
+      if (indexArr.includes(id)) {
+        const newIndex = items.findIndex((item) => item.encodeId === id);
+        const newSong = items.filter((item) => {
+          const { encodeId } = item;
+          return encodeId === id;
+        })[0];
+        return {
+          ...state,
+          currentAlbum: album,
+          indexValidSongs: indexArr,
+          idCurrentSong: id,
+          listSong: items,
+          currentIndexSong: newIndex,
+          currentSong: newSong,
+          fetchSong: true,
+          showLyric: true,
+          currentSinger: "",
+        };
+      } else {
+        toast.error("Bài hát này chưa được hỗ trợ!");
+        return {
+          ...state,
+        };
+      }
+    }
+    // case "PLAY_SONG_ANOTHER_CHART_PAGE": {
+    //   const { idSong, listSong: items } = action.payLoad;
+    //   const indexArr = [];
+    //   items.forEach((item) => {
+    //     const { encodeId, streamingStatus: statusSong } = item;
+    //     if (statusSong === 1) {
+    //       indexArr.push(encodeId);
+    //     }
+    //   });
+    //   if (indexArr.includes(idSong)) {
+    //     const newIndex = items.findIndex((item) => item.encodeId === idSong);
+    //     const newSong = items.filter((item) => {
+    //       const { encodeId } = item;
+    //       return encodeId === idSong;
+    //     })[0];
+    //     return {
+    //       ...state,
+    //       currentAlbum: album,
+    //       indexValidSongs: indexArr,
+    //       idCurrentSong: idSong,
+    //       listSong: items,
+    //       currentIndexSong: newIndex,
+    //       currentSong: newSong,
+    //       fetchSong: true,
+    //       showLyric: true,
+    //       currentSinger: "",
+    //     };
+    //   } else {
+    //     toast.error("Bài hát này chưa được hỗ trợ!");
+    //     return {
+    //       ...state,
+    //     };
+    //   }
+    // }
     case "PLAY_NEXT_SONG_AUTO": {
       const {
         repeatSong,
@@ -306,13 +482,22 @@ const reducer = (state = initState, action) => {
         indexValidSongs,
         currentIndexSong,
         listSong,
+        idCurrentSong,
       } = state;
       if (repeatSong === 1) {
-        const newSong = listSong[currentIndexSong];
-        const newIndex = currentIndexSong;
+        const newSong = listSong.filter((item) => {
+          const { encodeId } = item;
+          return encodeId === idCurrentSong;
+        })[0];
+
+        const newIndex = listSong.findIndex((item) => {
+          const { encodeId } = item;
+          return encodeId === idCurrentSong;
+        });
 
         return {
           ...state,
+          idCurrentSong: idCurrentSong,
           currentSong: newSong,
           currentIndexSong: newIndex,
           fetchSong: true,
@@ -320,16 +505,29 @@ const reducer = (state = initState, action) => {
       } else {
         if (randomSong) {
           const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
+
+          const newSong = listSong.filter((item) => {
+            const { encodeId } = item;
+            return encodeId === indexValidSongs[indexRd];
+          })[0];
+
+          const newIndex = listSong.findIndex((item) => {
+            const { encodeId } = item;
+            return encodeId === indexValidSongs[indexRd];
+          });
+
           return {
             ...state,
-            currentSong: listSong[indexValidSongs[indexRd]],
-            currentIndexSong: indexRd,
+            currentSong: newSong,
+            currentIndexSong: newIndex,
+            idCurrentSong: indexValidSongs[indexRd],
             fetchSong: true,
           };
         } else {
           const currentIndex = indexValidSongs.findIndex(
-            (item) => item === currentIndexSong
+            (item) => item === idCurrentSong
           );
+
           if (currentIndex === indexValidSongs.length - 1) {
             if (repeatSong === 0) {
               return {
@@ -338,19 +536,41 @@ const reducer = (state = initState, action) => {
               };
             }
             if (repeatSong === 2) {
+              const newSong = listSong.filter((item) => {
+                const { encodeId } = item;
+                return encodeId === indexValidSongs[0];
+              })[0];
+
+              const newIndex = listSong.findIndex((item) => {
+                const { encodeId } = item;
+                return encodeId === indexValidSongs[0];
+              });
+
               return {
                 ...state,
-                currentSong: listSong[indexValidSongs[0]],
-                currentIndexSong: indexValidSongs[0],
+                currentSong: newSong,
+                currentIndexSong: newIndex,
+                idCurrentSong: indexValidSongs[0],
                 fetchSong: true,
               };
             }
           } else {
+            const newSong = listSong.filter((item) => {
+              const { encodeId } = item;
+              return encodeId === indexValidSongs[currentIndex + 1];
+            })[0];
+
+            const newIndex = listSong.findIndex((item) => {
+              const { encodeId } = item;
+              return encodeId === indexValidSongs[currentIndex + 1];
+            });
+
             return {
               ...state,
-              currentSong: listSong[indexValidSongs[currentIndex + 1]],
-              currentIndexSong: indexValidSongs[currentIndex + 1],
+              currentSong: newSong,
+              currentIndexSong: newIndex,
               fetchSong: true,
+              idCurrentSong: indexValidSongs[currentIndex + 1],
             };
           }
         }
@@ -363,51 +583,87 @@ const reducer = (state = initState, action) => {
         indexValidSongs,
         listSong,
         repeatSong,
+        idCurrentSong,
       } = state;
       if (randomSong) {
         const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
+        const newSong = listSong.filter((item) => {
+          const { encodeId } = item;
+          return encodeId === indexValidSongs[indexRd];
+        })[0];
+
+        const newIndex = listSong.findIndex((item) => {
+          const { encodeId } = item;
+          return encodeId === indexValidSongs[indexRd];
+        });
+
         return {
           ...state,
-          currentSong: listSong[indexValidSongs[indexRd]],
-          currentIndexSong: indexRd,
+          currentSong: newSong,
+          currentIndexSong: newIndex,
           fetchSong: true,
+          idCurrentSong: indexValidSongs[indexRd],
         };
       } else {
         const currentIndex = indexValidSongs.findIndex(
-          (item) => item === currentIndexSong
+          (item) => item === idCurrentSong
         );
         if (currentIndex === indexValidSongs.length - 1) {
+          const song = listSong.filter((item) => {
+            const { encodeId } = item;
+            return encodeId === indexValidSongs[0];
+          })[0];
+
+          const newIndex = listSong.findIndex((item) => {
+            const { encodeId } = item;
+            return encodeId === indexValidSongs[0];
+          });
+
           if (repeatSong === 1) {
             return {
               ...state,
-              currentSong: listSong[indexValidSongs[0]],
-              currentIndexSong: indexValidSongs[0],
+              currentSong: song,
+              currentIndexSong: newIndex,
               fetchSong: true,
               repeatSong: 0,
+              idCurrentSong: indexValidSongs[0],
             };
           } else {
             return {
               ...state,
-              currentSong: listSong[indexValidSongs[0]],
-              currentIndexSong: indexValidSongs[0],
+              currentSong: song,
+              currentIndexSong: newIndex,
               fetchSong: true,
+              idCurrentSong: indexValidSongs[0],
             };
           }
         } else {
+          const song = listSong.filter((item) => {
+            const { encodeId } = item;
+            return encodeId === indexValidSongs[currentIndex + 1];
+          })[0];
+
+          const newIndex = listSong.findIndex((item) => {
+            const { encodeId } = item;
+            return encodeId === indexValidSongs[currentIndex + 1];
+          });
+
           if (repeatSong === 1) {
             return {
               ...state,
-              currentSong: listSong[indexValidSongs[currentIndex + 1]],
-              currentIndexSong: indexValidSongs[currentIndex + 1],
+              currentSong: song,
+              currentIndexSong: newIndex,
               fetchSong: true,
               repeatSong: 0,
+              idCurrentSong: indexValidSongs[currentIndex + 1],
             };
           }
           return {
             ...state,
-            currentSong: listSong[indexValidSongs[currentIndex + 1]],
-            currentIndexSong: indexValidSongs[currentIndex + 1],
+            currentSong: song,
+            currentIndexSong: newIndex,
             fetchSong: true,
+            idCurrentSong: indexValidSongs[currentIndex + 1],
           };
         }
       }
@@ -419,42 +675,69 @@ const reducer = (state = initState, action) => {
         indexValidSongs,
         listSong,
         repeatSong,
+        idCurrentSong,
       } = state;
       if (randomSong) {
         const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
+
+        const newSong = listSong.filter((item) => {
+          const { encodeId } = item;
+          return encodeId === indexValidSongs[indexRd];
+        })[0];
+
+        const newIndex = listSong.findIndex((item) => {
+          const { encodeId } = item;
+          return encodeId === indexValidSongs[indexRd];
+        });
+
         if (repeatSong === 1) {
           return {
             ...state,
-            currentSong: listSong[indexValidSongs[indexRd]],
-            currentIndexSong: indexRd,
+            currentSong: newSong,
+            currentIndexSong: newIndex,
             fetchSong: true,
             repeatSong: 0,
+            idCurrentSong: indexValidSongs[indexRd],
           };
         }
         return {
           ...state,
-          currentSong: listSong[indexValidSongs[indexRd]],
-          currentIndexSong: indexRd,
+          currentSong: newSong,
+          currentIndexSong: newIndex,
           fetchSong: true,
+          idCurrentSong: indexValidSongs[indexRd],
         };
       } else {
         const currentIndex = indexValidSongs.findIndex(
-          (item) => item === currentIndexSong
+          (item) => item === idCurrentSong
         );
+
+        const newSong = listSong.filter((item) => {
+          const { encodeId } = item;
+          return encodeId === indexValidSongs[currentIndex - 1];
+        })[0];
+
+        const newIndex = listSong.findIndex((item) => {
+          const { encodeId } = item;
+          return encodeId === indexValidSongs[currentIndex - 1];
+        });
+
         if (repeatSong === 1) {
           return {
             ...state,
-            currentSong: listSong[indexValidSongs[currentIndex - 1]],
-            currentIndexSong: indexValidSongs[currentIndex - 1],
+            currentSong: newSong,
+            currentIndexSong: newIndex,
             fetchSong: true,
             repeatSong: 0,
+            idCurrentSong: indexValidSongs[currentIndex - 1],
           };
         }
         return {
           ...state,
-          currentSong: listSong[indexValidSongs[currentIndex - 1]],
-          currentIndexSong: indexValidSongs[currentIndex - 1],
+          currentSong: newSong,
+          currentIndexSong: newIndex,
           fetchSong: true,
+          idCurrentSong: indexValidSongs[currentIndex - 1],
         };
       }
     }
@@ -465,27 +748,36 @@ const reducer = (state = initState, action) => {
         song: { items },
       } = album;
       const indexArr = [];
+      let newCurrentIndex = 0;
+      let newIdSong = "";
       items.forEach((item, index) => {
-        const { streamingStatus: statusSong, isWorldWide } = item;
-        if (statusSong === 1 && isWorldWide) {
-          indexArr.push(index);
+        const { encodeId, streamingStatus: statusSong } = item;
+        if (statusSong === 1) {
+          indexArr.push(encodeId);
         }
       });
       if (indexArr.length === 0) {
+        toast.error("Album này chưa được hỗ trợ");
         return {
           ...state,
-          warning: {
-            show: true,
-            msg: "Album này chưa được hỗ trợ",
-          },
         };
       }
-      let newCurrentIndex = indexArr[0];
-      let newSong = items[newCurrentIndex];
+      let newSong = items.filter((item) => {
+        const { encodeId } = item;
+        return encodeId === indexArr[0];
+      })[0];
+      newIdSong = indexArr[0];
       if (randomSong) {
         const indexRd = getRandomIndex(indexArr, currentIndexSong);
-        newCurrentIndex = indexArr[indexRd];
-        newSong = items[newCurrentIndex];
+        newIdSong = indexArr[indexRd];
+        newSong = items.filter((item) => {
+          const { encodeId } = item;
+          return encodeId === newIdSong;
+        })[0];
+        newCurrentIndex = items.findIndex((item) => {
+          const { encodeId } = item;
+          return encodeId === newIdSong;
+        });
       }
 
       if (!getValidLastest(lastest, album)) {
@@ -497,12 +789,14 @@ const reducer = (state = initState, action) => {
         ...state,
         currentIndexSong: newCurrentIndex,
         currentSong: newSong,
+        idCurrentSong: newIdSong,
         currentAlbum: encodeId,
         listSong: items,
         playing: true,
         indexValidSongs: indexArr,
         showLyric: true,
         fetchSong: true,
+        currentSinger: "",
       };
     }
 

@@ -15,12 +15,12 @@ import { actions } from "../../store";
 function AlbumItem({
   data,
   status,
-  worldWide,
   index,
   singer = false,
   albumSong = false,
   small,
   chartHome,
+  listSong,
 }) {
   const {
     currentAlbum,
@@ -30,6 +30,7 @@ function AlbumItem({
     songLoading,
     currentSinger,
     singer: singerCurrent,
+    idCurrentSong,
   } = useSelector((state) => state);
 
   const [activeSongAlbum, setActiveSongAlbum] = useState(false);
@@ -38,8 +39,8 @@ function AlbumItem({
   const [loadingSong, setLoadingSong] = useState(false);
 
   const dispatch = useDispatch();
-
   const {
+    encodeId: idSong,
     artistsNames,
     title = " ",
     album = {},
@@ -47,61 +48,80 @@ function AlbumItem({
     duration,
     rakingStatus,
   } = data;
+
   const { title: albumTitle } = album;
   const { encodeId } = albumCurrent;
   const { id, alias } = singerCurrent;
   const newDuration = getTime(duration);
-
   const handlePlaySingleSong = () => {
-    if (singer) {
-      if (alias === currentSinger) {
-        if (index === currentIndexSong) {
-          dispatch(actions.setPlaying(!playing));
+    if (idSong === idCurrentSong) {
+      dispatch(actions.setPlaying(!playing));
+    } else {
+      if (singer) {
+        if (alias === currentSinger) {
+          dispatch(actions.playSongSameSinger(idSong));
         } else {
-          dispatch(actions.playSongSameSinger(index));
+          dispatch(actions.playSongAnotherSinger(idSong));
         }
-      } else {
-        dispatch(actions.playSongAnotherSinger(index));
       }
-    }
-    if (albumSong) {
-      console.log(index);
-      if (encodeId === currentAlbum) {
-        if (index === currentIndexSong) {
-          dispatch(actions.setPlaying(!playing));
+      if (albumSong) {
+        if (encodeId === currentAlbum) {
+          dispatch(actions.playSongSameAlbum(idSong));
         } else {
-          dispatch(actions.playSongSameAlbum(index));
+          dispatch(actions.playSongAnotherAlbum(idSong));
         }
-      } else {
-        dispatch(actions.playSongAnotherAlbum(index));
+      }
+      if (chartHome) {
+        if (currentAlbum === "ZO68OC68") {
+          dispatch(actions.playSongSameAlbum(idSong));
+        } else {
+          dispatch(
+            actions.playSongAnotherChartHome({
+              id: idSong,
+              album: "ZO68OC68",
+              items: listSong,
+            })
+          );
+        }
       }
     }
   };
 
   const handleShowLyric = () => {
-    if (encodeId === currentAlbum) {
-      if (index !== currentIndexSong) {
-        dispatch(actions.playSongSameAlbum(index));
+    if (albumSong) {
+      if (encodeId === currentAlbum) {
+        if (index !== currentIndexSong) {
+          dispatch(actions.playSongSameAlbum(encodeId));
+        }
+      } else {
+        dispatch(actions.playSongAnotherAlbum(encodeId));
       }
-    } else {
-      dispatch(actions.playSongAnotherAlbum(index));
+    }
+    if (chartHome) {
+      if (currentAlbum === "ZO68OC68") {
+        dispatch(actions.playSongSameAlbum(idSong));
+      } else {
+        dispatch(
+          actions.playSongAnotherChartHome({
+            id: idSong,
+            album: "ZO68OC68",
+            items: listSong,
+          })
+        );
+      }
     }
     dispatch(actions.setShowLyric(true));
   };
 
   useEffect(() => {
-    if (index === currentIndexSong) {
-      if (encodeId === currentAlbum) {
-        setActiveSongAlbum(true);
-      }
-      if (alias === currentSinger) {
-        setActiveSongSinger(true);
-      }
+    if (idSong === idCurrentSong) {
+      setActiveSongAlbum(true);
+      setActiveSongSinger(true);
     } else {
       setActiveSongAlbum(false);
       setActiveSongSinger(false);
     }
-  }, [currentIndexSong, playing]);
+  }, [playing, idCurrentSong]);
 
   useEffect(() => {
     if (activeSongAlbum || activeSongSinger) {
@@ -123,7 +143,7 @@ function AlbumItem({
     }
   }, [activeSongAlbum, songLoading, activeSongSinger]);
 
-  const statusClass = status === 2 || !worldWide ? styles.itemStatus : "";
+  const statusClass = status === 2 ? styles.itemStatus : "";
   const activeClass =
     activeSongAlbum || activeSongSinger ? styles.itemActive : "";
   const playingClass = playingSong ? styles.itemPlaying : "";
@@ -184,7 +204,11 @@ function AlbumItem({
           </div>
         </div>
         <div className={styles.info}>
-          <h3>{title}</h3>
+          <div className={styles.infoTitle}>
+            {" "}
+            <h3>{title}</h3> {status === 2 && <span></span>}
+          </div>
+
           <span>{artistsNames}</span>
         </div>
       </div>

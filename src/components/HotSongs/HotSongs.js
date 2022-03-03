@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./HotSongs.module.scss";
 import { HomeTitle, HotSongSlide, AlbumItem } from "..";
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 function HotSongs({ data }) {
   const { title, items } = data;
@@ -10,10 +10,10 @@ function HotSongs({ data }) {
     <div className={styles.hitSongs}>
       <HomeTitle msg={title} />
       <Row className={styles.hitSongsContainer}>
-        <div className={styles.hitSongsLeft}>
+        <Col className={styles.hitSongsLeft} md={4} sm={4}>
           <HotSongSlide data={items} />
-        </div>
-        <div className={styles.hitSongsRight}>
+        </Col>
+        <Col className={styles.hitSongsRight} md={7} sm={7}>
           {items.map((item, index) => {
             const { encodeId, isWorldWide, streamingStatus: status } = item;
             return (
@@ -27,7 +27,7 @@ function HotSongs({ data }) {
               />
             );
           })}
-        </div>
+        </Col>
       </Row>
     </div>
   );

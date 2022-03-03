@@ -96,3 +96,34 @@
 .modalContent .modalText::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg);
 }
+
+@media only screen and(max-width:1000px) {
+  .modal {
+    .modalWrap {
+      // width: 300px;
+
+      .modalImg {
+        .bg {
+        }
+
+        .blur {
+        }
+
+        .img {
+          img {
+          }
+
+          h4 {
+          }
+        }
+        .btn {
+        }
+      }
+
+      .modalContent {
+        .modalText {
+        }
+      }
+    }
+  }
+}

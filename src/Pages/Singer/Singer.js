@@ -48,6 +48,10 @@ function Singer() {
     dispatch(actions.setCurrentNav(""));
   }, [SingerName]);
 
+  useEffect(() => {
+    dispatch(actions.setShowNavMobile(false));
+  }, []);
+
   if (loading) {
     return <Loading size={50} />;
   }

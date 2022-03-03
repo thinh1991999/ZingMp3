@@ -49,7 +49,6 @@ function ChartLine({
   const chartAreaBorder = {
     id: "chartAreaBorder",
     beforeDraw(chart) {
-      console.log("line");
       const newArr = [...chart._metasets];
       let listPoint = [];
       newArr.forEach((item, index) => {

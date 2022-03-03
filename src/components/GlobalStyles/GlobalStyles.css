@@ -1,4 +1,6 @@
 .app {
+  position: relative;
+  overflow: hidden;
 }
 
 .app__container > .row {
@@ -57,4 +59,31 @@ a:hover {
 
 .infinite-scroll-component::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg) !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  margin-top: calc(0px - (var(--swiper-navigation-size))) !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .app__nav {
+    width: 0%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 999999999;
+    transition: all 0.2s linear;
+  }
+  .app__nav--active {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .app__nav--active {
+    width: 80%;
+  }
 }

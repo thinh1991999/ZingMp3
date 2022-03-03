@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { actions, ZING_CHART_API } from "../../store";
 import styles from "./ZingChartPage.module.scss";
@@ -41,6 +41,7 @@ function ZingChartPage() {
     fetchZingChartData();
     dispatch(actions.setBGHeader(false));
     dispatch(actions.setCurrentNav(2));
+    dispatch(actions.setShowNavMobile(false));
   }, []);
   if (loading) {
     return <Loading size={50} />;
@@ -82,6 +83,7 @@ function ZingChartPage() {
                 data={item}
                 index={index}
                 chartHome={true}
+                listSong={items}
               />
             );
           })}

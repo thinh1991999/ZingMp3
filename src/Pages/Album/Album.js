@@ -10,9 +10,8 @@ function Album() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
 
-  const album = useSelector((state) => state.album);
+  const { album, currentIndexSong } = useSelector((state) => state);
   const dispatch = useDispatch();
-
   const fetchAlbum = async () => {
     setLoading(true);
     try {
@@ -24,7 +23,7 @@ function Album() {
       throw new Error(error);
     }
   };
-  console.log("album");
+
   useEffect(() => {
     fetchAlbum();
   }, [id]);
@@ -53,7 +52,7 @@ function Album() {
     <div className={styles.album}>
       <div className={styles.albumContainer}>
         <Row className={styles.albumWrap}>
-          <Col lg={4}>
+          <Col xl={4} lg={12}>
             <AlbumLeft
               data={{
                 title,
@@ -66,7 +65,7 @@ function Album() {
               }}
             />
           </Col>
-          <Col lg={8}>
+          <Col xl={8} lg={12}>
             <AlbumRight title={sortDescription} song={song} />
           </Col>
         </Row>

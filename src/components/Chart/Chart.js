@@ -4,9 +4,19 @@ import { Row, Col } from "react-bootstrap";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { BsFillPlayFill } from "react-icons/bs";
 import clsx from "clsx";
-import { ChartLine } from "..";
+import { ChartLine, PlayingIcon } from "..";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../store";
+import { toast } from "react-toastify";
+
 function Chart({ data, home = false }) {
+  const { idCurrentSong, playing, currentAlbum, songLoading } = useSelector(
+    (state) => state
+  );
+
+  const dispatch = useDispatch();
+
   const [pointPosition, setPointPosition] = useState("");
   const [indexShow, setIndexShow] = useState(0);
   const [position, setPosition] = useState({
@@ -18,10 +28,50 @@ function Chart({ data, home = false }) {
   const [left, setLeft] = useState(0);
   const [top, setTop] = useState(0);
   const [didMount, setDidMount] = useState(false);
+  const [songLoadingClick, setSongLoadingClick] = useState(false);
+  const [idSongFirst, setIdSongFirst] = useState("");
+
   const {
     items,
     chart: { totalScore },
   } = data;
+
+  const handlePlayZingChartSong = (id) => {
+    if (id === idCurrentSong) {
+      dispatch(actions.setPlaying(!playing));
+    } else {
+      if (currentAlbum === "ZO68OC68") {
+        dispatch(actions.playSongSameAlbum(id));
+      } else {
+        (async () => {
+          setSongLoadingClick(true);
+          setIdSongFirst(id);
+          try {
+            const respon = await fetch(
+              `https://music-player-pink.vercel.app/api/playlist?id=ZO68OC68`
+            );
+            const {
+              data: {
+                song: { items },
+              },
+            } = await respon.json();
+            setSongLoadingClick(false);
+            setIdSongFirst("");
+            dispatch(
+              actions.playSongAnotherChartHome({
+                id,
+                album: "ZO68OC68",
+                items,
+              })
+            );
+          } catch (error) {
+            setSongLoadingClick(false);
+            toast.error("Có lỗi xảy ra,vui lòng thử lại");
+          }
+        })();
+      }
+    }
+  };
 
   useEffect(() => {
     let changeIndex;
@@ -72,8 +122,16 @@ function Chart({ data, home = false }) {
     };
   }, []);
 
+  // useEffect(() => {
+  //   if (idCurrentSong === encodeId) {
+  //     setPlayingSong(playing);
+  //   } else {
+  //     setPlayingSong(false);
+  //   }
+  // }, [idCurrentSong, playing]);
+
   if (!didMount) return null;
-  // console.log(home);
+
   return (
     <div className={clsx(styles.content, home && styles.homeContent)}>
       <div className={styles.box}>
@@ -104,19 +162,53 @@ function Chart({ data, home = false }) {
                   onMouseEnter={() => {
                     setIndexShow(index);
                   }}
+                  onClick={() => handlePlayZingChartSong(encodeId)}
                   key={encodeId}
                   className={clsx(
                     styles.leftItem,
                     position,
-                    index === indexShow && styles.leftItemActive
+                    index === indexShow && styles.leftItemActive,
+                    idCurrentSong === encodeId ||
+                      (songLoadingClick && idSongFirst === encodeId)
+                      ? styles.leftItemPlaying
+                      : ""
                   )}
                 >
                   <span>{index + 1}</span>
                   <div className={styles.img}>
                     <img src={thumbnailM} alt={title} />
                     <div className={styles.imgLayer}></div>
-                    <div className={styles.imgBtn}>
-                      <BsFillPlayFill />
+                    <div className={styles.play}>
+                      {(songLoading && idCurrentSong === encodeId) ||
+                      songLoadingClick ? (
+                        <PlayingIcon loading={true} />
+                      ) : (
+                        ""
+                      )}
+                      {!songLoading &&
+                      idCurrentSong === encodeId &&
+                      !playing &&
+                      !songLoadingClick ? (
+                        <div className={styles.imgBtn}>
+                          <BsFillPlayFill />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {playing && idCurrentSong === encodeId ? (
+                        <div className={styles.playing}>
+                          <PlayingIcon className={styles.playingIcon} />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {idCurrentSong !== encodeId && !songLoadingClick ? (
+                        <div className={styles.imgBtn}>
+                          <BsFillPlayFill />
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                   <div className={styles.info}>
@@ -144,7 +236,9 @@ function Chart({ data, home = false }) {
               );
             })}
             <div className={styles.leftBtnWrap}>
-              <button className={styles.leftBtn}>Xem thêm</button>
+              <Link to={"/ZingChartHome"} className={styles.leftBtn}>
+                Xem thêm
+              </Link>
             </div>
           </Col>
           <Col xl={home ? 12 : 8} lg={12} className={styles.right}>

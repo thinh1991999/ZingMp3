@@ -19,6 +19,20 @@ export const setCurrentNav = (payLoad) => {
   };
 };
 
+export const setShowNavMobile = (payLoad) => {
+  return {
+    type: "SET_SHOW_NAV_MOBILE",
+    payLoad,
+  };
+};
+
+export const setBtnMobile = (payLoad) => {
+  return {
+    type: "SET_BTN_MOBILE",
+    payLoad,
+  };
+};
+
 export const setBGHeader = (payLoad) => {
   return {
     type: "SET_BG_HEADER",
@@ -64,6 +78,13 @@ export const setAlbum = (payLoad) => {
 export const setCurrentAlbum = (payLoad) => {
   return {
     type: "SET_CURRENT_ALBUM",
+    payLoad,
+  };
+};
+
+export const setPopperInfo = (payLoad) => {
+  return {
+    type: "SET_POPPER_INFO",
     payLoad,
   };
 };
@@ -201,6 +222,13 @@ export const setCurrentSinger = (payLoad) => {
   };
 };
 
+export const playSinger = (payLoad) => {
+  return {
+    type: "PLAY_SINGER",
+    payLoad,
+  };
+};
+
 export const playSongSameSinger = (payLoad) => {
   return {
     type: "PLAY_SONG_SAME_SINGER",
@@ -211,6 +239,20 @@ export const playSongSameSinger = (payLoad) => {
 export const playSongAnotherSinger = (payLoad) => {
   return {
     type: "PLAY_SONG_ANOTHER_SINGER",
+    payLoad,
+  };
+};
+
+export const playSongAnotherChartHome = (payLoad) => {
+  return {
+    type: "PLAY_SONG_ANOTHER_CHART_HOME",
+    payLoad,
+  };
+};
+
+export const playSongAnotherChartPage = (payLoad) => {
+  return {
+    type: "PLAY_SONG_ANOTHER_CHART_PAGE",
     payLoad,
   };
 };

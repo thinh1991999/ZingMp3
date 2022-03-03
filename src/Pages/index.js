@@ -5,3 +5,4 @@ export { default as Search } from "./Search/Search";
 export { default as ZingChartPage } from "./ZingChartPage/ZingChartPage";
 export { default as ListMV } from "./ListMV/ListMV";
 export { default as Top100 } from "./Top100/Top100";
+export { default as SearchMobile } from "./SearchMobile/SearchMobile";

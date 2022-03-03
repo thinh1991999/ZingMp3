@@ -180,20 +180,39 @@
     .info {
       color: var(--text-primary);
       padding: 0 10px;
-
-      h3 {
-        font-size: 14px;
-        margin: 0;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
-        overflow: hidden;
+      flex: 1;
+      .infoTitle {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        h3 {
+          max-width: 80%;
+          font-size: 14px;
+          margin: 0;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          overflow: hidden;
+        }
+        span {
+          margin-left: 8px;
+          display: flex;
+          align-items: center;
+          width: 26px;
+          height: 12px;
+          background-size: contain;
+          background-image: url(https://zjs.zadn.vn/zmp3-desktop/releases/v1.6.0/static/media/vip-label.3dd6ac7e.svg);
+        }
       }
 
-      span {
+      > span {
         font-size: 12px;
         margin-top: 3px;
         color: var(--text-secondary);
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
   }
@@ -267,8 +286,8 @@
   .left {
     .ranking {
       display: block;
-      width: 60px;
       text-align: center;
+      width: 60px;
       span {
         -webkit-text-stroke: 1.5px var(--text-primary);
         font-size: 32px;
@@ -280,8 +299,8 @@
       }
     }
     .hint {
-      display: block;
       width: 40px;
+      display: block;
       text-align: center;
       span {
         font-size: 20px;
@@ -357,9 +376,6 @@
         -webkit-text-stroke: 1.5px var(--text-primary);
       }
     }
-    .info {
-      width: 100%;
-    }
   }
   .center {
     display: none;
@@ -369,6 +385,65 @@
       .btn:first-child {
         display: none;
       }
+    }
+  }
+}
+
+@media only screen and(max-width:769px) {
+  .item.itemChart {
+    .left {
+      flex: 1;
+      .ranking {
+        width: calc(100% / 12 * 1);
+      }
+      .hint {
+        width: calc(100% / 12 * 1);
+      }
+      .img {
+        width: 40px;
+      }
+      .info {
+        flex: 1;
+        padding: 0 0 0 10px;
+        width: calc(100% / 12 * 10 - 40px);
+      }
+    }
+    .center {
+      display: none;
+    }
+    .right {
+      display: none;
+    }
+  }
+}
+
+@media only screen and(max-width:426px) {
+  .item {
+    .left {
+      flex: 1;
+    }
+    .center {
+      display: none;
+    }
+  }
+  .item.itemChart {
+    .left {
+      .ranking {
+        width: calc(100% / 7 * 1);
+      }
+      .hint {
+        width: calc(100% / 7 * 1);
+      }
+      .img {
+        width: 40px;
+      }
+      .info {
+        padding: 0 0 0 10px;
+        width: calc(100% / 7 * 5 - 40px);
+      }
+    }
+    .right {
+      display: none;
     }
   }
 }

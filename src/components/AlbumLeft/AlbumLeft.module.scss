@@ -165,3 +165,24 @@
   align-items: center;
   justify-content: center;
 }
+
+@media only screen and(max-width:1200px) {
+  .albumLeft {
+    display: flex;
+    .albumLeftInfoWrap {
+      flex: 1;
+    }
+  }
+}
+
+@media only screen and(max-width:426px) {
+  .albumLeft {
+    flex-direction: column;
+    .albumLeftImgWrap {
+      width: 100%;
+    }
+    .albumLeftInfoWrap {
+      width: 100%;
+    }
+  }
+}

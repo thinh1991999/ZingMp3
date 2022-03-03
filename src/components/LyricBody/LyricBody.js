@@ -49,7 +49,7 @@ function LyricBody({ setCount, data }) {
 
   return (
     <Row className={styles.lyricBody}>
-      <Col lg={5} className={styles.lyricBodyLeft}>
+      <Col xl={5} lg={5} md={12} className={styles.lyricBodyLeft}>
         <div className={styles.imgWrap}>
           <img src={image} alt={title} />
           <div className={styles.imgLayer}>
@@ -57,14 +57,9 @@ function LyricBody({ setCount, data }) {
           </div>
         </div>
       </Col>
-      <Col lg={7} className={styles.lyricBodyRight}>
+      <Col xl={7} lg={7} md={12} className={styles.lyricBodyRight}>
         <div className={styles.lyricBodyWrap}>
-          <ul
-            ref={ulRef}
-            style={{
-              fontSize: `${size}px`,
-            }}
-          >
+          <ul ref={ulRef}>
             {lyricsText.map((lyricText, lyricTextIndex) => {
               const { text } = lyricText;
               const classItem = styles.item;
@@ -76,6 +71,9 @@ function LyricBody({ setCount, data }) {
                 <li
                   key={lyricTextIndex}
                   className={clsx(classItem, activeClass, overClass)}
+                  style={{
+                    fontSize: `${size}em`,
+                  }}
                 >
                   {text}
                 </li>

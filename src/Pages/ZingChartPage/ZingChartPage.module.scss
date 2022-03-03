@@ -1,10 +1,7 @@
 .zingchart {
-  // padding-bottom: 100px;
   height: 100vh;
   overflow-y: scroll;
   .container {
-    // padding: 15px 40px 0;
-
     .top {
       padding-top: 100px;
       position: relative;
@@ -131,6 +128,8 @@
                 align-items: center;
               }
               button {
+                display: flex;
+                align-items: center;
                 background-color: unset;
                 font-size: 32px;
                 border: unset;
@@ -160,4 +159,51 @@
 
 .zingchart::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg);
+}
+
+@media only screen and (max-width: 540px) {
+  .zingchart {
+    .container {
+      .bottom {
+        > a {
+          font-size: 36px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 426px) {
+  .zingchart {
+    .container {
+      .top {
+        .header {
+          h4 {
+            font-size: 32px;
+          }
+        }
+      }
+      .center {
+        padding: 0 20px;
+      }
+      .bottom {
+        padding: 40px 20px 100px;
+        > a {
+          font-size: 32px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 358px) {
+  .zingchart {
+    .container {
+      .bottom {
+        > a {
+          font-size: 28px;
+        }
+      }
+    }
+  }
 }

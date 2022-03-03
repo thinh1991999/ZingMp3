@@ -115,3 +115,15 @@
     }
   }
 }
+
+@media only screen and (max-width: 769px) {
+  .mv {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 426px) {
+  .mv {
+    width: 100%;
+  }
+}

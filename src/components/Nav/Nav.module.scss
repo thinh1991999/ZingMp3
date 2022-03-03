@@ -14,6 +14,14 @@
       align-items: center;
       padding-left: 20px;
       margin-bottom: 40px;
+      button {
+        background-color: transparent;
+        border: unset;
+        padding-right: 20px;
+        color: var(--text-primary);
+        font-size: 28px;
+        display: none;
+      }
       a {
         width: 120px;
         height: 40px;
@@ -104,6 +112,37 @@
           }
           .itemHint {
             display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .nav {
+    .navWrap {
+      .logo {
+        padding-left: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button {
+          display: block;
+        }
+        a {
+          background-image: var(--img-logo-mp3);
+        }
+      }
+      .navList {
+        .navItem {
+          display: flex;
+          justify-content: flex-start;
+          .itemName {
+            display: block;
+          }
+          .itemHint {
+            display: block;
           }
         }
       }

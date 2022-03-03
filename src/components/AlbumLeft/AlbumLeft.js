@@ -52,17 +52,8 @@ function AlbumLeft({ data }) {
     if (album.encodeId === currentAlbum) {
       dispatch(actions.setPlaying(!playing));
     } else {
-      console.log(123);
       dispatch(actions.playAlbum());
     }
-  };
-
-  const handlePauseAlbum = () => {
-    // setPlaying(false);
-  };
-
-  const handlePlayAlbum = () => {
-    // setPlaying(true);
   };
 
   // styles.albumLeftImgActive
@@ -88,71 +79,73 @@ function AlbumLeft({ data }) {
           </div>
         </div>
       </div>
-      <div className={styles.albumLeftInfo}>
-        <h3>{title}</h3>
-        <p>Cập nhật: {newUpdateDate}</p>
-        <p className={styles.artistsName}>
-          {artists.map((artist, index) => {
-            const { id, name, alias } = artist;
-            if (index === artists.length - 1) {
+      <div className={styles.albumLeftInfoWrap}>
+        <div className={styles.albumLeftInfo}>
+          <h3>{title}</h3>
+          <p>Cập nhật: {newUpdateDate}</p>
+          <p className={styles.artistsName}>
+            {artists.map((artist, index) => {
+              const { id, name, alias } = artist;
+              if (index === artists.length - 1) {
+                return (
+                  <Link to={`/Singer/${alias}`} key={id}>
+                    {name}
+                  </Link>
+                );
+              }
               return (
                 <Link to={`/Singer/${alias}`} key={id}>
-                  {name}
+                  {name} ,
                 </Link>
               );
-            }
-            return (
-              <Link to={`/Singer/${alias}`} key={id}>
-                {name} ,
-              </Link>
-            );
-          })}
-        </p>
-        <p>{newLike} người yêu thích</p>
-      </div>
-      <div className={styles.albumLeftBtnPlay}>
-        <div onClick={handleAlbum}>
-          {playing && albumId === currentAlbum ? (
-            <PrimaryButton
-              info={{
-                msg: "Tạm dừng",
+            })}
+          </p>
+          <p>{newLike} người yêu thích</p>
+        </div>
+        <div className={styles.albumLeftBtnPlay}>
+          <div onClick={handleAlbum}>
+            {playing && albumId === currentAlbum ? (
+              <PrimaryButton
+                info={{
+                  msg: "Tạm dừng",
+                }}
+              >
+                <BsPauseFill />
+              </PrimaryButton>
+            ) : (
+              <PrimaryButton
+                info={{
+                  msg: "Tiếp tục phát",
+                }}
+              >
+                <BsPlayFill />
+              </PrimaryButton>
+            )}
+          </div>
+        </div>
+        <div className={styles.albumLeftBtnMore}>
+          <div className={styles.btn}>
+            <ButtonIcon
+              fill={true}
+              popper={{
+                show: true,
+                msg: "Thêm vào thư viện",
               }}
             >
-              <BsPauseFill />
-            </PrimaryButton>
-          ) : (
-            <PrimaryButton
-              info={{
-                msg: "Tiếp tục phát",
+              <AiOutlineHeart />
+            </ButtonIcon>
+          </div>
+          <div className={styles.btn}>
+            <ButtonIcon
+              fill={true}
+              popper={{
+                show: true,
+                msg: "Xem thêm",
               }}
             >
-              <BsPlayFill />
-            </PrimaryButton>
-          )}
-        </div>
-      </div>
-      <div className={styles.albumLeftBtnMore}>
-        <div className={styles.btn}>
-          <ButtonIcon
-            fill={true}
-            popper={{
-              show: true,
-              msg: "Thêm vào thư viện",
-            }}
-          >
-            <AiOutlineHeart />
-          </ButtonIcon>
-        </div>
-        <div className={styles.btn}>
-          <ButtonIcon
-            fill={true}
-            popper={{
-              show: true,
-              msg: "Xem thêm",
-            }}
-          >
-            <BsThreeDots />
-          </ButtonIcon>
+              <BsThreeDots />
+            </ButtonIcon>
+          </div>
         </div>
       </div>
     </div>

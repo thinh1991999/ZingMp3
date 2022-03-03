@@ -15,3 +15,11 @@
 .singer::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg);
 }
+
+@media only screen and(max-width:768px) {
+  .singer {
+    .singerWrap {
+      padding: 20px;
+    }
+  }
+}

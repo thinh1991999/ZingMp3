@@ -145,6 +145,8 @@
       }
       .body {
         flex: 1;
+        display: flex;
+        align-items: center;
       }
     }
   }
@@ -152,4 +154,144 @@
 
 .lyric.showLyric {
   transform: translateY(0);
+}
+
+@media only screen and(max-width:1200px) {
+  .lyric {
+    .lyricWrap {
+      .info {
+        .header {
+          .headerCenter {
+            .wrap {
+              ul {
+                li {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1100px) and(min-width:1000px) {
+  .lyric {
+    .lyricWrap {
+      .info {
+        .header {
+          .headerCenter {
+            .wrap {
+              ul {
+                li {
+                  font-size: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1000px) and(min-width:768px) {
+  .lyric {
+    .lyricWrap {
+      .info {
+        .header {
+          .headerCenter {
+            .wrap {
+              ul {
+                li {
+                  font-size: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .lyric {
+    .lyricWrap {
+      .info {
+        .header {
+          .headerCenter {
+            .wrap {
+              ul {
+                li {
+                  padding: 7px 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:575px) {
+  .lyric {
+    .lyricWrap {
+      .info {
+        .header {
+          flex-direction: column-reverse;
+          align-items: center;
+          .headerRight {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:424px) {
+  .lyric {
+    .lyricWrap {
+      .info {
+        .header {
+          .headerCenter {
+            .wrap {
+              ul {
+                li {
+                  padding: 7px 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:326px) {
+  .lyric {
+    .lyricWrap {
+      .info {
+        .header {
+          .headerCenter {
+            .wrap {
+              ul {
+                li {
+                  padding: 7px 20px;
+                  font-size: 9px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

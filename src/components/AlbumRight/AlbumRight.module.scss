@@ -1,6 +1,4 @@
 .albumRight {
-  padding-right: 40px;
-
   .albumWrap {
     max-height: 90vh;
     flex: 1;
@@ -70,5 +68,16 @@
   > p {
     color: var(--text-secondary);
     margin-top: 10px;
+  }
+}
+
+@media only screen and(max-width:1200px) {
+  .albumRight {
+    padding-top: 20px;
+    .albumWrap {
+      .albumRightTitle {
+        display: none;
+      }
+    }
   }
 }

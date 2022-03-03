@@ -53,3 +53,78 @@
 .search::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg);
 }
+
+@media only screen and(max-width:1200px) {
+  .search {
+    .searchWrap {
+      .searchHeader {
+        h3,
+        span {
+          display: none;
+        }
+        ul {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:769px) {
+  .search {
+    .searchWrap {
+      .searchHeader {
+        padding: 0 20px;
+      }
+      .searchContent {
+        padding: 0 20px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:480px) {
+  .search {
+    .searchWrap {
+      .searchHeader {
+        padding: 0 20px;
+        > ul {
+          > li {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:393px) {
+  .search {
+    .searchWrap {
+      .searchHeader {
+        padding: 0 20px;
+        > ul {
+          > li {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:350px) {
+  .search {
+    .searchWrap {
+      .searchHeader {
+        padding: 0 20px;
+        > ul {
+          > li {
+            font-size: 8px;
+          }
+        }
+      }
+    }
+  }
+}

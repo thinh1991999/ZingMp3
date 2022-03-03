@@ -32,6 +32,7 @@ function Top100() {
     fetchDataTop();
     dispatch(actions.setBGHeader(false));
     dispatch(actions.setCurrentNav(7));
+    dispatch(actions.setShowNavMobile(false));
   }, []);
 
   if (loading) {

@@ -1,12 +1,37 @@
 import React, { useEffect, useState } from "react";
 import styles from "./HotSongSlide.module.scss";
 import clsx from "clsx";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../store";
 
 function HotSongSlide({ data }) {
+  const {
+    idCurrentSong,
+    singer: singerCurrent,
+    currentSinger,
+    playing,
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+
   const [slide, setSlides] = useState(data);
   const [activeIndex, setActiveIndex] = useState(0);
   const [centerIndex, setCenterIndex] = useState(1);
   const [lastIndex, setLastIndex] = useState(2);
+
+  const { alias } = singerCurrent;
+
+  const handlePlaySingerSong = (idSong) => {
+    if (idSong === idCurrentSong) {
+      dispatch(actions.setPlaying(!playing));
+    } else {
+      if (alias === currentSinger) {
+        dispatch(actions.playSongSameSinger(idSong));
+      } else {
+        dispatch(actions.playSongAnotherSinger(idSong));
+      }
+    }
+  };
 
   useEffect(() => {
     if (activeIndex === slide.length - 2) {
@@ -25,7 +50,7 @@ function HotSongSlide({ data }) {
     return () => {
       clearInterval(slideInterval);
     };
-  });
+  }, []);
 
   return (
     <>
@@ -41,7 +66,13 @@ function HotSongSlide({ data }) {
             positionClass = clsx(styles.hitSongItem, styles.hitSongItemLast);
           }
           return (
-            <li className={positionClass} key={encodeId}>
+            <li
+              className={positionClass}
+              key={encodeId}
+              onClick={() => {
+                handlePlaySingerSong(encodeId);
+              }}
+            >
               <a>
                 <img src={image} alt={title} />
               </a>

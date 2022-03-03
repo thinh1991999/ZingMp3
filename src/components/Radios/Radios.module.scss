@@ -30,6 +30,10 @@
       }
     }
   }
+  .radiosContainer {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
 }
 
 @keyframes textMoveRight {
@@ -40,5 +44,13 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@media only screen and(max-width:769px) {
+  .radios {
+    .radiosContainer {
+      flex-wrap: wrap;
+    }
   }
 }

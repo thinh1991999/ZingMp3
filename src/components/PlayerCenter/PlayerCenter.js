@@ -22,7 +22,18 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
     songCurrentTime,
     indexValidSongs,
     currentAlbum,
+    currentSinger,
   } = useSelector((state) => state);
+
+  const baseInfoRepeatSong = () => {
+    if (repeatSong === 1) {
+      return { msg: "Tắt phát lại", active: true };
+    } else if (repeatSong === 0) {
+      return { msg: "Bật phát lại tất cả", active: false };
+    } else {
+      return { msg: "Bật phát lại một bài", active: true };
+    }
+  };
 
   const dispatch = useDispatch();
 
@@ -33,7 +44,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   const [current, setCurrent] = useState(0);
   const [currentTime, setCurrentTime] = useState("");
   const [totalTime, setTotalTime] = useState("");
-  const [infoRepeat, setInfoRepeat] = useState({ msg: "", active: false });
+  const [infoRepeat, setInfoRepeat] = useState(baseInfoRepeatSong());
 
   const audioRef = useRef(null);
 
@@ -47,7 +58,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   };
 
   const handleSeekSong = (e) => {
-    const newTime = Math.round((duration / 100) * +e.target.value);
+    const newTime = (duration / 100) * +e.target.value;
     dispatch(actions.setSongCurrentTime(newTime));
     setCurrent(+e.target.value);
     audioRef.current.currentTime = newTime;
@@ -69,7 +80,6 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
     const validIndex = indexValidSongs.findIndex(
       (item) => item === currentIndexSong
     );
-
     if (current > 5) {
       setCurrent(0);
       dispatch(actions.setSongCurrentTime(0));
@@ -88,7 +98,12 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
     const arr = Array.from([...e.target.classList]);
 
     if (arr.includes(styles.playFeatures) || arr.includes(styles.wrap)) {
-      navigate(`/Album/${currentAlbum}`);
+      if (currentAlbum) {
+        navigate(`/Album/${currentAlbum}`);
+      }
+      if (currentSinger) {
+        navigate(`/Singer/${currentSinger}`);
+      }
     }
   };
 
@@ -125,10 +140,15 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
     setSongDuration(duration);
   }, [duration]);
 
+  const endEvent = () => {
+    dispatch(actions.playNextSongAuto());
+  };
+
   useEffect(() => {
-    if (currentTime === totalTime) {
-      dispatch(actions.playNextSongAuto());
-    }
+    audioRef.current.addEventListener("ended", endEvent);
+    return () => {
+      audioRef.current.removeEventListener("ended", endEvent);
+    };
   }, [currentTime]);
 
   useEffect(() => {
@@ -157,7 +177,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   }, [songCurrentTime]);
 
   const lyricClass = lyric ? styles.lyricClass : "";
-
+  const mess = randomSong ? "Tắt phát lại ngẫu nhiên" : "Bật phát ngẫu nhiên";
   return (
     <div className={clsx(styles.wrap, lyricClass)} onClick={handleToAlbum}>
       <div className={styles.playFeatures}>
@@ -166,10 +186,10 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
             active={randomSong}
             popper={{
               show: true,
-              msg: `${
-                randomSong ? "Tắt phát lại ngẫu nhiên" : "Bật phát ngẫu nhiên"
-              }`,
+              msg: mess,
+              position: "CenterUp",
             }}
+            player={true}
           >
             <BiShuffle />
           </ButtonIcon>
@@ -205,7 +225,9 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
             popper={{
               show: true,
               msg: `${infoRepeat.msg}`,
+              position: "CenterUp",
             }}
+            player={true}
           >
             {repeatSong === 1 ? <MdOutlineRepeatOne /> : <MdOutlineRepeat />}
           </ButtonIcon>

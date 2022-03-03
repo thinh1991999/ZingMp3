@@ -1,11 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./LyricList.module.scss";
+import "./LyricList.css";
 import { BsPlayCircle, BsPauseCircle } from "react-icons/bs";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import clsx from "clsx";
 import { PlayingIcon, ButtonIcon } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation } from "swiper/core";
+import "swiper/css";
+import "swiper/css/navigation";
+
+SwiperCore.use([Navigation]);
 
 function LyricList() {
   const { listSong, currentIndexSong, playing, invi, songLoading } =
@@ -13,98 +20,102 @@ function LyricList() {
 
   const dispatch = useDispatch();
 
-  const [position, setPosition] = useState("0");
   const [index, setIndex] = useState(currentIndexSong);
   const [canMove, setCanMove] = useState(false);
+  const [width, setWidth] = useState(0);
 
   const listRef = useRef(null);
   const wrapRef = useRef(null);
-  const leftBtnRef = useRef(null);
-  const rightBtnRef = useRef(null);
 
   const handleSong = (index) => {
-    if (index === currentIndexSong) {
-      dispatch(actions.setPlaying(!playing));
-    } else {
-      dispatch(actions.playSongSameAlbum(index));
-    }
+    // if (index === currentIndexSong) {
+    //   dispatch(actions.setPlaying(!playing));
+    // } else {
+    //   dispatch(actions.playSongSameAlbum(index));
+    // }
+    console.log(wrapRef.current.swiper.slideTo(10, 1000));
   };
 
-  const handleNext = () => {
-    setIndex(index + 2);
-    dispatch(actions.setInvi(false));
-  };
-
-  const handleBack = () => {
-    setIndex(index - 2);
-    dispatch(actions.setInvi(false));
-  };
-
-  useEffect(() => {
-    const newPosition = `calc(32% + 2% + -68% / 3 * ${currentIndexSong})`;
-    setPosition(newPosition);
-    if (!canMove) {
-      setIndex(currentIndexSong);
-    }
-  }, [currentIndexSong]);
-
-  useEffect(() => {
-    if (wrapRef) {
-      if (!canMove) {
-        wrapRef.current.style.transform = `translateX(${position})`;
-      }
-    }
-  }, [position]);
-
-  useEffect(() => {
-    if (index < 0) {
-      setIndex(0);
-      return;
-    }
-    if (wrapRef) {
-      const newPosition = `calc(32% + 2% + -68% / 3 * ${index})`;
-      wrapRef.current.style.transform = `translateX(${newPosition})`;
-    }
-  }, [index]);
-
-  const mouseOver = () => {
+  const handleEnter = () => {
     setCanMove(true);
   };
 
-  const mouseOut = () => {
+  const handleLeave = () => {
     setCanMove(false);
   };
 
   useEffect(() => {
-    if (listRef) {
-      listRef.current.addEventListener("mouseenter", mouseOver);
-      listRef.current.addEventListener("mouseleave", mouseOut);
-    }
-    return () => {
-      if (listRef.current) {
-        listRef.current.removeEventListener("mouseover", mouseOver);
-        listRef.current.removeEventListener("mouseleave", mouseOut);
-      }
-    };
+    console.log(wrapRef.current.swiper);
   }, []);
 
   useEffect(() => {
-    if (!canMove || invi) {
-      wrapRef.current.style.transform = `translateX(${position})`;
-      setIndex(currentIndexSong);
+    if (!canMove) {
+      if (width >= 1024) {
+        wrapRef.current.swiper.slideTo(currentIndexSong - 2);
+      } else if (width >= 768) {
+        wrapRef.current.swiper.slideTo(currentIndexSong - 1);
+      } else {
+        wrapRef.current.swiper.slideTo(currentIndexSong);
+      }
     }
-  }, [canMove, invi]);
+  }, [canMove, width, currentIndexSong]);
+
+  const eventResize = (e) => {
+    const { innerWidth } = e.target;
+    setWidth(innerWidth);
+  };
+
+  useEffect(() => {
+    if (songLoading) {
+      setCanMove(false);
+    }
+  }, [songLoading]);
+
+  useEffect(() => {
+    window.addEventListener("resize", eventResize);
+    setWidth(window.screen.width);
+    return () => {
+      window.removeEventListener("resize", eventResize);
+    };
+  }, []);
 
   return (
-    <div className={clsx(styles.list, invi && styles.inviList)} ref={listRef}>
-      <div className={styles.wrap} ref={wrapRef}>
+    <div
+      className={clsx(styles.list, invi && styles.inviList)}
+      ref={listRef}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <Swiper
+        id="swiper"
+        className={styles.wrap}
+        ref={wrapRef}
+        slidesPerView={3}
+        spaceBetween={10}
+        navigation
+        breakpoints={{
+          // when window width is >= 640px
+          0: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          1024: {
+            slidesPerView: 5,
+          },
+        }}
+      >
         {listSong.map((item, index) => {
           const { encodeId, title, artistsNames, thumbnailM } = item;
           const newImage = thumbnailM.replace("w240", "w480");
           const valid = index === currentIndexSong;
           const activeClass = valid ? styles.itemActive : "";
           return (
-            <div key={encodeId} className={clsx(styles.item, activeClass)}>
+            <SwiperSlide
+              key={encodeId}
+              className={clsx(styles.item, activeClass)}
+            >
               <div className={styles.itemBox}>
                 <div className={styles.itemWrap}>
                   <img src={newImage} alt={title} />
@@ -126,36 +137,10 @@ function LyricList() {
                 <h2>{title}</h2>
                 <h3>{artistsNames}</h3>
               </div>
-            </div>
+            </SwiperSlide>
           );
         })}
-      </div>
-      {currentIndexSong === 0 || index === 0 ? (
-        ""
-      ) : (
-        <div
-          className={styles.listBtnLeft}
-          onClick={handleBack}
-          ref={leftBtnRef}
-        >
-          <ButtonIcon fill={true} lyric={true}>
-            <IoIosArrowBack />
-          </ButtonIcon>
-        </div>
-      )}
-      {currentIndexSong === listSong.length || index === listSong.length ? (
-        ""
-      ) : (
-        <div
-          className={styles.listBtnRight}
-          onClick={handleNext}
-          ref={rightBtnRef}
-        >
-          <ButtonIcon fill={true} lyric={true}>
-            <IoIosArrowForward />
-          </ButtonIcon>
-        </div>
-      )}
+      </Swiper>
     </div>
   );
 }

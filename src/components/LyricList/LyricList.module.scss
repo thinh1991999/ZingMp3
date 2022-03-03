@@ -1,7 +1,7 @@
 .list {
-  // padding: 40px 0;
+  width: 100%;
   position: relative;
-  overflow: hidden;
+  // overflow: hidden;
   &:hover .listBtnLeft {
     display: block;
   }
@@ -11,16 +11,8 @@
   }
 
   .wrap {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    transition: all 1s linear;
-    flex-wrap: nowrap;
-    // overflow: hidden;
     .item {
-      flex-shrink: 0;
-      padding: 15px;
-      width: calc(68% / 3);
+      padding: 40px;
       transition: all 0.5s linear;
       .itemBox {
         &:hover .itemWrap .layer {
@@ -121,7 +113,7 @@
       }
     }
     .item.itemActive {
-      width: 32%;
+      padding: 10px;
       .itemBox {
         &:hover h2 {
           opacity: 0;
@@ -167,8 +159,51 @@
       opacity: 1;
     }
   }
-  .listBtnLeft,
-  .listBtnRight {
-    opacity: 0;
-  }
 }
+
+.wrap::-webkit-scrollbar {
+  // display: none;
+}
+
+// @media only screen and(max-width:767px) and (min-width: 500px) {
+//   .list {
+//     .wrap {
+//       .item {
+//         width: 50%;
+//         .itemBox {
+//           .itemWrap {
+//             .btn {
+//               .btnWrap {
+//                 font-size: 60px;
+//               }
+//             }
+//           }
+//         }
+//       }
+//       .item.itemActive {
+//         width: 50%;
+//       }
+//     }
+//   }
+// }
+
+// @media only screen and(max-width:499px) {
+//   .list {
+//     .wrap {
+//       .item {
+//         .itemBox {
+//           .itemWrap {
+//             .playing {
+//               padding: 10px;
+//             }
+//             .btn {
+//               .btnWrap {
+//                 font-size: 40px;
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

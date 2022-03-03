@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useEffect, useRef, useState } from "react";
 import styles from "./Nav.module.scss";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
@@ -6,7 +6,11 @@ import { RiFolderMusicLine } from "react-icons/ri";
 import { SiRoamresearch } from "react-icons/si";
 import { GiChart } from "react-icons/gi";
 import { MdOutlineRadio } from "react-icons/md";
-import { AiOutlineStar, AiOutlineVideoCameraAdd } from "react-icons/ai";
+import {
+  AiOutlineStar,
+  AiOutlineVideoCameraAdd,
+  AiOutlineClose,
+} from "react-icons/ai";
 import { BsNewspaper, BsUiChecksGrid } from "react-icons/bs";
 import { FiMusic } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,6 +19,8 @@ import { actions } from "../../store";
 import { toast } from "react-toastify";
 
 function Nav() {
+  const navRef = useRef(null);
+
   let iconStyles = { fontSize: "24px" };
   const [stateNavTop, setStateNav] = useState([
     {
@@ -55,13 +61,15 @@ function Nav() {
     },
   ]);
 
-  const { currentNav } = useSelector((state) => state);
+  const { currentNav, btnMobile } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
+  const handleCloseShowNavMobile = () => {
+    dispatch(actions.setShowNavMobile(false));
+  };
   const handleNav = (index) => {
-    console.log(index);
     switch (index) {
       case 1:
         dispatch(actions.setCurrentNav(1));
@@ -96,11 +104,32 @@ function Nav() {
     }
   };
 
+  const event = (e) => {
+    if (
+      !navRef.current.contains(e.target) &&
+      !btnMobile.current.contains(e.target)
+    ) {
+      dispatch(actions.setShowNavMobile(false));
+    } else if (btnMobile.current.contains(e.target)) {
+      dispatch(actions.setShowNavMobile(true));
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", event);
+    return () => {
+      window.removeEventListener("click", event);
+    };
+  }, [btnMobile]);
+
   return (
-    <div className={styles.nav}>
+    <div className={styles.nav} ref={navRef}>
       <div className={styles.navWrap}>
         <div className={styles.logo}>
           <Link to={"/"}> </Link>
+          <button onClick={handleCloseShowNavMobile}>
+            <AiOutlineClose />
+          </button>
         </div>
         <ul className={styles.navList}>
           {stateNavTop.map((nav, index) => {

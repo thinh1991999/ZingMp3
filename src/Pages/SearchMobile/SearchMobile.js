@@ -1,21 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import styles from "./Header.module.scss";
-import { HeaderButton, HeaderFormSuggest } from "..";
-import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
-import { MdOutlineClose } from "react-icons/md";
-import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
-import { FiSettings } from "react-icons/fi";
-import { FaUserAlt } from "react-icons/fa";
+import React, { useState, useEffect, useRef } from "react";
+import { SEARCH_API } from "../../store";
 import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
-import { actions, SEARCH_API } from "../../store";
+import styles from "./SearchMobile.module.scss";
+import { MdOutlineClose } from "react-icons/md";
+import { AiOutlineSearch } from "react-icons/ai";
+import { HeaderFormSuggest } from "../../components";
+import { useDispatch } from "react-redux";
+import { actions } from "../../store";
+import { Navigate, useNavigate } from "react-router-dom";
 
-function Header() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const { blackHeader, activeSearch } = useSelector((state) => state);
+function SearchMobile() {
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,15 +19,14 @@ function Header() {
     "em đừng đi",
     "zing choice",
   ]);
-  const [leftDisable, setLeftDisable] = useState(true);
-  const [rightDisable, setRightDisable] = useState(true);
+  const [activeSearch, setActiveSearch] = useState(false);
 
   const inputRef = useRef(null);
   const formRef = useRef(null);
   const deleteBtnRef = useRef(null);
-  const btnMobileRef = useRef(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchSearch = async () => {
     setLoading(true);
@@ -49,41 +42,16 @@ function Header() {
     }
   };
 
-  const handlePrevPage = () => {
-    navigate(-1);
-  };
-
-  const handleNextPage = () => {
-    navigate(+1);
-  };
-
   const handleSearchForm = () => {
-    dispatch(actions.setActiveSearch(true));
+    setActiveSearch(true);
   };
 
   const handleOutSearch = () => {
-    // dispatch(actions.setActiveSearch(false));
+    // setActiveSearch(false);
   };
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (searchText.length > 0) {
-      navigate(`/Search/${searchText}`);
-      dispatch(actions.setActiveSearch(false));
-      inputRef.current.blur();
-    }
-  };
-
-  const handleSubmitBtn = () => {
-    if (searchText.length > 0) {
-      navigate(`/Search/${searchText}`);
-      dispatch(actions.setActiveSearch(false));
-      inputRef.current.blur();
-    }
   };
 
   const handleDeleteSearchText = () => {
@@ -91,14 +59,22 @@ function Header() {
     inputRef.current.focus();
   };
 
-  useEffect(() => {
-    const {
-      length,
-      state: { idx },
-    } = window.history;
-    idx === 0 ? setLeftDisable(true) : setLeftDisable(false);
-    idx === length - 1 ? setRightDisable(true) : setRightDisable(false);
-  }, [location]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchText.length > 0) {
+      navigate(`/Search/${searchText}`);
+      //   dispatch(actions.setActiveSearch(false));
+      inputRef.current.blur();
+    }
+  };
+
+  const handleSubmitBtn = () => {
+    if (searchText.length > 0) {
+      navigate(`/Search/${searchText}`);
+      //   dispatch(actions.setActiveSearch(false));
+      inputRef.current.blur();
+    }
+  };
 
   useEffect(() => {
     if (searchText.trim().length > 0) {
@@ -108,42 +84,21 @@ function Header() {
 
   const event = (e) => {
     if (!formRef.current.contains(e.target)) {
-      dispatch(actions.setActiveSearch(false));
+      setActiveSearch(false);
     }
   };
 
   useEffect(() => {
     window.addEventListener("click", event);
-    dispatch(actions.setBtnMobile(btnMobileRef));
+    dispatch(actions.setShowNavMobile(false));
     return () => {
       window.removeEventListener("click", event);
     };
   }, []);
 
-  const headerBg = blackHeader ? styles.headerBg : "";
-
-  const finalClass = clsx(styles.features, headerBg);
-
   return (
-    <header className={finalClass}>
-      <div className={styles.featuresLeft}>
-        <div className={styles.featuresLeftBtn}>
-          <div className={styles.menuBtn} ref={btnMobileRef}>
-            <HeaderButton>
-              <AiOutlineMenu />
-            </HeaderButton>
-          </div>
-          <div className={styles.leftBtn} onClick={handlePrevPage}>
-            <HeaderButton disable={leftDisable}>
-              <HiOutlineArrowLeft />
-            </HeaderButton>
-          </div>
-          <div className={styles.rightBtn} onClick={handleNextPage}>
-            <HeaderButton disable={rightDisable}>
-              <HiOutlineArrowRight />
-            </HeaderButton>
-          </div>
-        </div>
+    <div className={styles.container}>
+      <div className={styles.wrap}>
         <form
           className={clsx(styles.form, activeSearch && styles.formActive)}
           onSubmit={handleSubmit}
@@ -185,22 +140,9 @@ function Header() {
             )}
           </div>
         </form>
-        <div className={styles.searchMobile}>
-          <Link to={"/SearchMobile"}>
-            <AiOutlineSearch />
-          </Link>
-        </div>
       </div>
-      <div className={styles.featuresRight}>
-        <HeaderButton circle={true}>
-          <FiSettings />
-        </HeaderButton>
-        <HeaderButton circle={true} white={true}>
-          <FaUserAlt />
-        </HeaderButton>
-      </div>
-    </header>
+    </div>
   );
 }
 
-export default Header;
+export default SearchMobile;

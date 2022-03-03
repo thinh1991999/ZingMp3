@@ -6,6 +6,7 @@
       padding: 100px 40px 0;
       display: flex;
       align-items: center;
+      justify-content: center;
       color: var(--text-primary);
       border-bottom: 1px solid var(--border-primary);
       > h4 {
@@ -37,6 +38,47 @@
     }
     .content {
       padding: 0 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 535px) {
+  .listMV {
+    .container {
+      .header {
+        > h4 {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 470px) {
+  .listMV {
+    .container {
+      .header {
+        > ul {
+          > li {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .listMV {
+    .container {
+      .header {
+        padding: 100px 0 0;
+        > ul {
+          > li {
+            font-size: 10px;
+          }
+        }
+      }
     }
   }
 }

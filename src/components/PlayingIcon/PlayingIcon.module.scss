@@ -32,3 +32,10 @@
     border-radius: unset;
   }
 }
+
+@media only screen and(max-width:499px) {
+  .wrap.wrapLyric {
+    width: 10px;
+    height: 10px;
+  }
+}

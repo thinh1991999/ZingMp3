@@ -28,5 +28,8 @@
       transition: all 1s linear;
       scroll-behavior: smooth;
     }
+    .eventsContainer::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

@@ -8,25 +8,52 @@
     align-items: center;
     justify-content: space-between;
 
-    .btn {
-      display: flex;
-      align-items: center;
+    a {
+      border: none;
+      outline: none;
+      text-decoration: none;
+      background-color: transparent;
+      font-size: 12px;
+      text-transform: uppercase;
       color: var(--text-secondary);
-      margin-bottom: 20px;
-      font-size: 24px;
+      transition: all 0.5s;
+      cursor: pointer;
+      animation: textMoveRight 1s;
+      display: none;
 
-      .btnChildActive {
-        cursor: pointer;
-        color: var(--text-primary);
+      &:hover {
+        color: var(--purple-primary);
       }
     }
   }
 
   .topicContainer {
-    // width: 100%;
     display: flex;
-    flex-wrap: nowrap !important;
-    overflow: scroll;
-    scroll-behavior: smooth;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+}
+
+.topics.topWrap {
+  .topicContainer {
+    flex-wrap: wrap;
+  }
+}
+@keyframes textMoveRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media only screen and(max-width:768px) {
+  .topics {
+    .topicContainer {
+      flex-wrap: wrap;
+    }
   }
 }

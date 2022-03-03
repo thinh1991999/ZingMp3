@@ -110,6 +110,7 @@ function ListMV() {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(8));
     fetchListMV();
+    dispatch(actions.setShowNavMobile(false));
   }, []);
 
   useEffect(() => {

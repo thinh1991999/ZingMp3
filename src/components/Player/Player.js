@@ -47,36 +47,46 @@ function Player() {
 
   const handleToAlbum = (e) => {
     const arr = Array.from([...e.target.classList]);
-
     if (
       arr.includes(styles.playLeft) ||
       arr.includes(styles.playInfo) ||
       arr.includes(styles.playRight)
     ) {
       if (currentAlbum) {
+        console.log(currentAlbum);
         navigate(`/Album/${currentAlbum}`);
       }
       if (currentSinger) {
+        console.log(currentSinger);
         navigate(`/Singer/${currentSinger}`);
       }
     }
   };
-
   const fetchDataSong = async () => {
     dispatch(actions.setSongLoading(true));
     try {
+      console.log(encodeId);
       const respon = await fetch(`${SONG_API}${encodeId}`);
-      const { err, data } = await respon.json();
+      const { err, data, url } = await respon.json();
       if (err === 0) {
         dispatch(actions.setSong(data[128]));
         dispatch(actions.setSongLoading(false));
         dispatch(actions.setSongCurrentTime(0));
         dispatch(actions.setFetchSong(false));
-      } else if (err < 0) {
-        console.log("cant find");
+      } else if (err === -1110) {
+        dispatch(
+          actions.setSong(
+            `http://api.mp3.zing.vn/api/streaming/audio/${encodeId}/320`
+          )
+        );
+        dispatch(actions.setSongLoading(false));
+        dispatch(actions.setSongCurrentTime(0));
+        dispatch(actions.setFetchSong(false));
+      } else {
+        dispatch(actions.playNextSong());
       }
     } catch (error) {
-      throw new Error(error);
+      dispatch(actions.playNextSong());
     }
   };
 
@@ -113,7 +123,7 @@ function Player() {
   return (
     <div className={finalClass} onClick={handleToAlbum}>
       <Row className={styles.playWrap}>
-        <Col className={styles.playLeft} lg={3}>
+        <Col className={styles.playLeft} xl={3} lg={3} md={3}>
           <div className={styles.playImg}>
             <img src={thumbnail} alt={title} />
           </div>
@@ -153,6 +163,7 @@ function Player() {
                 popper={{
                   show: true,
                   msg: "Thêm vào thư viện",
+                  position: "CenterUp",
                 }}
               >
                 <AiOutlineHeart />
@@ -163,6 +174,7 @@ function Player() {
                 popper={{
                   show: true,
                   msg: "Xem thêm",
+                  position: "CenterUp",
                 }}
               >
                 <BsThreeDots />
@@ -170,7 +182,7 @@ function Player() {
             </div>
           </div>
         </Col>
-        <Col className={styles.playCenter} lg={6}>
+        <Col className={styles.playCenter} xl={6} lg={6} md={6}>
           <PlayerCenter
             data={song}
             songLoading={songLoading}
@@ -178,13 +190,14 @@ function Player() {
             volume={volume}
           />
         </Col>
-        <Col className={styles.playRight} lg={3}>
+        <Col className={styles.playRight} xl={3} lg={3} md={3}>
           <div className={styles.playRightWrap}>
             <div className={styles.btnWrap} onClick={openLyric}>
               <ButtonIcon
                 popper={{
                   show: true,
                   msg: "Xem lời bài hát",
+                  position: "CenterUp",
                 }}
               >
                 <GiMicrophone />
@@ -195,6 +208,7 @@ function Player() {
                 popper={{
                   show: true,
                   msg: "Chế độ cửa sổ",
+                  position: "CenterUp",
                 }}
               >
                 <BiWindows />

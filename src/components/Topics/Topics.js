@@ -3,6 +3,7 @@ import styles from "./Topics.module.scss";
 import { Row, Col } from "react-bootstrap";
 import { Topic, HomeTitle } from "..";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
+import clsx from "clsx";
 
 function Topics({ data, top = false }) {
   const [value, setValue] = useState(data);
@@ -68,23 +69,10 @@ function Topics({ data, top = false }) {
   }, []);
   // console.log(items);
   return (
-    <div className={styles.topics}>
+    <div className={clsx(styles.topics, top && styles.topWrap)}>
       <div className={styles.topicsTitle}>
         <HomeTitle msg={title} />
-        <div className={styles.btn}>
-          <div
-            className={current === 1 ? "" : styles.btnChildActive}
-            onClick={handleBackSlide}
-          >
-            <AiOutlineLeft />
-          </div>
-          <div
-            className={current < countSlide ? styles.btnChildActive : ""}
-            onClick={handleNextSlide}
-          >
-            <AiOutlineRight />
-          </div>
-        </div>
+        {items.length > 5 ? <a href="#">Tất cả</a> : ""}
       </div>
       <Row
         className={styles.topicContainer}
@@ -93,9 +81,9 @@ function Topics({ data, top = false }) {
       >
         {items.map((item, index) => {
           const { encodeId, sortDescription, title, thumbnail } = item;
-          // if (index >= 5 && !top) {
-          //   return;
-          // }
+          if (index >= 5 && !top) {
+            return;
+          }
           return (
             <Topic
               key={encodeId}

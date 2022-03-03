@@ -50,6 +50,7 @@ function Search() {
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(""));
+    dispatch(actions.setShowNavMobile(false));
   }, []);
 
   if (loading) {

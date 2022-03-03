@@ -13,11 +13,27 @@
     display: flex;
     color: var(--text-primary);
     flex: 1;
-
+    align-items: center;
     .featuresLeftBtn {
       display: flex;
       align-items: center;
       margin-left: 10px;
+      .menuBtn {
+        display: none;
+      }
+    }
+    .searchMobile {
+      flex: 1;
+      display: none;
+      justify-content: center;
+      a {
+        background-color: transparent;
+        color: var(--text-primary);
+        font-size: 28px;
+        border: unset;
+        display: flex;
+        align-items: center;
+      }
     }
   }
   .featuresRight {
@@ -106,5 +122,35 @@
 @media only screen and(max-width:1200px) {
   .features {
     left: calc(100% / 12 * 1);
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .features {
+    left: 0;
+    .featuresLeft {
+      .featuresLeftBtn {
+        .leftBtn,
+        .rightBtn {
+          display: none;
+        }
+        .menuBtn {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:426px) {
+  .features {
+    .featuresLeft {
+      form {
+        display: none;
+      }
+      .searchMobile {
+        display: flex;
+      }
+    }
   }
 }

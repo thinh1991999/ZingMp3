@@ -6,14 +6,25 @@ import clsx from "clsx";
 
 function Radios({ data }) {
   const { title, items } = data;
+
+  const newItems = items.filter((item) => {
+    const { host, program } = item;
+    return program !== undefined && host !== undefined;
+  });
+
   return (
     <div className={clsx(styles.radios, "pd-15-px")}>
       <h2 className={styles.radiosTitle}>
         {title} {items.length > 7 ? <a href="#">Tất cả</a> : ""}
       </h2>
-      <Row className="radiosContainer row">
-        {items.map((item, index) => {
-          const { encodeId } = item;
+      <Row className={styles.radiosContainer}>
+        {newItems.map((item, index) => {
+          const {
+            encodeId,
+            activeUsers,
+            host: { name, thumbnail: hostImage },
+            program,
+          } = item;
           if (index > 6) {
             return;
           }

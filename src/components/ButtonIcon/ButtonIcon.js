@@ -1,7 +1,8 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import styles from "./ButtonIcon.module.scss";
 import clsx from "clsx";
-import Popper from "../Popper/Popper";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
 
 function ButtonIcon({
   children,
@@ -12,22 +13,68 @@ function ButtonIcon({
   noClick,
   display = true,
   modal,
-  active,
+  active = false,
   lyric,
+  player = false,
   popper = { show: false, msg: "", position: "CenterUp" },
 }) {
-  const [popperDisplay, setPopperDisplay] = useState(false);
+  const { popperInfo } = useSelector((state) => state);
+  const [messPopper, setMessPopper] = useState(popper.msg);
 
+  const dispatch = useDispatch();
   const btnRef = useRef(null);
 
-  const handlePopperOver = (e) => {};
+  const dispatchPopper = () => {};
+
+  const handleEnter = (e) => {
+    if (popper.show) {
+      const { width, height, top, left, bottom, right } =
+        e.target.getBoundingClientRect();
+      console.log(e.target.getBoundingClientRect());
+      dispatch(
+        actions.setPopperInfo({
+          show: true,
+          top,
+          left,
+          bottom,
+          right,
+          width,
+          height,
+          msg: messPopper,
+          position: popper.position,
+        })
+      );
+    }
+  };
+  const handleLeave = (e) => {
+    if (popper.show) {
+      dispatch(actions.setPopperInfo({ show: false }));
+    }
+  };
+
   useEffect(() => {
-    btnRef.current.addEventListener("mousemove", () => {
-      setPopperDisplay(true);
-    });
-    btnRef.current.addEventListener("mouseout", () => {
-      setPopperDisplay(false);
-    });
+    if (player) {
+      dispatch(
+        actions.setPopperInfo(
+          Object.assign({}, { ...popperInfo, msg: popper.msg })
+        )
+      );
+    }
+  }, [popper.msg, player]);
+  if (player) {
+  }
+
+  useEffect(() => {
+    btnRef.current.addEventListener("mouseenter", handleEnter);
+    btnRef.current.addEventListener("mouseleave", handleLeave);
+
+    return () => {
+      console.log("unmount");
+      if (btnRef.current) {
+        btnRef.current.removeEventListener("mouseenter", handleEnter);
+        btnRef.current.removeEventListener("mouseleave", handleLeave);
+      }
+    };
   }, []);
 
   const circleClass = circle ? styles.iconBtnCircle : "";
@@ -58,21 +105,9 @@ function ButtonIcon({
         display: `${display ? "" : "none"}`,
       }}
       ref={btnRef}
-      onMouseOver={handlePopperOver}
+      // onMouseOver={handlePopperOver}
     >
       {children}
-      {popper.show ? (
-        <Popper
-          properties={{
-            position: "center",
-            msg: popper.msg,
-            popperDisplay,
-            position: popper.position,
-          }}
-        />
-      ) : (
-        ""
-      )}
     </button>
   );
 }

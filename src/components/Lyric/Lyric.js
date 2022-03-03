@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap";
 import { ButtonIcon, LyricBody, LyricSetting, LyricKara, LyricList } from "..";
 import {
   AiOutlineFullscreen,
+  AiOutlineFullscreenExit,
   AiOutlineDown,
   AiOutlineSetting,
 } from "react-icons/ai";
@@ -27,15 +28,15 @@ function Lyric() {
   const [sizes, setSizes] = useState([
     {
       name: "S",
-      size: 34,
+      size: 0.8,
     },
     {
       name: "M",
-      size: 38,
+      size: 0.9,
     },
     {
       name: "X",
-      size: 42,
+      size: 1,
     },
   ]);
   const [textSize, setTextSize] = useState("S");
@@ -48,12 +49,19 @@ function Lyric() {
     "Lời bài hát",
   ]);
   const [showSetting, setShowSetting] = useState(false);
+  const [fullscreen, setFullScreen] = useState(false);
 
   const lyricRef = useRef(null);
   const settingRef = useRef(null);
   const settingBtnRef = useRef(null);
 
-  const { encodeId, title, thumbnailM, artists = [], duration } = currentSong;
+  const {
+    encodeId = "",
+    title,
+    thumbnailM,
+    artists = [],
+    duration,
+  } = currentSong;
 
   const fetchLyricData = async () => {
     setLyrics([]);
@@ -64,7 +72,9 @@ function Lyric() {
       } = await respon.json();
       setImages(images);
       setLyrics(sentences);
-    } catch (error) {}
+    } catch (error) {
+      setLyrics([]);
+    }
   };
 
   const closeLyric = () => {
@@ -80,18 +90,19 @@ function Lyric() {
   const handleShowSetting = () => {
     setShowSetting(!showSetting);
   };
-
   const handleFullScreen = () => {
-    // if (elem.requestFullscreen) {
-    //   elem.requestFullscreen();
-    // } else if (elem.mozRequestFullScreen) {
-    //   elem.mozRequestFullScreen();
-    // } else if (elem.webkitRequestFullscreen) {
-    //   elem.webkitRequestFullscreen();
-    // } else if (elem.msRequestFullscreen) {
-    //   elem = window.top.document.body;
-    //   elem.msRequestFullscreen();
-    // }
+    const bodyEl = document.body;
+    if (!document.fullscreenElement) {
+      bodyEl.requestFullscreen().catch((err) => {
+        alert(
+          `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`
+        );
+      });
+      setFullScreen(true);
+    } else {
+      setFullScreen(false);
+      document.exitFullscreen();
+    }
   };
 
   useEffect(() => {
@@ -107,26 +118,30 @@ function Lyric() {
   }, [showLyric, currentSong, currentIndexSong]);
 
   useEffect(() => {
-    const newArr = lyrics.map((lyric) => {
-      const { words } = lyric;
-      let start, end;
-      const text = words
-        .map((word, wordIndex) => {
-          const { startTime, endTime, data } = word;
-          if (wordIndex === 0) {
-            start = startTime;
-          } else if (wordIndex === words.length - 1) {
-            end = endTime;
-          }
-          return data;
-        })
-        .join(" ");
-      return {
-        text,
-        start,
-        end,
-      };
-    });
+    let newArr = [];
+    if (typeof lyrics === "object") {
+      newArr = lyrics.map((lyric) => {
+        const { words } = lyric;
+        let start, end;
+        const text = words
+          .map((word, wordIndex) => {
+            const { startTime, endTime, data } = word;
+            if (wordIndex === 0) {
+              start = startTime;
+            } else if (wordIndex === words.length - 1) {
+              end = endTime;
+            }
+            return data;
+          })
+          .join(" ");
+        return {
+          text,
+          start,
+          end,
+        };
+      });
+    }
+
     setLyricsText(newArr);
     setTextActiveIndex(0);
   }, [lyrics, currentIndexSong, currentSong]);
@@ -148,6 +163,32 @@ function Lyric() {
   useEffect(() => {
     setCount((prevCount) => prevCount + 1);
   }, [songCurrentTime]);
+
+  var changeHandler = function () {
+    if (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement
+    ) {
+    } else {
+      setFullScreen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("fullscreenchange", changeHandler, false);
+    document.addEventListener("webkitfullscreenchange", changeHandler, false);
+    document.addEventListener("mozfullscreenchange", changeHandler, false);
+    return () => {
+      document.removeEventListener("fullscreenchange", changeHandler, false);
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        changeHandler,
+        false
+      );
+      document.removeEventListener("mozfullscreenchange", changeHandler, false);
+    };
+  }, []);
 
   const settingClick = (e) => {
     let valid = false;
@@ -237,7 +278,7 @@ function Lyric() {
               })}
             </div>
 
-            {/* <div className={styles.imageBehind}>
+            <div className={styles.imageBehind}>
               <img
                 src="https://photo-resize-zmp3.zadn.vn/w1920_r3x2_jpeg/cover/e/1/3/e/e13eba8bece6dee40b09d08e33f50129.jpg"
                 alt=""
@@ -248,13 +289,13 @@ function Lyric() {
                 src="https://photo-resize-zmp3.zadn.vn/w1920_r3x2_jpeg/cover/8/d/2/6/8d264b2ba5ede2840f812a0434f7e81a.jpg"
                 alt=""
               />
-            </div> */}
+            </div>
           </div>
         </div>
         <div className={styles.info}>
           <Row className={clsx(styles.header, invi && styles.headerInvi)}>
-            <Col lg={3} className={styles.headerLeft}></Col>
-            <Col lg={6} className={styles.headerCenter}>
+            <Col xl={3} className={styles.headerLeft}></Col>
+            <Col sm={9} xl={6} className={styles.headerCenter}>
               <div className={styles.wrap}>
                 <ul>
                   {features.map((feature, index) => {
@@ -279,19 +320,33 @@ function Lyric() {
                 </ul>
               </div>
             </Col>
-            <Col lg={3} className={styles.headerRight}>
+            <Col sm={3} xl={3} className={styles.headerRight}>
               <div className={styles.btn} onClick={handleFullScreen}>
-                <ButtonIcon
-                  fill={true}
-                  size={24}
-                  popper={{
-                    show: true,
-                    msg: "Toàn màn hình",
-                    position: "CenterDown",
-                  }}
-                >
-                  <AiOutlineFullscreen />
-                </ButtonIcon>
+                {fullscreen ? (
+                  <ButtonIcon
+                    fill={true}
+                    size={24}
+                    popper={{
+                      show: true,
+                      msg: "Thoát toàn màn hình",
+                      position: "CenterDown",
+                    }}
+                  >
+                    <AiOutlineFullscreenExit />
+                  </ButtonIcon>
+                ) : (
+                  <ButtonIcon
+                    fill={true}
+                    size={24}
+                    popper={{
+                      show: true,
+                      msg: "Toàn màn hình",
+                      position: "CenterDown",
+                    }}
+                  >
+                    <AiOutlineFullscreen />
+                  </ButtonIcon>
+                )}
               </div>
               <div className={styles.btn} ref={settingBtnRef}>
                 <div className={styles.btnWrap} onClick={handleShowSetting}>
@@ -326,17 +381,19 @@ function Lyric() {
               </div>
 
               <div className={styles.btn} onClick={closeLyric}>
-                <ButtonIcon
-                  fill={true}
-                  size={24}
-                  popper={{
-                    show: true,
-                    msg: "Đóng",
-                    position: "CenterDown",
-                  }}
-                >
-                  <AiOutlineDown />
-                </ButtonIcon>
+                {!fullscreen && (
+                  <ButtonIcon
+                    fill={true}
+                    size={24}
+                    popper={{
+                      show: true,
+                      msg: "Đóng",
+                      position: "CenterDown",
+                    }}
+                  >
+                    <AiOutlineDown />
+                  </ButtonIcon>
+                )}
               </div>
             </Col>
           </Row>

@@ -1,0 +1,14 @@
+.choices {
+  .choicesContainer {
+    align-items: center;
+    // justify-content: center;
+  }
+}
+
+@media only screen and(max-width:426px) {
+  .choices {
+    .choicesContainer {
+      justify-content: center;
+    }
+  }
+}

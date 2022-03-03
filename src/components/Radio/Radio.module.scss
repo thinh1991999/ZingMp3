@@ -97,3 +97,65 @@
     }
   }
 }
+
+@media only screen and(max-width:1200px) {
+  .radio {
+    width: calc(100% / 5);
+    .radioWrap {
+      .radioHost {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:769px) {
+  .radio {
+    width: calc(100% / 4);
+    margin-top: 10px;
+    .radioWrap {
+      .radioHost {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:520px) {
+  .radio {
+    .radioWrap {
+      .radioHost {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:426px) {
+  .radio {
+    width: calc(100% / 3);
+    margin-top: 10px;
+    .radioWrap {
+      .radioHost {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:321px) {
+  .radio {
+    width: calc(100% / 2);
+    margin-top: 10px;
+    .radioWrap {
+      .radioHost {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}

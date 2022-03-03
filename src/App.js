@@ -7,7 +7,7 @@ import {
   Player,
   Header,
   Lyric,
-  Warning,
+  Popper,
 } from "./components";
 import {
   Home,
@@ -17,19 +17,24 @@ import {
   ZingChartPage,
   ListMV,
   Top100,
+  SearchMobile,
 } from "./Pages";
 import { Row, Col } from "react-bootstrap";
+import { AiOutlineMenu } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { HOME_API, actions } from "./store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import clsx from "clsx";
 
 function App() {
   const {
     loading,
     page,
-    warning: { show, msg },
+    idCurrentSong,
     currentSong,
+    showNavMobile,
+    popperInfo: { show },
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -62,7 +67,12 @@ function App() {
         <div className="app__container">
           <Header />
           <Row>
-            <Col lg={1} xl={2} md={1}>
+            <Col
+              lg={1}
+              xl={2}
+              md={1}
+              className={clsx("app__nav", showNavMobile && "app__nav--active")}
+            >
               <Nav />
             </Col>
             <Col lg={11} xl={10} md={11} className="app__wrap">
@@ -81,15 +91,20 @@ function App() {
                   ></Route>
                   <Route path={"/ListMV"} element={<ListMV />}></Route>
                   <Route path={"/Top100"} element={<Top100 />}></Route>
+                  <Route
+                    path={"/SearchMobile"}
+                    element={<SearchMobile />}
+                  ></Route>
                 </Routes>
               </div>
             </Col>
           </Row>
           <Lyric />
-          {currentSong.encodeId && <Player />}
-          {/* <Warning msg={msg} /> */}
+          {idCurrentSong && <Player />}
         </div>
+        {show && <Popper />}
       </div>
+
       <ToastContainer autoClose={3000} />
     </GlobalStyles>
   );

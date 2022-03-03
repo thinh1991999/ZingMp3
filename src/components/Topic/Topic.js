@@ -41,6 +41,7 @@ function Topic({ data }) {
                     popper={{
                       show: true,
                       msg: "Thêm vào thư viện",
+                      position: "CenterUp",
                     }}
                   >
                     <AiOutlineHeart />
@@ -61,6 +62,7 @@ function Topic({ data }) {
                     popper={{
                       show: true,
                       msg: "Khác",
+                      position: "CenterUp",
                     }}
                   >
                     <BsThreeDots />

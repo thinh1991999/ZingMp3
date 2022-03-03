@@ -14,6 +14,7 @@
       position: relative;
 
       > img {
+        width: 100%;
         max-width: 580px;
         object-fit: cover;
         border-radius: 10px;
@@ -53,12 +54,13 @@
           hsla(0, 0%, 100%, 0.8) 90%,
           hsla(0, 0%, 100%, 0)
         );
+        font-size: 42px;
 
         .item {
           color: var(--white);
           font-weight: 700;
           padding: 20px 0;
-          font-size: inherit;
+          // font-size: inherit;
           letter-spacing: -1px;
           line-height: 1.2;
         }
@@ -72,5 +74,56 @@
         }
       }
     }
+  }
+}
+
+@media only screen and(max-width:1400px) and(min-width:1199px) {
+  .lyricBody {
+    .lyricBodyRight {
+      .lyricBodyWrap {
+        ul {
+          font-size: 36px;
+          max-height: 480px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1200px) and(min-width:1000px) {
+  .lyricBody {
+    .lyricBodyRight {
+      .lyricBodyWrap {
+        ul {
+          font-size: 36px;
+          max-height: 450px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:991px) {
+  .lyricBody {
+    .lyricBodyLeft {
+      display: none;
+    }
+    .lyricBodyRight {
+      .lyricBodyWrap {
+        ul {
+          font-size: 28px;
+          max-height: 420px;
+          li {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .lyricBody {
+    padding: 20px 0;
   }
 }

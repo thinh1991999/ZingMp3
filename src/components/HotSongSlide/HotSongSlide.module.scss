@@ -1,20 +1,30 @@
 .hitSongList {
   position: relative;
-  width: 230px;
-  height: 230px;
-  margin: unset;
-}
-
-.hitSongItem {
-  position: absolute;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  left: 0;
-  top: 0;
-  z-index: 7;
-  transition: all 1s;
+  margin: unset;
+  .hitSongItem {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    left: 0;
+    top: 0;
+    z-index: 7;
+    transition: all 1s;
+    a {
+      display: inline-block;
+    }
+    img {
+      width: 80%;
+      // height: 170px;
+      object-fit: contain;
+      opacity: 0;
+      border-radius: 10px;
+      transition: all 1s linear;
+    }
+  }
 }
 
 .hitSongItem.hitSongItemLast {
@@ -23,8 +33,8 @@
 }
 
 .hitSongItem.hitSongItemLast img {
-  width: 170px;
-  height: 170px;
+  width: 80%;
+  // height: 170px;
   opacity: 0.5;
 }
 
@@ -34,8 +44,8 @@
 }
 
 .hitSongItem.hitSongItemCenter img {
-  width: 200px;
-  height: 200px;
+  width: 90%;
+  // height: 200px;
   opacity: 0.7;
 }
 
@@ -46,19 +56,66 @@
 }
 
 .hitSongItem.hitSongItemActive img {
-  width: 230px;
-  height: 230px;
+  width: 100%;
+  // height: 230px;
   opacity: 1;
 }
 
-.hitSongItem a {
-  display: inline-block;
+@media only screen and(max-width:539px) {
+  .info {
+    .infoWrap {
+      .infoInfo {
+        .inforWrap {
+          .inforContainer {
+            .infoLeft {
+              p {
+                max-width: 100%;
+              }
+            }
+            .infoRight {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
-.hitSongItem img {
-  width: 170px;
-  height: 170px;
-  opacity: 0;
-  border-radius: 10px;
-  transition: all 1s linear;
-}
+// @media only screen and(max-width:1000px) {
+//   .hitSongList {
+//     width: 200px;
+//     height: 200px;
+//     .hitSongItem {
+//       img {
+//         width: 140px;
+//         height: 140px;
+//       }
+//     }
+//   }
+//   .hitSongItem.hitSongItemLast img {
+//     width: 140px;
+//     height: 140px;
+//   }
+
+//   .hitSongItem.hitSongItemCenter {
+//     left: 25px;
+//     z-index: 9;
+//   }
+
+//   .hitSongItem.hitSongItemCenter img {
+//     width: 170px;
+//     height: 170px;
+//   }
+
+//   .hitSongItem.hitSongItemActive {
+//     left: 50px;
+//     z-index: 10;
+//     cursor: pointer;
+//   }
+
+//   .hitSongItem.hitSongItemActive img {
+//     width: 200px;
+//     height: 200px;
+//   }
+// }

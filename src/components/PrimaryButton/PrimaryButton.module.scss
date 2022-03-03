@@ -35,3 +35,14 @@
     }
   }
 }
+
+@media only screen and(max-width:1000px) {
+  .wrap {
+    svg {
+      display: none;
+    }
+    span {
+      font-size: 12px;
+    }
+  }
+}

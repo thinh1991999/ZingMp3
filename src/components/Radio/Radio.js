@@ -7,8 +7,12 @@ function Radio({ data }) {
   const {
     activeUsers,
     host: { name, thumbnail: hostImage },
-    program: { thumbnail: programImage },
+    program,
   } = data;
+  let programImage = "";
+  if (program) {
+    programImage = program.thumbnail;
+  }
 
   return (
     <div className={styles.radio}>
