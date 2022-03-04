@@ -441,40 +441,43 @@ const reducer = (state = initState, action) => {
         };
       }
     }
-    // case "PLAY_SONG_ANOTHER_CHART_PAGE": {
-    //   const { idSong, listSong: items } = action.payLoad;
-    //   const indexArr = [];
-    //   items.forEach((item) => {
-    //     const { encodeId, streamingStatus: statusSong } = item;
-    //     if (statusSong === 1) {
-    //       indexArr.push(encodeId);
-    //     }
-    //   });
-    //   if (indexArr.includes(idSong)) {
-    //     const newIndex = items.findIndex((item) => item.encodeId === idSong);
-    //     const newSong = items.filter((item) => {
-    //       const { encodeId } = item;
-    //       return encodeId === idSong;
-    //     })[0];
-    //     return {
-    //       ...state,
-    //       currentAlbum: album,
-    //       indexValidSongs: indexArr,
-    //       idCurrentSong: idSong,
-    //       listSong: items,
-    //       currentIndexSong: newIndex,
-    //       currentSong: newSong,
-    //       fetchSong: true,
-    //       showLyric: true,
-    //       currentSinger: "",
-    //     };
-    //   } else {
-    //     toast.error("Bài hát này chưa được hỗ trợ!");
-    //     return {
-    //       ...state,
-    //     };
-    //   }
-    // }
+    case "SET_SONG_CURRENT_INFO": {
+      const {
+        encodeId,
+        album: { encodeId: idAlbum },
+      } = action.payLoad;
+      return {
+        ...state,
+        currentAlbum: idAlbum,
+        idCurrentSong: encodeId,
+        currentSong: action.payLoad,
+        fetchSong: true,
+        showLyric: true,
+        currentSinger: "",
+      };
+    }
+    case "SET_LIST_SONG": {
+      const { idCurrentSong } = state;
+      const indexArr = [];
+      action.payLoad.forEach((item) => {
+        const { encodeId, streamingStatus: statusSong } = item;
+        if (statusSong === 1) {
+          indexArr.push(encodeId);
+        }
+      });
+      const newIndex = action.payLoad.findIndex((item) => {
+        const { encodeId } = item;
+        return encodeId === idCurrentSong;
+      });
+      console.log(newIndex);
+      console.log(indexArr);
+      return {
+        ...state,
+        indexValidSongs: indexArr,
+        listSong: action.payLoad,
+        currentIndexSong: newIndex,
+      };
+    }
     case "PLAY_NEXT_SONG_AUTO": {
       const {
         repeatSong,

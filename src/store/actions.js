@@ -250,9 +250,16 @@ export const playSongAnotherChartHome = (payLoad) => {
   };
 };
 
-export const playSongAnotherChartPage = (payLoad) => {
+export const setListSong = (payLoad) => {
   return {
-    type: "PLAY_SONG_ANOTHER_CHART_PAGE",
+    type: "SET_LIST_SONG",
+    payLoad,
+  };
+};
+
+export const setSongCurrentInfo = (payLoad) => {
+  return {
+    type: "SET_SONG_CURRENT_INFO",
     payLoad,
   };
 };

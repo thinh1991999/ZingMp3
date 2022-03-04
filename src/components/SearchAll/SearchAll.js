@@ -10,10 +10,19 @@ import {
   Mvs,
   Topics,
   SearchNoInfo,
+  PlayingIcon,
 } from "..";
 import { GiMusicSpell } from "react-icons/gi";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
+import { toast } from "react-toastify";
+import clsx from "clsx";
 
 function SearchAll({ dataSearch, Keyword }) {
+  const { idCurrentSong, playing, currentAlbum } = useSelector(
+    (state) => state
+  );
+
   const {
     top = {},
     artists = [],
@@ -21,7 +30,50 @@ function SearchAll({ dataSearch, Keyword }) {
     videos = [],
     playlists = [],
   } = dataSearch;
-  console.log(top);
+
+  const dispatch = useDispatch();
+
+  const handlePlayTopSong = () => {
+    const { streamingStatus, encodeId } = top;
+    if (encodeId === idCurrentSong) {
+      dispatch(actions.setPlaying(!playing));
+    } else {
+      if (songs.length > 0 && top && streamingStatus === 1) {
+        const song = songs.filter((item) => {
+          const { encodeId } = item;
+          return encodeId === top.encodeId;
+        })[0];
+        const {
+          album: { encodeId: idAlbum },
+        } = song;
+        if (idAlbum === currentAlbum) {
+          dispatch(actions.playSongSameAlbum(encodeId));
+        } else {
+          const setSong = async () => {
+            dispatch(actions.setSongCurrentInfo(song));
+          };
+          const setListSong = async () => {
+            try {
+              const respon = await fetch(
+                `https://music-player-pink.vercel.app/api/playlist?id=${idAlbum}`
+              );
+              const {
+                data: {
+                  song: { items },
+                },
+              } = await respon.json();
+              dispatch(actions.setListSong(items));
+            } catch (error) {
+              toast.error("Bài hát này chưa được hỗ trợ!");
+            }
+          };
+          Promise.all([setSong(), setListSong()]);
+        }
+      } else {
+        toast.error("Bài hát này chưa được hỗ trợ!");
+      }
+    }
+  };
 
   return (
     <div className={styles.searchAll}>
@@ -31,14 +83,28 @@ function SearchAll({ dataSearch, Keyword }) {
             <h3>
               Top kết quả <span>"{Keyword}"</span>
             </h3>
-            <div className={styles.topSong}>
-              <div className={styles.topSongImg}>
+            <div
+              className={clsx(
+                styles.topSong,
+                top.encodeId === idCurrentSong && styles.topSongActive
+              )}
+            >
+              <div className={styles.topSongImg} onClick={handlePlayTopSong}>
                 <img src={top.thumbnail} alt="" />
                 <div className={styles.layer}></div>
-                <div className={styles.btn}>
-                  <ButtonIcon circle={true} topic={true}>
-                    <BsPlayCircle />
-                  </ButtonIcon>
+                <div className={styles.play}>
+                  {(!playing || top.encodeId !== idCurrentSong) && (
+                    <div className={styles.btn}>
+                      <ButtonIcon circle={true} topic={true}>
+                        <BsPlayCircle />
+                      </ButtonIcon>
+                    </div>
+                  )}
+                  {playing && top.encodeId === idCurrentSong && (
+                    <div className={styles.playing}>
+                      <PlayingIcon className={styles.playingIcon} />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className={styles.topSongInfo}>
@@ -59,6 +125,7 @@ function SearchAll({ dataSearch, Keyword }) {
                     worldWide={worldWide}
                     index={index}
                     key={index}
+                    search={true}
                   />
                 );
               })}

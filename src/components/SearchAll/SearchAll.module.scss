@@ -26,8 +26,8 @@
           border-radius: 8px;
           overflow: hidden;
           position: relative;
-
-          img {
+          cursor: pointer;
+          > img {
             width: 80px;
             height: 80px;
           }
@@ -36,7 +36,7 @@
             opacity: 0.2;
           }
 
-          &:hover .btn {
+          &:hover .play {
             opacity: 1;
           }
 
@@ -50,17 +50,28 @@
             opacity: 0;
             transition: all 0.5s;
           }
-          .btn {
+          .play {
             position: absolute;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             opacity: 0;
             transition: all 0.5s linear;
+            .btn {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .playing {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
           }
         }
 
@@ -72,6 +83,16 @@
           }
           span {
             color: var(--text-secondary);
+          }
+        }
+      }
+      .topSong.topSongActive {
+        .topSongImg {
+          .layer {
+            opacity: 0.4;
+          }
+          .play {
+            opacity: 1;
           }
         }
       }

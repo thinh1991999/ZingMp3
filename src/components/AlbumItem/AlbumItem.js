@@ -11,6 +11,7 @@ import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
+import { toast } from "react-toastify";
 
 function AlbumItem({
   data,
@@ -21,6 +22,7 @@ function AlbumItem({
   small,
   chartHome,
   listSong,
+  search,
 }) {
   const {
     currentAlbum,
@@ -47,6 +49,7 @@ function AlbumItem({
     thumbnailM,
     duration,
     rakingStatus,
+    streamingStatus,
   } = data;
 
   const { title: albumTitle } = album;
@@ -82,6 +85,35 @@ function AlbumItem({
               items: listSong,
             })
           );
+        }
+      }
+      if (search) {
+        if (streamingStatus === 1) {
+          if (album.encodeId === currentAlbum) {
+            dispatch(actions.playSongSameAlbum(idSong));
+          } else {
+            const setSong = async () => {
+              dispatch(actions.setSongCurrentInfo(data));
+            };
+            const setListSong = async () => {
+              try {
+                const respon = await fetch(
+                  `https://music-player-pink.vercel.app/api/playlist?id=${album.encodeId}`
+                );
+                const {
+                  data: {
+                    song: { items },
+                  },
+                } = await respon.json();
+                dispatch(actions.setListSong(items));
+              } catch (error) {
+                toast.error("Bài hát này chưa được hỗ trợ!");
+              }
+            };
+            Promise.all([setSong(), setListSong()]);
+          }
+        } else {
+          toast.error("Bài hát này chưa được hỗ trợ!");
         }
       }
     }

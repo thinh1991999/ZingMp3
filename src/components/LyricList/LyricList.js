@@ -49,7 +49,7 @@ function LyricList() {
   }, []);
 
   useEffect(() => {
-    if (!canMove) {
+    if (!canMove && typeof currentIndexSong === Number) {
       if (width >= 1024) {
         wrapRef.current.swiper.slideTo(currentIndexSong - 2);
       } else if (width >= 768) {

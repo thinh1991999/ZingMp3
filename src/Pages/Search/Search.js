@@ -58,7 +58,7 @@ function Search() {
   }
 
   const { top, songs, videos, playlists, artists } = dataSearch;
-  console.log(videos);
+
   return (
     <div className={styles.search}>
       <div className={styles.searchWrap}>
