@@ -28,6 +28,7 @@ function Player() {
     fetchSong,
     currentAlbum,
     currentSinger,
+    showPlayLists,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -92,6 +93,10 @@ function Player() {
 
   const openLyric = () => {
     dispatch(actions.setShowLyric(true));
+  };
+
+  const handleShowPlayLists = () => {
+    dispatch(actions.setShowPlayLists(!showPlayLists));
   };
 
   const handleVolume = (e) => {
@@ -241,15 +246,23 @@ function Player() {
                 onChange={handleVolume}
               />
             </div>
-            <ButtonIcon
-              popper={{
-                show: true,
-                msg: "Danh sách phát",
-                position: "RightUp",
-              }}
+            <div
+              className={clsx(
+                styles.btnWrap,
+                showPlayLists && styles.btnWrapActive
+              )}
+              onClick={handleShowPlayLists}
             >
-              <BsMusicNoteList />
-            </ButtonIcon>
+              <ButtonIcon
+                popper={{
+                  show: true,
+                  msg: "Danh sách phát",
+                  position: "RightUp",
+                }}
+              >
+                <BsMusicNoteList />
+              </ButtonIcon>
+            </div>
           </div>
         </Col>
       </Row>

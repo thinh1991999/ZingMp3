@@ -8,6 +8,7 @@ import {
   Header,
   Lyric,
   Popper,
+  Playlists,
 } from "./components";
 import {
   Home,
@@ -99,9 +100,11 @@ function App() {
               </div>
             </Col>
           </Row>
-          <Lyric />
-          {idCurrentSong && <Player />}
         </div>
+        <Lyric />
+
+        {idCurrentSong && <Playlists />}
+        {idCurrentSong && <Player />}
         {show && <Popper />}
       </div>
 

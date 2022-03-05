@@ -13,7 +13,6 @@
 
 .app__container {
   background-color: var(--layout-bg);
-  position: relative;
   /* max-width: 1536px; */
   overflow: hidden;
 }

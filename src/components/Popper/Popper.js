@@ -33,6 +33,12 @@ function Popper() {
         setRightPosition("unset");
         setClassName(clsx(styles.popper, styles.popperCenterDown));
         break;
+      case "CenterDownRight":
+        setLeftPosition(`unset`);
+        setTopPosition(`${top + height + 10}px`);
+        setRightPosition(`-${width / 1.3}px`);
+        setClassName(clsx(styles.popper, styles.popperCenterDown));
+        break;
       default:
         break;
     }

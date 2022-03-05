@@ -30,14 +30,11 @@ const initState = {
   song: {},
   songCurrentTime: 0,
   showLyric: false,
+  showPlayLists: false,
   invi: false,
   fetchSong: false,
   lastest: lastestStorage(),
   activeSearch: false,
-  warning: {
-    show: false,
-    msg: "",
-  },
   singer: {},
   currentSinger: "",
   showNavMobile: false,
@@ -198,6 +195,26 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         showLyric: action.payLoad,
+        showPlayLists: false,
+      };
+    }
+    case "SET_SHOW_PLAY_LISTS": {
+      return {
+        ...state,
+        showPlayLists: action.payLoad,
+      };
+    }
+    case "CLEAR_PLAY_LIST": {
+      return {
+        ...state,
+        idCurrentSong: "",
+        listSong: [],
+        currentIndexSong: null,
+        currentSinger: "",
+        currentAlbum: "",
+        currentSong: {},
+        playing: false,
+        songCurrentTime: 0,
       };
     }
     case "SET_INVI": {

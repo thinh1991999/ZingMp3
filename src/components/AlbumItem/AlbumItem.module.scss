@@ -247,6 +247,36 @@
   }
 }
 
+.item.blur {
+  opacity: 0.5;
+}
+
+.item.playLists {
+  .left {
+    flex: 1;
+    .icon {
+      display: none;
+    }
+  }
+  .center {
+    display: none;
+  }
+  .right {
+    span {
+      display: none;
+    }
+    .rightBtn {
+      .btn:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+}
+
+.item.playLists.itemPlaying {
+  background-color: var(--purple-primary);
+}
+
 .item.itemPlaying {
   .left {
     .play {

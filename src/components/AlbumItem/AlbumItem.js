@@ -23,6 +23,8 @@ function AlbumItem({
   chartHome,
   listSong,
   search,
+  playLists,
+  blur,
 }) {
   const {
     currentAlbum,
@@ -184,6 +186,8 @@ function AlbumItem({
     statusClass,
     activeClass,
     playingClass,
+    playLists && styles.playLists,
+    blur && styles.blur,
     chartHome && styles.itemChart,
     chartHome && index === 0 && styles.spanFirst,
     chartHome && index === 1 && styles.spanSecond,

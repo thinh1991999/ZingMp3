@@ -147,7 +147,9 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   useEffect(() => {
     audioRef.current.addEventListener("ended", endEvent);
     return () => {
-      audioRef.current.removeEventListener("ended", endEvent);
+      if (audioRef.current) {
+        audioRef.current.removeEventListener("ended", endEvent);
+      }
     };
   }, [currentTime]);
 

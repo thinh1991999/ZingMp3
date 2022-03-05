@@ -66,9 +66,9 @@ function ListMV() {
       setLoading(false);
     }
   };
-  // console.log(hasMore);
 
   const fetchMVPage = async () => {
+    setListMV([]);
     setPageLoading(true);
     setHasMore(false);
     try {

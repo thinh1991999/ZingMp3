@@ -8,6 +8,7 @@
   background-color: var(--primary-bg);
   transform: translateY(100%);
   transition: all 0.5s linear;
+  overflow: hidden;
   .lyricWrap {
     width: 100%;
     height: 100%;

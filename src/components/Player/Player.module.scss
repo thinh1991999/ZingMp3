@@ -125,6 +125,11 @@
       margin: 0 10px;
     }
 
+    .btnWrap.btnWrapActive {
+      background-color: var(--purple-primary);
+      border-radius: 10px;
+    }
+
     .playRightAudio {
       label {
         .playBtnSound {

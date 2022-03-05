@@ -187,6 +187,13 @@ export const setShowLyric = (payLoad) => {
   };
 };
 
+export const setShowPlayLists = (payLoad) => {
+  return {
+    type: "SET_SHOW_PLAY_LISTS",
+    payLoad,
+  };
+};
+
 export const setInvi = (payLoad) => {
   return {
     type: "SET_INVI",
@@ -260,6 +267,13 @@ export const setListSong = (payLoad) => {
 export const setSongCurrentInfo = (payLoad) => {
   return {
     type: "SET_SONG_CURRENT_INFO",
+    payLoad,
+  };
+};
+
+export const clearPlayList = (payLoad) => {
+  return {
+    type: "CLEAR_PLAY_LIST",
     payLoad,
   };
 };

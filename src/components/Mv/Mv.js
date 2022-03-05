@@ -4,6 +4,7 @@ import { ButtonIcon } from "..";
 import { BsPlayCircle } from "react-icons/bs";
 import { getTime } from "../../funtions";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Mv({ data }) {
   const {
@@ -17,8 +18,12 @@ function Mv({ data }) {
 
   const newDuraton = getTime(duration);
 
+  const openMv = () => {
+    toast.error("Mv chưa được hỗ trợ!");
+  };
+
   return (
-    <div className={styles.mv}>
+    <div className={styles.mv} onClick={openMv}>
       <div className={styles.mvWrap}>
         <div className={styles.mvImg}>
           <img src={image} alt={title} />
