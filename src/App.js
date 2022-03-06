@@ -9,6 +9,7 @@ import {
   Lyric,
   Popper,
   Playlists,
+  SetTimeModal,
 } from "./components";
 import {
   Home,
@@ -36,6 +37,7 @@ function App() {
     currentSong,
     showNavMobile,
     popperInfo: { show },
+    showTimeStop,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -102,7 +104,7 @@ function App() {
           </Row>
         </div>
         <Lyric />
-
+        {showTimeStop && <SetTimeModal />}
         {idCurrentSong && <Playlists />}
         {idCurrentSong && <Player />}
         {show && <Popper />}

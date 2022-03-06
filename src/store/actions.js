@@ -277,3 +277,17 @@ export const clearPlayList = (payLoad) => {
     payLoad,
   };
 };
+
+export const setTimeToStop = (payLoad) => {
+  return {
+    type: "SET_TIME_TO_STOP",
+    payLoad,
+  };
+};
+
+export const setShowTimeStop = (payLoad) => {
+  return {
+    type: "SET_SHOW_TIME_STOP",
+    payLoad,
+  };
+};

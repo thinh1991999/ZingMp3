@@ -51,6 +51,8 @@ const initState = {
     position: "",
   },
   currentChart: "",
+  timeToStop: 0,
+  showTimeStop: false,
 };
 
 const getRandomIndex = (arr, index) => {
@@ -196,6 +198,12 @@ const reducer = (state = initState, action) => {
         ...state,
         showLyric: action.payLoad,
         showPlayLists: false,
+      };
+    }
+    case "SET_SHOW_TIME_STOP": {
+      return {
+        ...state,
+        showTimeStop: action.payLoad,
       };
     }
     case "SET_SHOW_PLAY_LISTS": {
@@ -817,6 +825,12 @@ const reducer = (state = initState, action) => {
         showLyric: true,
         fetchSong: true,
         currentSinger: "",
+      };
+    }
+    case "SET_TIME_TO_STOP": {
+      return {
+        ...state,
+        timeToStop: action.payLoad,
       };
     }
 

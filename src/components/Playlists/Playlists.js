@@ -43,6 +43,10 @@ function Playlists() {
     }
   };
 
+  const handleShowTimeStop = () => {
+    dispatch(actions.setShowTimeStop(true));
+  };
+
   useEffect(() => {
     if (randomSong) {
       const currentSong = listSong.filter((item) => {
@@ -102,7 +106,7 @@ function Playlists() {
         <div className={styles.wrap}>
           <div className={styles.header}>
             <h2>Danh sách phát</h2>
-            <button>
+            <button onClick={handleShowTimeStop}>
               <ButtonIcon
                 fill={true}
                 popper={{
