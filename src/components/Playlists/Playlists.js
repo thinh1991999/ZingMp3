@@ -10,9 +10,8 @@ import { useLocation } from "react-router-dom";
 import { actions } from "../../store";
 
 function Playlists() {
-  const { listSong, randomSong, idCurrentSong, showPlayLists } = useSelector(
-    (state) => state
-  );
+  const { listSong, randomSong, idCurrentSong, showPlayLists, timeToStop } =
+    useSelector((state) => state);
   const [listCurrent, setListCurrent] = useState([]);
   const [listNext, setListNext] = useState([]);
   const [options, setOptions] = useState([
@@ -44,7 +43,16 @@ function Playlists() {
   };
 
   const handleShowTimeStop = () => {
-    dispatch(actions.setShowTimeStop(true));
+    if (timeToStop > 0) {
+      dispatch(
+        actions.setWarningModal({
+          show: true,
+          type: "TIME",
+        })
+      );
+    } else {
+      dispatch(actions.setShowTimeStop(true));
+    }
   };
 
   useEffect(() => {
@@ -106,7 +114,10 @@ function Playlists() {
         <div className={styles.wrap}>
           <div className={styles.header}>
             <h2>Danh sách phát</h2>
-            <button onClick={handleShowTimeStop}>
+            <div
+              onClick={handleShowTimeStop}
+              className={clsx(styles.btn, timeToStop > 0 ? styles.active : "")}
+            >
               <ButtonIcon
                 fill={true}
                 popper={{
@@ -117,8 +128,8 @@ function Playlists() {
               >
                 <GiAlarmClock />
               </ButtonIcon>
-            </button>
-            <button onClick={handleShowOption}>
+            </div>
+            <div className={styles.btn} onClick={handleShowOption}>
               <ButtonIcon
                 fill={true}
                 popper={{
@@ -143,7 +154,7 @@ function Playlists() {
                   </ul>
                 </div>
               )}
-            </button>
+            </div>
           </div>
           <div className={styles.body}>
             <div className={styles.past}>

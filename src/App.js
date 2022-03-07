@@ -10,6 +10,7 @@ import {
   Popper,
   Playlists,
   SetTimeModal,
+  WarningModal,
 } from "./components";
 import {
   Home,
@@ -28,6 +29,7 @@ import { HOME_API, actions } from "./store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clsx from "clsx";
+import TimeStopNote from "./components/TimeStopNote/TimeStopNote";
 
 function App() {
   const {
@@ -38,6 +40,8 @@ function App() {
     showNavMobile,
     popperInfo: { show },
     showTimeStop,
+    timeToStop,
+    warningModal: { show: warningShow },
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -104,6 +108,8 @@ function App() {
           </Row>
         </div>
         <Lyric />
+        {warningShow && <WarningModal />}
+        {timeToStop > 0 && <TimeStopNote />}
         {showTimeStop && <SetTimeModal />}
         {idCurrentSong && <Playlists />}
         {idCurrentSong && <Player />}

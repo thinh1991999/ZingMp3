@@ -5,6 +5,7 @@
 }
 
 :root {
+  --toastify-color-success: #7200a1 !important;
   --background-tooltip: #e8e8e8;
   --white: #fff;
   --black: #32323d;

@@ -53,6 +53,10 @@ const initState = {
   currentChart: "",
   timeToStop: 0,
   showTimeStop: false,
+  warningModal: {
+    show: false,
+    type: "",
+  },
 };
 
 const getRandomIndex = (arr, index) => {
@@ -210,6 +214,12 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         showPlayLists: action.payLoad,
+      };
+    }
+    case "SET_WARNING_MODAL": {
+      return {
+        ...state,
+        warningModal: action.payLoad,
       };
     }
     case "CLEAR_PLAY_LIST": {

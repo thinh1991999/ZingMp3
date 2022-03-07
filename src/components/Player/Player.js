@@ -29,6 +29,7 @@ function Player() {
     currentAlbum,
     currentSinger,
     showPlayLists,
+    timeToStop,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -120,6 +121,12 @@ function Player() {
   useEffect(() => {
     dispatch(actions.setPlaying(!songLoading));
   }, [songLoading]);
+
+  useEffect(() => {
+    if (timeToStop === 1) {
+      dispatch(actions.setPlaying(false));
+    }
+  }, [timeToStop]);
 
   const inviClass = invi ? styles.inviClass : "";
   const lyricClass = showLyric ? styles.lyricClass : "";

@@ -30,7 +30,6 @@ function ButtonIcon({
     if (popper.show) {
       const { width, height, top, left, bottom, right } =
         e.target.getBoundingClientRect();
-      console.log(e.target.getBoundingClientRect());
       dispatch(
         actions.setPopperInfo({
           show: true,
@@ -69,7 +68,6 @@ function ButtonIcon({
     btnRef.current.addEventListener("mouseleave", handleLeave);
 
     return () => {
-      console.log("unmount");
       if (btnRef.current) {
         btnRef.current.removeEventListener("mouseenter", handleEnter);
         btnRef.current.removeEventListener("mouseleave", handleLeave);

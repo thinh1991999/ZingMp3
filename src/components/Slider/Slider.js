@@ -45,7 +45,7 @@ function Slider({ data }) {
     return () => {
       clearInterval(loopSlider);
     };
-  });
+  }, [index, prevIndex, nextIndex]);
 
   return (
     <Row className={styles.slider}>

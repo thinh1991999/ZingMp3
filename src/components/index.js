@@ -51,3 +51,4 @@ export { default as ChartLine } from "./ChartLine/ChartLine";
 export { default as ChartToolTip } from "./ChartToolTip/ChartToolTip";
 export { default as Playlists } from "./Playlists/Playlists";
 export { default as SetTimeModal } from "./SetTimeModal/SetTimeModal";
+export { default as WarningModal } from "./WarningModal/WarningModal";

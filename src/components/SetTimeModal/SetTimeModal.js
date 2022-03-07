@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { actions } from "../../store";
+import { toast } from "react-toastify";
 
 function SetTimeModal() {
   const { timeToStop } = useSelector((state) => state);
@@ -86,10 +87,19 @@ function SetTimeModal() {
     dispatch(actions.setShowTimeStop(false));
   };
 
+  const saveTimeStop = () => {
+    const timeDuration = hour * 1 * 60 * 60 + minute * 1 * 60;
+    if (timeDuration > 0) {
+      dispatch(actions.setTimeToStop(timeDuration));
+      dispatch(actions.setShowTimeStop(false));
+      dispatch(actions.setShowPlayLists(false));
+      toast.success("Hẹn giờ dừng phát nhạt thành công");
+    }
+  };
+
   const eventClick = (e) => {
     let date = new Date(Date.now());
     if (e.target !== hourRef.current) {
-      console.log("hour");
       setHourActive(false);
       if (hour.length === 1) {
         setHour(`0${hour}`);
@@ -100,7 +110,6 @@ function SetTimeModal() {
       );
     }
     if (e.target !== minuteRef.current) {
-      console.log("minute");
       setMinuteActive(false);
       if (minute.length === 1) {
         setMinute(`0${minute}`);
@@ -248,10 +257,11 @@ function SetTimeModal() {
           )}
           <button
             className={hour * 1 === 0 && minute * 1 === 0 ? styles.disable : ""}
+            onClick={saveTimeStop}
           >
             <PrimaryButton
               info={{
-                msg: "Lưu",
+                msg: "Lưu lại",
               }}
             />
           </button>

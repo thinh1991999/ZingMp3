@@ -291,3 +291,10 @@ export const setShowTimeStop = (payLoad) => {
     payLoad,
   };
 };
+
+export const setWarningModal = (payLoad) => {
+  return {
+    type: "SET_WARNING_MODAL",
+    payLoad,
+  };
+};
