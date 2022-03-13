@@ -47,9 +47,9 @@ const initState = {
     right: 0,
     width: 0,
     height: 0,
-    msg: "",
     position: "",
   },
+  popperMess: "",
   currentChart: "",
   timeToStop: 0,
   showTimeStop: false,
@@ -111,6 +111,12 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         popperInfo: action.payLoad,
+      };
+    }
+    case "SET_POPPER_MESS": {
+      return {
+        ...state,
+        popperMess: action.payLoad,
       };
     }
     case "SET_CURRENT_NAV": {

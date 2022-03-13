@@ -21,6 +21,7 @@ function Playlists() {
     },
   ]);
   const [showOption, setShowOption] = useState(false);
+  const [mess, setMess] = useState("");
 
   const location = useLocation();
 
@@ -105,6 +106,14 @@ function Playlists() {
     };
   }, []);
 
+  useEffect(() => {
+    if (timeToStop > 0) {
+      setMess("Xóa hẹn giờ");
+    } else {
+      setMess("Hẹn giờ phát nhạc");
+    }
+  }, [timeToStop]);
+
   return (
     <div
       ref={playListRef}
@@ -122,9 +131,10 @@ function Playlists() {
                 fill={true}
                 popper={{
                   show: true,
-                  msg: "Hẹn giờ phát nhạc",
+                  msg: mess,
                   position: "CenterDownRight",
                 }}
+                player={true}
               >
                 <GiAlarmClock />
               </ButtonIcon>

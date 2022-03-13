@@ -259,6 +259,7 @@ function AlbumItem({
               popper={{
                 show: true,
                 msg: "Thêm vào thư viện",
+                position: "CenterUp",
               }}
             >
               <AiOutlineHeart />
@@ -270,6 +271,7 @@ function AlbumItem({
               popper={{
                 show: true,
                 msg: "Phát cùng lời bài hát",
+                position: "CenterUp",
               }}
             >
               <GiMicrophone />
@@ -281,6 +283,7 @@ function AlbumItem({
               popper={{
                 show: true,
                 msg: "Khác",
+                position: "CenterUp",
               }}
             >
               <BsThreeDots />

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Radio.module.scss";
 import { ButtonIcon } from "..";
 import { BsPlayCircle } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 function Radio({ data }) {
   const {
@@ -14,13 +15,17 @@ function Radio({ data }) {
     programImage = program.thumbnail;
   }
 
+  const openRadio = () => {
+    toast.error("Radio chưa được hỗ trợ!");
+  };
+
   return (
     <div className={styles.radio}>
       <div className={styles.radioWrap}>
         <div className={styles.radioImg}>
           <img src={programImage} alt="" />
           <div className={styles.imgLayer}></div>
-          <div className={styles.imgBtn}>
+          <div className={styles.imgBtn} onClick={openRadio}>
             <ButtonIcon circle={true} topic={true}>
               <BsPlayCircle />
             </ButtonIcon>

@@ -92,7 +92,7 @@ function Home() {
           sectionType === "recentPlaylist"
         ) {
           const { items = [] } = item;
-          if (items.length === 0) return;
+          if (items?.length === 0 || !items) return;
           return <Topics data={{ ...item }} key={`${sectionId}${index}`} />;
         } else if (sectionType === "RTChart") {
           return <Chart data={{ ...item }} key={`${sectionId}${index}`} />;

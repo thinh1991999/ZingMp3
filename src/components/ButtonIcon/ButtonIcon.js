@@ -39,29 +39,24 @@ function ButtonIcon({
           right,
           width,
           height,
-          msg: messPopper,
           position: popper.position,
         })
       );
+      dispatch(actions.setPopperMess(popper.msg));
     }
   };
   const handleLeave = (e) => {
     if (popper.show) {
       dispatch(actions.setPopperInfo({ show: false }));
+      // dispatch(actions.setPopperMess(""));
     }
   };
 
   useEffect(() => {
     if (player) {
-      dispatch(
-        actions.setPopperInfo(
-          Object.assign({}, { ...popperInfo, msg: popper.msg })
-        )
-      );
+      dispatch(actions.setPopperMess(popper.msg));
     }
   }, [popper.msg, player]);
-  if (player) {
-  }
 
   useEffect(() => {
     btnRef.current.addEventListener("mouseenter", handleEnter);
@@ -73,7 +68,7 @@ function ButtonIcon({
         btnRef.current.removeEventListener("mouseleave", handleLeave);
       }
     };
-  }, []);
+  }, [popper.msg, player]);
 
   const circleClass = circle ? styles.iconBtnCircle : "";
   const topicClass = topic ? styles.iconBtnTopic : "";

@@ -244,11 +244,19 @@
         .header {
           flex-direction: column-reverse;
           align-items: center;
+
           .headerRight {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            .btn {
+              .btnDrop {
+                left: 50%;
+                transform: translateX(-50%);
+                right: unset;
+              }
+            }
           }
         }
       }

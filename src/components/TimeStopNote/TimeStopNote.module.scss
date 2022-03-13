@@ -34,3 +34,10 @@
     }
   }
 }
+
+@media only screen and(max-width:767px) {
+  .container {
+    bottom: 113px;
+    min-width: 220px;
+  }
+}

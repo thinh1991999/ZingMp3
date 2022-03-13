@@ -50,10 +50,14 @@
 
       .infoCenter {
         width: 40%;
+        display: flex;
+        align-items: center;
       }
 
       .infoRight {
         width: 10%;
+        display: flex;
+        align-items: center;
       }
     }
   }

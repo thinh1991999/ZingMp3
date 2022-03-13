@@ -81,15 +81,19 @@ function Nav() {
         break;
       case 3:
         toast.error("Radio chưa sẵn sàng!");
+        dispatch(actions.setShowNavMobile(false));
         break;
       case 4:
         toast.error("Theo dõi chưa sẵn sàng!");
+        dispatch(actions.setShowNavMobile(false));
         break;
       case 5:
         toast.error("Nhạc mới chưa sẵn sàng!");
+        dispatch(actions.setShowNavMobile(false));
         break;
       case 6:
         toast.error("Thể loại chưa sẵn sàng!");
+        dispatch(actions.setShowNavMobile(false));
         break;
       case 7:
         dispatch(actions.setCurrentNav(7));

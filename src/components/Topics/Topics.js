@@ -72,14 +72,14 @@ function Topics({ data, top = false }) {
     <div className={clsx(styles.topics, top && styles.topWrap)}>
       <div className={styles.topicsTitle}>
         <HomeTitle msg={title} />
-        {items.length > 5 ? <a href="#">Tất cả</a> : ""}
+        {items?.length > 5 ? <a href="#">Tất cả</a> : ""}
       </div>
       <Row
         className={styles.topicContainer}
         ref={containerRef}
         onScroll={handleScroll}
       >
-        {items.map((item, index) => {
+        {items?.map((item, index) => {
           const { encodeId, sortDescription, title, thumbnail } = item;
           if (index >= 5 && !top) {
             return;

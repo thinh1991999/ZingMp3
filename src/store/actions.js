@@ -89,6 +89,13 @@ export const setPopperInfo = (payLoad) => {
   };
 };
 
+export const setPopperMess = (payLoad) => {
+  return {
+    type: "SET_POPPER_MESS",
+    payLoad,
+  };
+};
+
 export const setPlaying = (payLoad) => {
   return {
     type: "SET_PLAYING",

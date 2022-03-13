@@ -247,3 +247,21 @@
     }
   }
 }
+
+@media only screen and(max-width:767px) {
+  .play {
+    .playWrap {
+      flex-direction: column-reverse;
+      .playLeft {
+        display: none;
+      }
+      .playRight {
+        .playRightWrap {
+          .btnWrap:nth-child(2) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

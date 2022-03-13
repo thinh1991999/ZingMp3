@@ -1,17 +1,20 @@
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Popper.module.scss";
 import { useSelector } from "react-redux";
 
 function Popper() {
   const {
-    popperInfo: { top, left, bottom, right, width, height, msg, position },
+    popperInfo: { top, left, bottom, right, width, height, position },
+    popperMess,
   } = useSelector((state) => state);
 
   const [leftPosition, setLeftPosition] = useState(left);
   const [topPosition, setTopPosition] = useState(top);
   const [rightPosition, setRightPosition] = useState(right);
   const [className, setClassName] = useState(styles.popper);
+
+  const wrapRef = useRef(null);
 
   useEffect(() => {
     switch (position) {
@@ -34,15 +37,16 @@ function Popper() {
         setClassName(clsx(styles.popper, styles.popperCenterDown));
         break;
       case "CenterDownRight":
+        const { width: wrapWidth } = wrapRef.current.getBoundingClientRect();
         setLeftPosition(`unset`);
         setTopPosition(`${top + height + 10}px`);
-        setRightPosition(`-${width / 1.3}px`);
+        setRightPosition(`${-wrapWidth + width * 2.3}px`);
         setClassName(clsx(styles.popper, styles.popperCenterDown));
         break;
       default:
         break;
     }
-  }, [position, top, left, right, width, height]);
+  }, [position, top, left, right, width, height, popperMess]);
   return (
     <div
       className={className}
@@ -51,8 +55,9 @@ function Popper() {
         top: `${topPosition}`,
         right: `${rightPosition}`,
       }}
+      ref={wrapRef}
     >
-      <p>{msg}</p>
+      <p>{popperMess}</p>
     </div>
   );
 }
