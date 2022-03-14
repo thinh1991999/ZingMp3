@@ -54,6 +54,10 @@ const initState = {
   currentChart: "",
   timeToStop: 0,
   showTimeStop: false,
+  showComment: {
+    show: false,
+    id: "",
+  },
   warningModal: {
     show: false,
     type: "",
@@ -97,6 +101,12 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         showLogin: action.payLoad,
+      };
+    }
+    case "SET_SHOW_COMMENT": {
+      return {
+        ...state,
+        showComment: action.payLoad,
       };
     }
     case "SET_DATA": {

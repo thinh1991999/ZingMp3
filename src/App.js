@@ -12,6 +12,7 @@ import {
   SetTimeModal,
   WarningModal,
   LogInModal,
+  CommentModal,
 } from "./components";
 import {
   Home,
@@ -47,6 +48,7 @@ function App() {
     timeToStop,
     warningModal: { show: warningShow },
     showLogin,
+    showComment,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -58,7 +60,6 @@ function App() {
       const {
         data: { items },
       } = dataRespon;
-      dispatch(actions.setLoading(false));
       dispatch(actions.setData(items));
     } catch (error) {
       dispatch(actions.setScroll(false));
@@ -87,6 +88,7 @@ function App() {
       } else {
         dispatch(setCurrentUser(null));
       }
+      dispatch(actions.setLoading(false));
     });
   }, []);
 
@@ -135,6 +137,7 @@ function App() {
           </Row>
         </div>
         <Lyric />
+        {showComment.show && <CommentModal />}
         {showLogin && <LogInModal />}
         {warningShow && <WarningModal />}
         {timeToStop > 0 && <TimeStopNote />}

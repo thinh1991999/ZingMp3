@@ -19,6 +19,13 @@ export const setShowLogin = (payLoad) => {
   };
 };
 
+export const setShowComment = (payLoad) => {
+  return {
+    type: "SET_SHOW_COMMENT",
+    payLoad,
+  };
+};
+
 export const setData = (payLoad) => {
   return {
     type: "SET_DATA",

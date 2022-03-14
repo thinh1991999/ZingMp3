@@ -53,3 +53,4 @@ export { default as Playlists } from "./Playlists/Playlists";
 export { default as SetTimeModal } from "./SetTimeModal/SetTimeModal";
 export { default as WarningModal } from "./WarningModal/WarningModal";
 export { default as LogInModal } from "./LogInModal/LogInModal";
+export { default as CommentModal } from "./CommentModal/CommentModal";

@@ -92,7 +92,7 @@ function ButtonIcon({
   );
 
   return (
-    <button
+    <div
       className={finalClass}
       style={{
         display: `${display ? "" : "none"}`,
@@ -101,7 +101,7 @@ function ButtonIcon({
       // onMouseOver={handlePopperOver}
     >
       {children}
-    </button>
+    </div>
   );
 }
 

@@ -9,7 +9,7 @@ import {
   BsPauseFill,
   BsThreeDots,
 } from "react-icons/bs";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineComment } from "react-icons/ai";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../../store";
@@ -54,6 +54,15 @@ function AlbumLeft({ data }) {
     } else {
       dispatch(actions.playAlbum());
     }
+  };
+
+  const handleShowComment = () => {
+    dispatch(
+      actions.setShowComment({
+        show: true,
+        id: albumId,
+      })
+    );
   };
 
   // styles.albumLeftImgActive
@@ -124,28 +133,42 @@ function AlbumLeft({ data }) {
           </div>
         </div>
         <div className={styles.albumLeftBtnMore}>
-          <div className={styles.btn}>
+          <button className={styles.btn}>
             <ButtonIcon
               fill={true}
               popper={{
                 show: true,
                 msg: "Thêm vào thư viện",
+                position: "CenterUp",
               }}
             >
               <AiOutlineHeart />
             </ButtonIcon>
-          </div>
-          <div className={styles.btn}>
+          </button>
+          <button className={styles.btn}>
             <ButtonIcon
               fill={true}
               popper={{
                 show: true,
                 msg: "Xem thêm",
+                position: "CenterUp",
               }}
             >
               <BsThreeDots />
             </ButtonIcon>
-          </div>
+          </button>
+          <button className={styles.btn} onClick={handleShowComment}>
+            <ButtonIcon
+              fill={true}
+              popper={{
+                show: true,
+                msg: "Bình luận",
+                position: "CenterUp",
+              }}
+            >
+              <AiOutlineComment />
+            </ButtonIcon>
+          </button>
         </div>
       </div>
     </div>

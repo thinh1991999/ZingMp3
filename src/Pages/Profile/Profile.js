@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Profile.module.scss";
 import { Loading, PlayingIcon, PrimaryButton } from "../../components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import {
   CountryDropdown,
@@ -16,9 +16,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { db, auth, storage } from "../../firebase";
+import { actions } from "../../store";
 
 function Profile() {
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const { currentUser } = useSelector((state) => state);
   const [location, setLocation] = useState({ country: "", region: "" });
@@ -153,6 +156,10 @@ function Profile() {
     setPhone(phone);
     setLocation(location);
   }, [currentUser]);
+
+  useEffect(() => {
+    dispatch(actions.setCurrentNav(0));
+  }, []);
 
   const { email, profile_picture } = currentUser;
 

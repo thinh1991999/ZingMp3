@@ -1,0 +1,117 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(2, 2, 2, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+
+  .wrap {
+    background-color: var(--primary-bg);
+    border-radius: 8px;
+    width: 480px;
+    padding: 25px 20px;
+    color: #fff;
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-secondary);
+      padding-bottom: 15px;
+      h2 {
+        font-size: 24px;
+        color: #fff;
+        margin: unset;
+      }
+      button {
+        background-color: transparent;
+        border: unset;
+      }
+    }
+    .center {
+      > span {
+        color: var(--text-secondary);
+        margin: 10px 0;
+        display: block;
+      }
+      .commentList {
+        list-style: none;
+        padding: unset;
+        max-height: 300px;
+        overflow-y: scroll;
+        .commentItem {
+          display: flex;
+          margin-bottom: 25px;
+          .leftItem {
+            margin-right: 10px;
+            img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+            }
+          }
+          .rightItem {
+            h4 {
+              font-size: 20px;
+              margin: unset;
+              span {
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-left: 5px;
+              }
+            }
+            p {
+              font-size: 16px;
+              margin: unset;
+            }
+            .itemBtnWrap {
+              margin-top: 5px;
+              display: flex;
+              align-items: center;
+              color: var(--text-secondary);
+              span {
+                margin: 0 10px 0 5px;
+              }
+              .btn {
+                background-color: transparent;
+                border: unset;
+              }
+            }
+          }
+        }
+      }
+    }
+    .bottom {
+      border-top: 1px solid var(--border-secondary);
+      padding-top: 15px;
+      .noLogin {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        p {
+          margin: unset;
+        }
+        a {
+          text-decoration: none;
+          color: var(--link-text-hover);
+          margin-left: 8px;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+}
+.commentList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.commentList::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}

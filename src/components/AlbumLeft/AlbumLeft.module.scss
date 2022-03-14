@@ -69,9 +69,16 @@
     display: flex;
     justify-content: center;
 
-    .btn {
+    button {
+      background-color: transparent;
+      border: unset;
       margin: 0 10px;
     }
+  }
+  p {
+    text-align: center;
+    margin: unset;
+    color: var(--player-text);
   }
 }
 
