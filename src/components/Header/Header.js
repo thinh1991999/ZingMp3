@@ -15,7 +15,9 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { blackHeader, activeSearch } = useSelector((state) => state);
+  const { blackHeader, activeSearch, currentUser } = useSelector(
+    (state) => state
+  );
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -198,9 +200,15 @@ function Header() {
         <HeaderButton circle={true}>
           <FiSettings />
         </HeaderButton>
-        <HeaderButton circle={true} white={true}>
-          <FaUserAlt />
-        </HeaderButton>
+        <button>
+          <HeaderButton circle={true} white={true}>
+            {currentUser ? (
+              <img src={currentUser.profile_picture} alt="" />
+            ) : (
+              <FaUserAlt />
+            )}
+          </HeaderButton>
+        </button>
       </div>
     </header>
   );

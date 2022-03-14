@@ -11,6 +11,7 @@ import {
   Playlists,
   SetTimeModal,
   WarningModal,
+  LogInModal,
 } from "./components";
 import {
   Home,
@@ -21,27 +22,31 @@ import {
   ListMV,
   Top100,
   SearchMobile,
+  Profile,
 } from "./Pages";
 import { Row, Col } from "react-bootstrap";
-import { AiOutlineMenu } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { HOME_API, actions } from "./store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clsx from "clsx";
 import TimeStopNote from "./components/TimeStopNote/TimeStopNote";
+import { auth, db } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { setCurrentUser } from "./store/actions";
+import { onValue, ref } from "firebase/database";
 
 function App() {
   const {
     loading,
     page,
     idCurrentSong,
-    currentSong,
     showNavMobile,
     popperInfo: { show },
     showTimeStop,
     timeToStop,
     warningModal: { show: warningShow },
+    showLogin,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -62,6 +67,27 @@ function App() {
 
   useEffect(() => {
     fetchHomeData();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userRef = ref(db, "users/" + user.uid);
+        onValue(userRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data.profile_picture) {
+            dispatch(setCurrentUser(data));
+          } else {
+            dispatch(
+              setCurrentUser({
+                ...data,
+                profile_picture:
+                  "https://firebasestorage.googleapis.com/v0/b/my-project-2b635.appspot.com/o/unknown.jpg?alt=media&token=0ac6668a-86e6-426a-bf15-18f4e93cacd5",
+              })
+            );
+          }
+        });
+      } else {
+        dispatch(setCurrentUser(null));
+      }
+    });
   }, []);
 
   if (loading) {
@@ -86,6 +112,7 @@ function App() {
               <div className="app__outer">
                 <Routes>
                   <Route path={"/"} element={<Home />}></Route>
+                  <Route path={"/Profile"} element={<Profile />}></Route>
                   <Route path={"/Album/:id"} element={<Album />}></Route>
                   <Route
                     path={"/Singer/:SingerName"}
@@ -108,6 +135,7 @@ function App() {
           </Row>
         </div>
         <Lyric />
+        {showLogin && <LogInModal />}
         {warningShow && <WarningModal />}
         {timeToStop > 0 && <TimeStopNote />}
         {showTimeStop && <SetTimeModal />}

@@ -61,7 +61,7 @@ function Nav() {
     },
   ]);
 
-  const { currentNav, btnMobile } = useSelector((state) => state);
+  const { currentNav, btnMobile, currentUser } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -71,6 +71,14 @@ function Nav() {
   };
   const handleNav = (index) => {
     switch (index) {
+      case 0: {
+        if (currentUser) {
+          navigate("/Profile");
+        } else {
+          dispatch(actions.setShowLogin(true));
+        }
+        break;
+      }
       case 1:
         dispatch(actions.setCurrentNav(1));
         navigate("/");

@@ -5,6 +5,20 @@ export const setLoading = (payLoad) => {
   };
 };
 
+export const setCurrentUser = (payLoad) => {
+  return {
+    type: "SET_CURRENT_USER",
+    payLoad,
+  };
+};
+
+export const setShowLogin = (payLoad) => {
+  return {
+    type: "SET_SHOW_LOGIN",
+    payLoad,
+  };
+};
+
 export const setData = (payLoad) => {
   return {
     type: "SET_DATA",

@@ -8,11 +8,11 @@ function HeaderButton({ children, disable = false, circle = false, white }) {
   const whiteClass = white ? styles.headerBtnWhite : "";
 
   return (
-    <button
+    <div
       className={clsx(styles.headerBtn, disableClass, circleClass, whiteClass)}
     >
       {children}
-    </button>
+    </div>
   );
 }
 

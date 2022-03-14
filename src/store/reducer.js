@@ -9,6 +9,7 @@ const lastestStorage = () => {
 
 const initState = {
   loading: true,
+  currentUser: null,
   page: 1,
   data: [],
   currentNav: 1,
@@ -57,6 +58,7 @@ const initState = {
     show: false,
     type: "",
   },
+  showLogin: false,
 };
 
 const getRandomIndex = (arr, index) => {
@@ -83,6 +85,18 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    }
+    case "SET_CURRENT_USER": {
+      return {
+        ...state,
+        currentUser: action.payLoad,
+      };
+    }
+    case "SET_SHOW_LOGIN": {
+      return {
+        ...state,
+        showLogin: action.payLoad,
       };
     }
     case "SET_DATA": {
