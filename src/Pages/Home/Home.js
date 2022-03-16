@@ -7,7 +7,6 @@ import {
   Zingcharts,
   Singers,
   Choices,
-  HotSongs,
   Events,
   Chart,
 } from "../../components";
@@ -16,9 +15,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { actions, HOME_API } from "../../store";
 
 function Home() {
-  const { data, page, scroll, nextPage, loadingHome, lastest } = useSelector(
-    (state) => state
-  );
+  const { data, page, scroll, nextPage, loadingHome, currentSong } =
+    useSelector((state) => state);
 
   const [mount, setMount] = useState(false);
 
@@ -52,12 +50,11 @@ function Home() {
   };
 
   useEffect(() => {
-    if (scroll) {
+    const valid = homeRef.current;
+    if (scroll && valid) {
       homeRef.current.addEventListener("scroll", eventNextPage);
       return () => {
-        if (homeRef.current) {
-          homeRef.current.removeEventListener("scroll", eventNextPage);
-        }
+        homeRef.current.removeEventListener("scroll", eventNextPage);
       };
     }
   }, [scroll]);
@@ -78,11 +75,12 @@ function Home() {
     setMount(true);
     dispatch(actions.setCurrentNav(1));
     dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle("Home"));
   }, []);
 
   return (
     <div className={styles.home} ref={homeRef}>
-      {data.map((item, index) => {
+      {data?.map((item, index) => {
         const { sectionId, sectionType } = item;
 
         if (sectionType === "banner") {

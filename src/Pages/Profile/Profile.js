@@ -1,29 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Profile.module.scss";
-import { Loading, PlayingIcon, PrimaryButton } from "../../components";
+import { ButtonIcon, PlayingIcon, PrimaryButton } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
-import {
-  CountryDropdown,
-  RegionDropdown,
-  CountryRegionData,
-} from "react-country-region-selector";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { ref, set } from "firebase/database";
 import {
-  getStorage,
   ref as refStorage,
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+import { signOut } from "firebase/auth";
 import { db, auth, storage } from "../../firebase";
 import { actions } from "../../store";
+import { AiOutlineLogout } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const { currentUser } = useSelector((state) => state);
+  const { currentUser, currentSong } = useSelector((state) => state);
   const [location, setLocation] = useState({ country: "", region: "" });
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -39,9 +37,6 @@ function Profile() {
 
   const imgInputRef = useRef(null);
 
-  // if (!loading) {
-  //   return <Loading size={50} />;
-  // }
   const getValidPhone = () => {
     const re = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
     if (phone.trim().length === 0) {
@@ -150,28 +145,63 @@ function Profile() {
     }
   };
 
+  const handleLogOut = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {});
+  };
+
   useEffect(() => {
-    const { name, phone, location } = currentUser;
-    setName(name);
-    setPhone(phone);
-    setLocation(location);
+    if (currentUser) {
+      const { name, phone, location } = currentUser;
+      name && setName(name);
+      phone && setPhone(phone);
+      location && setLocation(location);
+    }
   }, [currentUser]);
 
   useEffect(() => {
     dispatch(actions.setCurrentNav(0));
+    dispatch(actions.setBGHeader(true));
+    dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle("Profile"));
+    return () => {
+      dispatch(actions.setPopperInfo({ show: false }));
+    };
   }, []);
 
-  const { email, profile_picture } = currentUser;
-
+  let email = "";
+  let profile_picture = "";
+  if (currentUser) {
+    email = currentUser.email;
+    profile_picture = currentUser.profile_picture;
+  }
+  console.log(location);
   return (
     <div className={styles.container}>
       <div className={styles.wrap}>
         <Row>
-          <Col lg={4} className={styles.left}>
+          <Col lg={4} sm={10} xs={10} className={styles.left}>
             <img src={profile_picture} alt="" />
             <p>{email}</p>
           </Col>
-          <Col lg={6} className={styles.center}>
+          <Col sm={2} xs={2} className={styles.mobile}>
+            <button onClick={handleLogOut}>
+              <ButtonIcon
+                popper={{
+                  show: true,
+                  msg: "Đăng xuất",
+                  position: "CenterUp",
+                }}
+                fill={true}
+              >
+                <AiOutlineLogout />
+              </ButtonIcon>
+            </button>
+          </Col>
+          <Col lg={6} sm={12} className={styles.center}>
             <h2>Chỉnh sửa thông tin</h2>
             <form onSubmit={handleSaveProfile}>
               <label htmlFor="name">Họ và tên</label>
@@ -248,7 +278,20 @@ function Profile() {
               </div>
             </form>
           </Col>
-          <Col lg={2} className={styles.right}></Col>
+          <Col lg={2} sm={12} className={styles.right}>
+            <button onClick={handleLogOut}>
+              <ButtonIcon
+                popper={{
+                  show: true,
+                  msg: "Đăng xuất",
+                  position: "CenterUpRight",
+                }}
+                fill={true}
+              >
+                <AiOutlineLogout />
+              </ButtonIcon>
+            </button>
+          </Col>
         </Row>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Artists.module.scss";
-import { Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { Artist } from "..";
 import clsx from "clsx";
 

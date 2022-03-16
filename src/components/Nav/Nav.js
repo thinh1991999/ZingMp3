@@ -76,6 +76,7 @@ function Nav() {
           navigate("/Profile");
         } else {
           dispatch(actions.setShowLogin(true));
+          dispatch(actions.setShowNavMobile(false));
         }
         break;
       }

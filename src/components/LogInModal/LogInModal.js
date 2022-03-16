@@ -12,6 +12,8 @@ import { ref, set } from "firebase/database";
 import { db, auth } from "../../firebase";
 import clsx from "clsx";
 import PlayingIcon from "../PlayingIcon/PlayingIcon";
+import ButtonIcon from "../ButtonIcon/ButtonIcon";
+import { MdOutlineClose } from "react-icons/md";
 
 function LogInModal() {
   const dispatch = useDispatch();
@@ -82,6 +84,11 @@ function LogInModal() {
         createUserWithEmailAndPassword(auth, email, pw)
           .then((userCredential) => {
             const user = userCredential.user;
+            set(ref(db, "users/" + user.uid), {
+              id: user.uid,
+              email: email,
+              profile_picture: "",
+            });
             signOut(auth)
               .then(() => {})
               .catch((error) => {});
@@ -92,11 +99,6 @@ function LogInModal() {
             setEmail("");
             setPw("");
             setCfPw("");
-            set(ref(db, "users/" + user.uid), {
-              id: user.uid,
-              email: email,
-              profile_picture: "",
-            });
             setLoading(false);
           })
           .catch((error) => {
@@ -204,13 +206,27 @@ function LogInModal() {
       if (containerRef.current) {
         containerRef.current.removeEventListener("click", eventClickCloseModal);
       }
+      dispatch(actions.setPopperInfo({ show: false }));
     };
   }, []);
 
   return (
     <div className={styles.container} ref={containerRef}>
       <div className={styles.wrap} ref={wrapRef}>
-        <h2>{info.header}</h2>
+        <h2>
+          {info.header}{" "}
+          <button onClick={() => dispatch(actions.setShowLogin(false))}>
+            <ButtonIcon
+              popper={{
+                show: true,
+                msg: "Đóng",
+                position: "CenterUp",
+              }}
+            >
+              <MdOutlineClose />
+            </ButtonIcon>
+          </button>
+        </h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"

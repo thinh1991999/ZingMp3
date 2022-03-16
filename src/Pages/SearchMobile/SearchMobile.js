@@ -5,11 +5,13 @@ import styles from "./SearchMobile.module.scss";
 import { MdOutlineClose } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 import { HeaderFormSuggest } from "../../components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SearchMobile() {
+  const { currentSong } = useSelector((state) => state);
+
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -91,6 +93,7 @@ function SearchMobile() {
   useEffect(() => {
     window.addEventListener("click", event);
     dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle(`SearchMobile`));
     return () => {
       window.removeEventListener("click", event);
     };

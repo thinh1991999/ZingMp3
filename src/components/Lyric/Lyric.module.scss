@@ -136,10 +136,16 @@
           .btn {
             padding: 0 10px;
             position: relative;
+            background-color: transparent;
+            border: unset;
             .btnDrop {
               position: absolute;
               top: calc(100% + 10px);
               right: 0;
+            }
+            .btnWrap {
+              background-color: transparent;
+              border: unset;
             }
           }
         }

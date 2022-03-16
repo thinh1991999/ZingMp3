@@ -7,7 +7,7 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { getNumberText } from "../../funtions";
 
 function Artist({ data }) {
-  const { name, totalFollow, thumbnailM, alias } = data;
+  const { name, totalFollow, thumbnailM, alias, thumbnail } = data;
 
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ function Artist({ data }) {
     <div className={styles.item}>
       <div className={styles.itemWrap}>
         <div className={styles.itemImg} onClick={handleSinger}>
-          <img src={thumbnailM} alt="" />
+          <img src={thumbnailM || thumbnail} alt="" />
           <div className={styles.imgLayer} />
           <div className={styles.imgIcon}>
             <ButtonIcon circle={true} topic={true}>

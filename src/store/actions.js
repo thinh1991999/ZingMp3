@@ -5,6 +5,13 @@ export const setLoading = (payLoad) => {
   };
 };
 
+export const setTitle = (payLoad) => {
+  return {
+    type: "SET_TITLE",
+    payLoad,
+  };
+};
+
 export const setCurrentUser = (payLoad) => {
   return {
     type: "SET_CURRENT_USER",

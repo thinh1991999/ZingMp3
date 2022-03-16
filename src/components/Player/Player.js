@@ -17,6 +17,7 @@ import { BiWindows } from "react-icons/bi";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Player() {
   const {
@@ -31,21 +32,12 @@ function Player() {
     showPlayLists,
     timeToStop,
   } = useSelector((state) => state);
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const [volume, setVolume] = useState(50);
 
-  const {
-    encodeId,
-    title,
-    thumbnail,
-    artists = [],
-    duration,
-    album,
-  } = currentSong;
+  const { encodeId, title, thumbnail, artists = [], duration } = currentSong;
 
   const handleToAlbum = (e) => {
     const arr = Array.from([...e.target.classList]);
@@ -69,7 +61,7 @@ function Player() {
     try {
       console.log(encodeId);
       const respon = await fetch(`${SONG_API}${encodeId}`);
-      const { err, data, url } = await respon.json();
+      const { err, data } = await respon.json();
       if (err === 0) {
         dispatch(actions.setSong(data[128]));
         dispatch(actions.setSongLoading(false));
@@ -123,6 +115,17 @@ function Player() {
   }, [songLoading]);
 
   useEffect(() => {
+    if (currentSong) {
+      console.log(currentSong.title);
+      dispatch(actions.setTitle(currentSong.title));
+    }
+  }, [currentSong]);
+
+  useEffect(() => {
+    dispatch(actions.setSongLoading(false));
+  }, []);
+
+  useEffect(() => {
     if (timeToStop === 1) {
       dispatch(actions.setPlaying(false));
     }
@@ -170,7 +173,10 @@ function Player() {
             </p>
           </div>
           <div className={styles.playLeftIcon}>
-            <div className={styles.leftBtn}>
+            <button
+              className={styles.leftBtn}
+              onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}
+            >
               <ButtonIcon
                 popper={{
                   show: true,
@@ -180,8 +186,11 @@ function Player() {
               >
                 <AiOutlineHeart />
               </ButtonIcon>
-            </div>
-            <div className={styles.leftBtn}>
+            </button>
+            <button
+              className={styles.leftBtn}
+              onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}
+            >
               <ButtonIcon
                 popper={{
                   show: true,
@@ -191,7 +200,7 @@ function Player() {
               >
                 <BsThreeDots />
               </ButtonIcon>
-            </div>
+            </button>
           </div>
         </Col>
         <Col className={styles.playCenter} xl={6} lg={6} md={6}>

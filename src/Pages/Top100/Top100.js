@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { actions, TOP_100_API } from "../../store";
 import styles from "./Top100.module.scss";
 import { Loading, Topics } from "../../components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Top100() {
   const [dataTop, setDataTop] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { currentSong } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
@@ -33,6 +35,7 @@ function Top100() {
     dispatch(actions.setBGHeader(false));
     dispatch(actions.setCurrentNav(7));
     dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle(`Top100`));
   }, []);
 
   if (loading) {

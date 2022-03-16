@@ -13,6 +13,8 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 function Singer() {
+  const { currentSong } = useSelector((state) => state);
+
   const [loading, setLoading] = useState(true);
   const [dataSinger, setDataSinger] = useState([]);
 
@@ -50,6 +52,7 @@ function Singer() {
 
   useEffect(() => {
     dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle(`Singer:${SingerName}`));
   }, []);
 
   if (loading) {
@@ -69,7 +72,7 @@ function Singer() {
     <div className={styles.singer} onScroll={handleScroll}>
       <SingerInfo data={{ name, sortDesc, desc, follow, image, topAlbum }} />
       <div className={styles.singerWrap}>
-        {sections.map((item, index) => {
+        {sections?.map((item, index) => {
           const { sectionType, items } = item;
           if (sectionType === "song") {
             return <HotSongs data={{ ...item }} key={index} />;

@@ -1,8 +1,16 @@
 import { toast } from "react-toastify";
 const lastestStorage = () => {
-  const data = JSON.parse(JSON.stringify(localStorage.getItem("lastest")));
-  if (typeof data !== "object") {
+  const data = JSON.parse(localStorage.getItem("lastest"));
+  if (typeof data !== "object" || data === null) {
     return [];
+  }
+  return data;
+};
+
+const infoStorage = () => {
+  const data = JSON.parse(localStorage.getItem("infoCurrent"));
+  if (typeof data !== "object" || data === null) {
+    return {};
   }
   return data;
 };
@@ -10,26 +18,27 @@ const lastestStorage = () => {
 const initState = {
   loading: true,
   currentUser: null,
+  title: "",
   page: 1,
   data: [],
   currentNav: 1,
-  currentAlbum: "",
+  currentAlbum: infoStorage()["currentAlbum"] || "",
   playing: false,
   blackHeader: false,
   scroll: true,
   loadingHome: true,
   nextPage: false,
   album: {},
-  listSong: [],
-  indexValidSongs: [],
-  currentSong: {},
-  currentIndexSong: null,
-  idCurrentSong: "",
+  listSong: infoStorage()["listSong"] || [],
+  indexValidSongs: infoStorage()["indexValidSongs"] || [],
+  currentSong: infoStorage()["currentSong"] || {},
+  currentIndexSong: infoStorage()["currentIndexSong"] || null,
+  idCurrentSong: infoStorage()["idCurrentSong"] || "",
   randomSong: false,
   repeatSong: 0,
   songLoading: true,
-  song: {},
-  songCurrentTime: 0,
+  song: infoStorage()["song"] || {},
+  songCurrentTime: infoStorage()["idCurrentSong"] || 0,
   showLyric: false,
   showPlayLists: false,
   invi: false,
@@ -37,7 +46,7 @@ const initState = {
   lastest: lastestStorage(),
   activeSearch: false,
   singer: {},
-  currentSinger: "",
+  currentSinger: infoStorage()["currentSinger"] || "",
   showNavMobile: false,
   btnMobile: null,
   popperInfo: {
@@ -73,7 +82,7 @@ const getRandomIndex = (arr, index) => {
   return indexRD;
 };
 
-const getValidLastest = (arr, hint) => {
+const getValidLastest = (arr = [], hint) => {
   let valid = false;
   arr.forEach((item) => {
     if (item.encodeId === hint.encodeId) {
@@ -89,6 +98,12 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    }
+    case "SET_TITLE": {
+      return {
+        ...state,
+        title: action.payLoad,
       };
     }
     case "SET_CURRENT_USER": {
@@ -113,7 +128,6 @@ const reducer = (state = initState, action) => {
       const { lastest, data } = state;
       const newData = Array.from([...data, ...action.payLoad]);
       newData[2].items = lastest;
-
       return {
         ...state,
         data: Array.from([...newData]),
@@ -847,7 +861,6 @@ const reducer = (state = initState, action) => {
           return encodeId === newIdSong;
         });
       }
-
       if (!getValidLastest(lastest, album)) {
         lastest.unshift(album);
         localStorage.setItem("lastest", JSON.stringify(lastest));

@@ -10,6 +10,7 @@ import { FaUserAlt } from "react-icons/fa";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { actions, SEARCH_API } from "../../store";
+import { toast } from "react-toastify";
 
 function Header() {
   const navigate = useNavigate();
@@ -67,6 +68,15 @@ function Header() {
 
   const handleOutSearch = () => {
     // dispatch(actions.setActiveSearch(false));
+  };
+
+  const handleLogin = () => {
+    if (currentUser) {
+      navigate("/Profile");
+    } else {
+      dispatch(actions.setShowLogin(true));
+      dispatch(actions.setShowNavMobile(false));
+    }
   };
 
   const handleSearchText = (e) => {
@@ -133,21 +143,21 @@ function Header() {
     <header className={finalClass}>
       <div className={styles.featuresLeft}>
         <div className={styles.featuresLeftBtn}>
-          <div className={styles.menuBtn} ref={btnMobileRef}>
+          <button className={styles.menuBtn} ref={btnMobileRef}>
             <HeaderButton>
               <AiOutlineMenu />
             </HeaderButton>
-          </div>
-          <div className={styles.leftBtn} onClick={handlePrevPage}>
+          </button>
+          <button className={styles.leftBtn} onClick={handlePrevPage}>
             <HeaderButton disable={leftDisable}>
               <HiOutlineArrowLeft />
             </HeaderButton>
-          </div>
-          <div className={styles.rightBtn} onClick={handleNextPage}>
+          </button>
+          <button className={styles.rightBtn} onClick={handleNextPage}>
             <HeaderButton disable={rightDisable}>
               <HiOutlineArrowRight />
             </HeaderButton>
-          </div>
+          </button>
         </div>
         <form
           className={clsx(styles.form, activeSearch && styles.formActive)}
@@ -197,10 +207,12 @@ function Header() {
         </div>
       </div>
       <div className={styles.featuresRight}>
-        <HeaderButton circle={true}>
-          <FiSettings />
-        </HeaderButton>
-        <button>
+        <button onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}>
+          <HeaderButton circle={true}>
+            <FiSettings />
+          </HeaderButton>
+        </button>
+        <button onClick={handleLogin}>
           <HeaderButton circle={true} white={true}>
             {currentUser ? (
               <img src={currentUser.profile_picture} alt="" />

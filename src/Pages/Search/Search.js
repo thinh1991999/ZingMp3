@@ -10,10 +10,13 @@ import {
 } from "../../components";
 import styles from "./Search.module.scss";
 import { actions, SEARCH_API } from "../../store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Search() {
   const { Keyword } = useParams();
+
+  const { currentSong } = useSelector((state) => state);
+
   const dispatch = useDispatch();
 
   const [header, setHeader] = useState([
@@ -51,6 +54,7 @@ function Search() {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(""));
     dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle(`Search:${Keyword}`));
   }, []);
 
   if (loading) {

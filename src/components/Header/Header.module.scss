@@ -21,6 +21,10 @@
       .menuBtn {
         display: none;
       }
+      button {
+        background-color: transparent;
+        border: unset;
+      }
     }
     .searchMobile {
       flex: 1;

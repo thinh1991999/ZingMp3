@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import {
   GlobalStyles,
@@ -42,6 +42,12 @@ function App() {
     loading,
     page,
     idCurrentSong,
+    currentAlbum,
+    currentIndexSong,
+    songCurrentTime,
+    currentSinger,
+    currentSong,
+    song,
     showNavMobile,
     popperInfo: { show },
     showTimeStop,
@@ -49,24 +55,26 @@ function App() {
     warningModal: { show: warningShow },
     showLogin,
     showComment,
+    title,
+    listSong,
+    indexValidSongs,
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
-  const fetchHomeData = async () => {
-    try {
-      const respon = await fetch(`${HOME_API}${page}`);
-      const dataRespon = await respon.json();
-      const {
-        data: { items },
-      } = dataRespon;
-      dispatch(actions.setData(items));
-    } catch (error) {
-      dispatch(actions.setScroll(false));
-    }
-  };
-
   useEffect(() => {
+    const fetchHomeData = async () => {
+      try {
+        const respon = await fetch(`${HOME_API}${page}`);
+        const dataRespon = await respon.json();
+        const {
+          data: { items },
+        } = dataRespon;
+        dispatch(actions.setData(items));
+      } catch (error) {
+        dispatch(actions.setScroll(false));
+      }
+    };
     fetchHomeData();
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -91,6 +99,37 @@ function App() {
       dispatch(actions.setLoading(false));
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "infoCurrent",
+      JSON.stringify({
+        idCurrentSong,
+        currentAlbum,
+        currentSinger,
+        currentIndexSong,
+        songCurrentTime,
+        currentSong,
+        song,
+        listSong,
+        indexValidSongs,
+      })
+    );
+  }, [
+    idCurrentSong,
+    currentAlbum,
+    currentSinger,
+    currentIndexSong,
+    songCurrentTime,
+    currentSong,
+    song,
+    listSong,
+    indexValidSongs,
+  ]);
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
   if (loading) {
     return <Loading loadFull={true} />;

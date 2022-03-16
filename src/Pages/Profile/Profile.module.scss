@@ -7,6 +7,10 @@
       color: #fff;
       margin-bottom: 5px;
     }
+    button {
+      background-color: transparent;
+      border: unset;
+    }
     .left {
       display: flex;
       flex-direction: column;
@@ -24,6 +28,9 @@
         font-size: 20px;
         margin: unset;
       }
+    }
+    .mobile {
+      display: none;
     }
     .center {
       h2 {
@@ -89,6 +96,9 @@
         }
       }
     }
+    .right {
+      text-align: end;
+    }
   }
 }
 
@@ -98,4 +108,38 @@
 
 .container::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg);
+}
+
+@media only screen and(max-width:991px) {
+  .container {
+    .wrap {
+      .mobile {
+        display: block;
+      }
+      .right {
+        display: none;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:469px) {
+  .container {
+    .wrap {
+      .center {
+        form {
+          .country {
+            flex-direction: column;
+            .countryLeft,
+            .countryRight {
+              width: 100%;
+            }
+            .countryLeft {
+              margin-bottom: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
 }

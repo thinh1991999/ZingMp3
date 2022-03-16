@@ -124,11 +124,11 @@ function AlbumItem({
   const handleShowLyric = () => {
     if (albumSong) {
       if (encodeId === currentAlbum) {
-        if (index !== currentIndexSong) {
-          dispatch(actions.playSongSameAlbum(encodeId));
+        if (idSong !== idCurrentSong) {
+          dispatch(actions.playSongSameAlbum(idSong));
         }
       } else {
-        dispatch(actions.playSongAnotherAlbum(encodeId));
+        dispatch(actions.playSongAnotherAlbum(idSong));
       }
     }
     if (chartHome) {
@@ -218,8 +218,8 @@ function AlbumItem({
         </div>
         <div className={styles.icon}>
           <HiOutlineMusicNote className={styles.musicIcon} />
-          <input type="checkbox" id="checkbox" className={styles.checkbox} />
-          <label htmlFor="checkbox"></label>
+          <input type="checkbox" id={idSong} className={styles.checkbox} />
+          <label htmlFor={idSong}></label>
         </div>
         <div className={styles.img}>
           <img src={thumbnailM} alt="" />
@@ -253,19 +253,22 @@ function AlbumItem({
       </div>
       <div className={styles.right}>
         <div className={styles.rightBtn}>
-          <div className={styles.btn}>
+          <button
+            className={styles.btn}
+            onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}
+          >
             <ButtonIcon
               album={true}
               popper={{
                 show: true,
                 msg: "Thêm vào thư viện",
-                position: "CenterUp",
+                position: `${playLists ? "CenterUpRight" : "CenterUp"}`,
               }}
             >
               <AiOutlineHeart />
             </ButtonIcon>
-          </div>
-          <div className={styles.btn} onClick={() => handleShowLyric()}>
+          </button>
+          <button className={styles.btn} onClick={() => handleShowLyric()}>
             <ButtonIcon
               album={true}
               popper={{
@@ -276,8 +279,11 @@ function AlbumItem({
             >
               <GiMicrophone />
             </ButtonIcon>
-          </div>
-          <div className={styles.btn}>
+          </button>
+          <button
+            className={styles.btn}
+            onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}
+          >
             <ButtonIcon
               album={true}
               popper={{
@@ -288,7 +294,7 @@ function AlbumItem({
             >
               <BsThreeDots />
             </ButtonIcon>
-          </div>
+          </button>
         </div>
         <span>{newDuration}</span>
       </div>

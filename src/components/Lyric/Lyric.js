@@ -321,7 +321,7 @@ function Lyric() {
               </div>
             </Col>
             <Col sm={3} xl={3} className={styles.headerRight}>
-              <div className={styles.btn} onClick={handleFullScreen}>
+              <button className={styles.btn} onClick={handleFullScreen}>
                 {fullscreen ? (
                   <ButtonIcon
                     fill={true}
@@ -347,9 +347,9 @@ function Lyric() {
                     <AiOutlineFullscreen />
                   </ButtonIcon>
                 )}
-              </div>
+              </button>
               <div className={styles.btn} ref={settingBtnRef}>
-                <div className={styles.btnWrap} onClick={handleShowSetting}>
+                <button className={styles.btnWrap} onClick={handleShowSetting}>
                   <ButtonIcon
                     fill={true}
                     size={24}
@@ -361,7 +361,7 @@ function Lyric() {
                   >
                     <AiOutlineSetting />
                   </ButtonIcon>
-                </div>
+                </button>
                 {showSetting ? (
                   <div className={styles.btnDrop} ref={settingRef}>
                     <LyricSetting
@@ -380,7 +380,7 @@ function Lyric() {
                 )}
               </div>
 
-              <div className={styles.btn} onClick={closeLyric}>
+              <button className={styles.btn} onClick={closeLyric}>
                 {!fullscreen && (
                   <ButtonIcon
                     fill={true}
@@ -394,7 +394,7 @@ function Lyric() {
                     <AiOutlineDown />
                   </ButtonIcon>
                 )}
-              </div>
+              </button>
             </Col>
           </Row>
           <div className={styles.body}>

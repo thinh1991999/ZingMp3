@@ -29,6 +29,8 @@
           border-radius: 50%;
           margin: 0 5px;
           position: relative;
+          background-color: transparent;
+          border: unset;
           .options {
             position: absolute;
             top: calc(100% + 10px);

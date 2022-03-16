@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 function Popper() {
   const {
-    popperInfo: { top, left, bottom, right, width, height, position },
+    popperInfo: { top, left, right, width, height, position },
     popperMess,
   } = useSelector((state) => state);
 
@@ -43,6 +43,14 @@ function Popper() {
         setRightPosition(`${-wrapWidth + width * 2.3}px`);
         setClassName(clsx(styles.popper, styles.popperCenterDown));
         break;
+      case "CenterUpRight": {
+        const { width: wrapWidth } = wrapRef.current.getBoundingClientRect();
+        setLeftPosition(`unset`);
+        setTopPosition(`${top - height}px`);
+        setRightPosition(`${-wrapWidth / 2 + width + width / 3}px`);
+        setClassName(clsx(styles.popper));
+        break;
+      }
       default:
         break;
     }

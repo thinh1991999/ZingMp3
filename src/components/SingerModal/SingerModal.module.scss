@@ -67,9 +67,12 @@
         height: 100%;
         left: 0;
         top: 0;
-        display: flex;
-        justify-content: right;
+        text-align: end;
         padding: 10px;
+        button {
+          background-color: transparent;
+          border: unset;
+        }
       }
     }
 

@@ -23,17 +23,6 @@ function AlbumLeft({ data }) {
 
   const dispatch = useDispatch();
 
-  // const {
-  //   setCurrentSong,
-  //   setCurrentAlbum,
-  //   currentAlbum,
-  //   playing,
-  //   setPlaying,
-  //   setListSong,
-  //   setCurrentIndexSong,
-  //   getSong,
-  // } = useGlobalAppContext();
-
   const {
     title,
     like,

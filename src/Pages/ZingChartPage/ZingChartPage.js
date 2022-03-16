@@ -4,9 +4,12 @@ import { actions, ZING_CHART_API } from "../../store";
 import styles from "./ZingChartPage.module.scss";
 import { Chart, Loading, AlbumItem, PrimaryButton } from "../../components";
 import { AiFillPlayCircle } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function ZingChartPage() {
+  const { currentSong } = useSelector((state) => state);
+
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
@@ -42,6 +45,7 @@ function ZingChartPage() {
     dispatch(actions.setBGHeader(false));
     dispatch(actions.setCurrentNav(2));
     dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle(`ZingChartPage`));
   }, []);
   if (loading) {
     return <Loading size={50} />;
@@ -143,7 +147,11 @@ function ZingChartPage() {
                     })}
                   </div>
                   <div className={styles.bottomBtn}>
-                    <a onClick={handleLoadMore}>
+                    <a
+                      onClick={() =>
+                        toast.error("Chức năng này chưa được hỗ trợ")
+                      }
+                    >
                       <PrimaryButton
                         info={{
                           msg: "xem tất cả",

@@ -4,9 +4,11 @@ import { Loading, Mv } from "../../components";
 import { actions, LIST_MV_API } from "../../store";
 import { Row } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function ListMV() {
+  const { currentSong } = useSelector((state) => state);
+
   const [loading, setLoading] = useState(true);
   const [stateNav, setStateNav] = useState([
     {
@@ -111,6 +113,7 @@ function ListMV() {
     dispatch(actions.setCurrentNav(8));
     fetchListMV();
     dispatch(actions.setShowNavMobile(false));
+    !currentSong && dispatch(actions.setTitle("List MV"));
   }, []);
 
   useEffect(() => {

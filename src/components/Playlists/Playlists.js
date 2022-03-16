@@ -123,7 +123,7 @@ function Playlists() {
         <div className={styles.wrap}>
           <div className={styles.header}>
             <h2>Danh sách phát</h2>
-            <div
+            <button
               onClick={handleShowTimeStop}
               className={clsx(styles.btn, timeToStop > 0 ? styles.active : "")}
             >
@@ -138,8 +138,8 @@ function Playlists() {
               >
                 <GiAlarmClock />
               </ButtonIcon>
-            </div>
-            <div className={styles.btn} onClick={handleShowOption}>
+            </button>
+            <button className={styles.btn} onClick={handleShowOption}>
               <ButtonIcon
                 fill={true}
                 popper={{
@@ -164,7 +164,7 @@ function Playlists() {
                   </ul>
                 </div>
               )}
-            </div>
+            </button>
           </div>
           <div className={styles.body}>
             <div className={styles.past}>

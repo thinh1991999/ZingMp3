@@ -52,6 +52,7 @@ function LyricSetting({ data }) {
             <label className={styles.labelFirst}>Cỡ chữ lời nhạc</label>
             {sizes.map((item, index) => {
               const { name, size } = item;
+              console.log(size);
               const activeLabel = name === textSize ? styles.activeLabel : "";
               return (
                 <div key={index}>
@@ -67,7 +68,7 @@ function LyricSetting({ data }) {
                   <label
                     htmlFor={name}
                     style={{
-                      fontSize: `${Math.floor(size / 2)}px`,
+                      fontSize: `${size * 20}px`,
                     }}
                     className={clsx(styles.label, activeLabel)}
                     onClick={() => handleChangeSize(name)}

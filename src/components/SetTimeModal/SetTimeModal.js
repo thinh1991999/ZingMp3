@@ -152,6 +152,9 @@ function SetTimeModal() {
     minuteArr.pop();
     setHourList(hourArr);
     setMinuteList(minuteArr);
+    return () => {
+      dispatch(actions.setPopperInfo({ show: false }));
+    };
   }, []);
 
   useEffect(() => {
