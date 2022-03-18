@@ -10,7 +10,7 @@ import { actions } from "../../store";
 import { useNavigate } from "react-router-dom";
 
 function SearchMobile() {
-  const { currentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state);
 
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
@@ -48,10 +48,6 @@ function SearchMobile() {
     setActiveSearch(true);
   };
 
-  const handleOutSearch = () => {
-    // setActiveSearch(false);
-  };
-
   const handleSearchText = (e) => {
     setSearchText(e.target.value);
   };
@@ -65,7 +61,6 @@ function SearchMobile() {
     e.preventDefault();
     if (searchText.length > 0) {
       navigate(`/Search/${searchText}`);
-      //   dispatch(actions.setActiveSearch(false));
       inputRef.current.blur();
     }
   };
@@ -73,7 +68,6 @@ function SearchMobile() {
   const handleSubmitBtn = () => {
     if (searchText.length > 0) {
       navigate(`/Search/${searchText}`);
-      //   dispatch(actions.setActiveSearch(false));
       inputRef.current.blur();
     }
   };
@@ -93,7 +87,7 @@ function SearchMobile() {
   useEffect(() => {
     window.addEventListener("click", event);
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle(`SearchMobile`));
+    !idCurrentSong && dispatch(actions.setTitle(`SearchMobile`));
     return () => {
       window.removeEventListener("click", event);
     };
@@ -117,7 +111,6 @@ function SearchMobile() {
                 placeholder="Nhập tên bài hát,nghệ sĩ,MV,...."
                 value={searchText}
                 onFocus={handleSearchForm}
-                onBlur={handleOutSearch}
                 onChange={handleSearchText}
                 ref={inputRef}
               />

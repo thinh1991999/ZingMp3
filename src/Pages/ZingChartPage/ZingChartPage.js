@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 function ZingChartPage() {
-  const { currentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ function ZingChartPage() {
     dispatch(actions.setBGHeader(false));
     dispatch(actions.setCurrentNav(2));
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle(`ZingChartPage`));
+    !idCurrentSong && dispatch(actions.setTitle(`ZingChartPage`));
   }, []);
   if (loading) {
     return <Loading size={50} />;

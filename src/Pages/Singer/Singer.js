@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 function Singer() {
   const navigate = useNavigate();
 
-  const { currentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state);
 
   const [loading, setLoading] = useState(true);
   const [dataSinger, setDataSinger] = useState([]);
@@ -57,7 +57,7 @@ function Singer() {
 
   useEffect(() => {
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle(`Singer:${SingerName}`));
+    !idCurrentSong && dispatch(actions.setTitle(`Singer:${SingerName}`));
   }, []);
 
   if (loading) {

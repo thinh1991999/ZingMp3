@@ -12,9 +12,7 @@ function Album() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
 
-  const { album, currentIndexSong, currentSong } = useSelector(
-    (state) => state
-  );
+  const { album, idCurrentSong } = useSelector((state) => state);
   const dispatch = useDispatch();
   const fetchAlbum = async () => {
     setLoading(true);
@@ -39,7 +37,7 @@ function Album() {
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(""));
-    !currentSong && dispatch(actions.setTitle(`Album:${id}`));
+    !idCurrentSong && dispatch(actions.setTitle(`Album:${album?.title}`));
   }, []);
 
   if (loading) {

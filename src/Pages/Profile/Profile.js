@@ -21,7 +21,7 @@ function Profile() {
 
   const dispatch = useDispatch();
 
-  const { currentUser, currentSong } = useSelector((state) => state);
+  const { currentUser, idCurrentSong } = useSelector((state) => state);
   const [location, setLocation] = useState({ country: "", region: "" });
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -166,7 +166,7 @@ function Profile() {
     dispatch(actions.setCurrentNav(0));
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle("Profile"));
+    !idCurrentSong && dispatch(actions.setTitle("Profile"));
     return () => {
       dispatch(actions.setPopperInfo({ show: false }));
     };
@@ -178,7 +178,7 @@ function Profile() {
     email = currentUser.email;
     profile_picture = currentUser.profile_picture;
   }
-  console.log(location);
+
   return (
     <div className={styles.container}>
       <div className={styles.wrap}>

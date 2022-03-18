@@ -33,10 +33,14 @@
   }
   .lyricBodyRight {
     padding-left: 50px;
+    display: flex;
+    justify-content: center;
     .lyricBodyWrap {
       span {
         font-size: 32px;
         color: var(--white);
+        text-align: center;
+        display: inline-block;
       }
       ul::-webkit-scrollbar {
         display: none;
