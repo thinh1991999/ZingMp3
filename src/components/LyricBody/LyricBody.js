@@ -32,7 +32,7 @@ function LyricBody({ setCount, data }) {
   }, [songCurrentTime, ulRef]);
 
   useEffect(() => {
-    if (count > 5) {
+    if (count > 5 && ulRef.current) {
       const pos =
         (ulRef.current.scrollHeight / lyricsText.length) *
         (textActiveIndex - 2);

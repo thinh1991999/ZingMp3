@@ -156,9 +156,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   useEffect(() => {
     if (playing && audioRef) {
       const playPromise = audioRef.current.play();
-      if (!playPromise) {
-        console.log(playPromise);
-      }
+      console.log(playing);
     } else {
       audioRef.current.pause();
     }
@@ -257,7 +255,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
           })}
         </p>
       </div>
-      <audio src={data} autoPlay ref={audioRef}></audio>
+      <audio src={data} ref={audioRef}></audio>
     </div>
   );
 }
