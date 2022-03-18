@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actions, HOME_API } from "../../store";
 
 function Home() {
-  const { data, page, scroll, nextPage, loadingHome, currentSong } =
+  const { data, page, scroll, nextPage, loadingHome, idCurrentSong } =
     useSelector((state) => state);
 
   const [mount, setMount] = useState(false);
@@ -77,7 +77,7 @@ function Home() {
     setMount(true);
     dispatch(actions.setCurrentNav(1));
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle("Home"));
+    !idCurrentSong && dispatch(actions.setTitle("Home"));
   }, []);
 
   return (

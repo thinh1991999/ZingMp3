@@ -8,7 +8,7 @@ function Top100() {
   const [dataTop, setDataTop] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { currentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ function Top100() {
     dispatch(actions.setBGHeader(false));
     dispatch(actions.setCurrentNav(7));
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle(`Top100`));
+    !idCurrentSong && dispatch(actions.setTitle(`Top100`));
   }, []);
 
   if (loading) {

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 function Search() {
   const { Keyword } = useParams();
 
-  const { currentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
@@ -54,7 +54,7 @@ function Search() {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(""));
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle(`Search:${Keyword}`));
+    !idCurrentSong && dispatch(actions.setTitle(`Search:${Keyword}`));
   }, []);
 
   if (loading) {

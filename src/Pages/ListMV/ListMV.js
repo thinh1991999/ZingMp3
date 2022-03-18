@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 
 function ListMV() {
-  const { currentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state);
 
   const [loading, setLoading] = useState(true);
   const [stateNav, setStateNav] = useState([
@@ -113,7 +113,7 @@ function ListMV() {
     dispatch(actions.setCurrentNav(8));
     fetchListMV();
     dispatch(actions.setShowNavMobile(false));
-    !currentSong && dispatch(actions.setTitle("List MV"));
+    !idCurrentSong && dispatch(actions.setTitle("List MV"));
   }, []);
 
   useEffect(() => {
