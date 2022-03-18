@@ -143,7 +143,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   const endEvent = () => {
     dispatch(actions.playNextSongAuto());
   };
-
+  console.log(playing);
   useEffect(() => {
     audioRef.current.addEventListener("ended", endEvent);
     return () => {
@@ -154,9 +154,8 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   }, [currentTime]);
 
   useEffect(() => {
-    if (playing && audioRef) {
-      const playPromise = audioRef.current.play();
-      console.log(playing);
+    if (playing && audioRef && data) {
+      audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
@@ -255,7 +254,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
           })}
         </p>
       </div>
-      <audio src={data} ref={audioRef}></audio>
+      <audio src={data} autoPlay ref={audioRef}></audio>
     </div>
   );
 }

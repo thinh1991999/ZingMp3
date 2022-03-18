@@ -13,6 +13,7 @@ import { AiOutlineHeart, AiOutlineComment } from "react-icons/ai";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../../store";
+import { toast } from "react-toastify";
 
 function AlbumLeft({ data }) {
   // const [playing, setPlaying] = useState(false);
@@ -122,7 +123,10 @@ function AlbumLeft({ data }) {
           </div>
         </div>
         <div className={styles.albumLeftBtnMore}>
-          <button className={styles.btn}>
+          <button
+            className={styles.btn}
+            onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}
+          >
             <ButtonIcon
               fill={true}
               popper={{
@@ -134,7 +138,10 @@ function AlbumLeft({ data }) {
               <AiOutlineHeart />
             </ButtonIcon>
           </button>
-          <button className={styles.btn}>
+          <button
+            className={styles.btn}
+            onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}
+          >
             <ButtonIcon
               fill={true}
               popper={{
