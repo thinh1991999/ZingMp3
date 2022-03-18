@@ -1,0 +1,133 @@
+.lyricBody {
+  width: 100%;
+  height: 100%;
+  padding: 20px 100px;
+  align-items: center;
+  .lyricBodyLeft {
+    padding: 0 30px;
+    max-height: 500px;
+    display: flex;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    .imgWrap {
+      position: relative;
+
+      > img {
+        width: 100%;
+        max-width: 580px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+      .imgLayer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: flex-end;
+        padding: 20px;
+      }
+    }
+  }
+  .lyricBodyRight {
+    padding-left: 50px;
+    .lyricBodyWrap {
+      span {
+        font-size: 32px;
+        color: var(--white);
+      }
+      ul::-webkit-scrollbar {
+        display: none;
+      }
+      ul {
+        list-style: none;
+        margin: unset;
+        padding: unset;
+        max-height: 500px;
+        overflow: scroll;
+        position: relative;
+        transition: all 0.5s linear;
+        -webkit-mask-image: linear-gradient(
+          180deg,
+          hsla(0, 0%, 100%, 0),
+          hsla(0, 0%, 100%, 0.8) 10%,
+          #fff 25%,
+          #fff 75%,
+          hsla(0, 0%, 100%, 0.8) 90%,
+          hsla(0, 0%, 100%, 0)
+        );
+        font-size: 42px;
+
+        .item {
+          color: var(--white);
+          font-weight: 700;
+          padding: 20px 0;
+          // font-size: inherit;
+          letter-spacing: -1px;
+          line-height: 1.2;
+        }
+
+        .item.itemOver {
+          color: hsla(0, 0%, 100%, 0.5);
+        }
+
+        .item.itemActive {
+          color: #ffed00;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1400px) and(min-width:1199px) {
+  .lyricBody {
+    .lyricBodyRight {
+      .lyricBodyWrap {
+        ul {
+          font-size: 36px;
+          max-height: 480px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1200px) and(min-width:1000px) {
+  .lyricBody {
+    .lyricBodyRight {
+      .lyricBodyWrap {
+        ul {
+          font-size: 36px;
+          max-height: 450px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:991px) {
+  .lyricBody {
+    .lyricBodyLeft {
+      display: none;
+    }
+    .lyricBodyRight {
+      .lyricBodyWrap {
+        ul {
+          font-size: 28px;
+          max-height: 420px;
+          li {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .lyricBody {
+    padding: 20px 0;
+  }
+}

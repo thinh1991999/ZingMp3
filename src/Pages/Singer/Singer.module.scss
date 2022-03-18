@@ -1,0 +1,25 @@
+.singer {
+  padding-bottom: 100px;
+  height: 100vh;
+  overflow-y: scroll;
+
+  .singerWrap {
+    padding: 20px 40px;
+  }
+}
+
+.singer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.singer::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}
+
+@media only screen and(max-width:768px) {
+  .singer {
+    .singerWrap {
+      padding: 20px;
+    }
+  }
+}

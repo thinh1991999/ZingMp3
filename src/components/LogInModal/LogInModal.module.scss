@@ -1,0 +1,81 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.8);
+  .wrap {
+    width: 330px;
+    margin: 0;
+    padding: 25px;
+    background-color: var(--primary-bg);
+    border-radius: 8px;
+    max-height: 100%;
+    color: #fff;
+    h2 {
+      font-size: 20px;
+      margin: unset;
+      display: flex;
+      justify-content: space-between;
+      button {
+        border: unset;
+        background-color: transparent;
+      }
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      input {
+        margin: 10px 0;
+        width: 100%;
+        padding: 5px 10px;
+        outline: none;
+        border-radius: 4px;
+        background-color: var(--alpha-bg);
+        color: #fff;
+        border: 1px solid rgb(118, 118, 118);
+      }
+      .error {
+        border-color: red;
+      }
+      p {
+        font-size: 16px;
+        color: red;
+        margin: unset;
+      }
+      .mess {
+        margin-bottom: 10px;
+      }
+      .messSuccess {
+        color: var(--green);
+      }
+
+      > button {
+        background-color: transparent;
+        border: unset;
+      }
+    }
+
+    .change {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin: 10px 0 0;
+      button {
+        background-color: transparent;
+        border: unset;
+        color: var(--link-text-hover);
+        transition: all 0.5s linear;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

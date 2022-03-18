@@ -1,0 +1,132 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(2, 2, 2, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+
+  .modalWrap {
+    background-color: var(--primary-bg);
+    border-radius: 8px;
+    width: 480px;
+
+    .modalImg {
+      position: relative;
+      padding: 40px 0;
+
+      .bg {
+        height: 110px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: blur(50px);
+      }
+
+      .blur {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--primary-bg);
+        opacity: 0.4;
+      }
+
+      .img {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          width: 110px;
+          height: 110px;
+          border-radius: 50%;
+        }
+
+        h4 {
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 0;
+          color: var(--text-primary);
+          margin-top: 10px;
+        }
+      }
+      .btn {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        text-align: end;
+        padding: 10px;
+        button {
+          background-color: transparent;
+          border: unset;
+        }
+      }
+    }
+
+    .modalContent {
+      padding: 24px;
+      position: relative;
+      background-color: var(--primary-bg);
+      opacity: 0.4;
+
+      .modalText {
+        line-height: 1.43;
+        color: var(--text-primary);
+        max-height: 218px;
+        overflow-y: auto;
+      }
+    }
+  }
+}
+
+.modalContent .modalText::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalContent .modalText::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}
+
+@media only screen and(max-width:1000px) {
+  .modal {
+    .modalWrap {
+      // width: 300px;
+
+      .modalImg {
+        .bg {
+        }
+
+        .blur {
+        }
+
+        .img {
+          img {
+          }
+
+          h4 {
+          }
+        }
+        .btn {
+        }
+      }
+
+      .modalContent {
+        .modalText {
+        }
+      }
+    }
+  }
+}

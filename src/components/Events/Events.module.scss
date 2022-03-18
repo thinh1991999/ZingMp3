@@ -1,0 +1,35 @@
+.events {
+  padding: 15px;
+
+  .eventsTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn {
+      display: flex;
+      align-items: center;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 24px;
+
+      .btnChildActive {
+        cursor: pointer;
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  .eventsWrap {
+    // overflow-x: scroll;
+    .eventsContainer {
+      overflow-x: scroll;
+      flex-wrap: nowrap;
+      transition: all 1s linear;
+      scroll-behavior: smooth;
+    }
+    .eventsContainer::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

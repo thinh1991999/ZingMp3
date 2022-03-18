@@ -1,0 +1,115 @@
+.kara {
+  width: 100%;
+  height: 100%;
+  .karaWrap {
+    height: 100%;
+    max-width: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 80px;
+    span {
+      font-size: 32px;
+      color: var(--white);
+    }
+    ul {
+      list-style: none;
+      padding: unset;
+      li {
+        font-size: 48px;
+        font-weight: 700;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        .wrap {
+          position: relative;
+          margin: 0 10px;
+
+          .box {
+            color: var(--white);
+          }
+          .layer {
+            position: absolute;
+            width: 0;
+            height: 100%;
+            top: 0;
+            left: 0;
+            color: var(--yellow);
+            transition: all 0.5s linear;
+            overflow: hidden;
+          }
+        }
+        .wrap.wrapActive {
+          .layer {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1200px) and (min-width: 1000px) {
+  .kara {
+    .karaWrap {
+      ul {
+        li {
+          font-size: 32px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:1000px) and (min-width: 768px) {
+  .kara {
+    .karaWrap {
+      ul {
+        li {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .kara {
+    .karaWrap {
+      max-width: unset;
+      ul {
+        li {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:500px) {
+  .kara {
+    .karaWrap {
+      max-width: unset;
+      ul {
+        li {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:321px) {
+  .kara {
+    .karaWrap {
+      max-width: unset;
+      ul {
+        li {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

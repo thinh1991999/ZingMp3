@@ -1,0 +1,21 @@
+.home {
+  background-color: var(--layout-bg);
+  padding: 100px 40px;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.home::-webkit-scrollbar {
+  width: 6px;
+}
+
+.home::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}
+
+@media only screen and(max-width:768px) {
+  .home {
+    padding: 100px 0;
+  }
+}

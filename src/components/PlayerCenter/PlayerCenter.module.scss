@@ -1,0 +1,85 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  height: 100%;
+  .playFeatures {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .playBtn {
+      margin: 0 10px;
+    }
+  }
+
+  .playProgress {
+    display: flex;
+    width: 80%;
+    align-items: center;
+    margin: 0 auto;
+
+    .playProgressInput {
+      flex: 1;
+      // width: 80%;
+      -webkit-appearance: none;
+      height: 6px;
+      background: #535252;
+      opacity: 1;
+      -webkit-transition: 0.2s;
+      transition: opacity 0.2s;
+      &:hover {
+        height: 10px;
+        border-radius: 4px;
+      }
+      &:hover::-webkit-slider-thumb {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+    }
+
+    .playProgressTime {
+      font-size: 14px;
+      color: var(--text-primary);
+      margin-left: 10px;
+    }
+  }
+  .name {
+    display: none;
+    p {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-primary);
+
+      span {
+        color: var(--text-secondary);
+      }
+    }
+  }
+}
+
+.wrap.lyricClass {
+  flex-direction: column-reverse;
+  .name {
+    display: block;
+  }
+}
+
+.playProgressCurrent {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-right: 10px;
+}
+
+.playProgressInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 6px;
+  background-color: var(--progressbar-active-bg);
+  cursor: pointer;
+}

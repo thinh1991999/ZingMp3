@@ -1,0 +1,209 @@
+.zingchart {
+  height: 100vh;
+  overflow-y: scroll;
+  .container {
+    .top {
+      padding-top: 100px;
+      position: relative;
+      .blur {
+        background: url(https://zjs.zadn.vn/zmp3-desktop/releases/v1.5.12/static/media/bg-chart.fd766403.jpg)
+          top/cover no-repeat;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        filter: grayscale(1);
+        // z-index: 1;
+      }
+      .alpha {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(
+          180deg,
+          hsla(0, 0%, 100%, 0) 37%,
+          var(--layout-bg)
+        );
+        // z-index: 0;
+      }
+      .alpha1 {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(
+          180deg,
+          var(--layout-bg),
+          var(--layout-bg)
+        );
+        opacity: 0.9;
+      }
+      .header {
+        position: relative;
+        h4 {
+          padding: 0 48px;
+          font-size: 48px;
+          color: var(--text-primary);
+          margin: unset;
+          display: flex;
+          align-items: center;
+
+          button {
+            background-color: transparent;
+            border: unset;
+            color: var(--purple-primary);
+            margin-left: 5px;
+          }
+        }
+      }
+      .content {
+        position: relative;
+      }
+    }
+    .center {
+      padding: 0 40px;
+      .centerBtn {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+        > button {
+          background-color: transparent;
+          border: unset;
+        }
+      }
+    }
+    .bottom {
+      position: relative;
+      margin: unset;
+      padding: 40px 40px 100px;
+      .blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+        background: url(https://zjs.zadn.vn/zmp3-desktop/releases/v1.5.13/static/media/week-chart-bg.edf332e5.jpg)
+          top/cover no-repeat;
+        filter: grayscale(1);
+      }
+      .alpha {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: var(--chart-bg-img-alpha);
+      }
+      > a {
+        position: relative;
+        font-size: 48px;
+        color: var(--text-primary);
+        margin: unset;
+        display: flex;
+        align-items: center;
+      }
+      .chartWeek {
+        position: relative;
+        padding: 20px 15px;
+
+        .chartWrap {
+          // padding: 0 10px;
+          background-color: var(--chart-box-bg-alpha);
+          border-radius: 16px;
+          .chartTop {
+            .chartHeader {
+              padding-left: 50px;
+              display: flex;
+              align-items: center;
+              a {
+                font-size: 28px;
+                color: var(--text-primary);
+                margin: unset;
+                display: flex;
+                align-items: center;
+              }
+              button {
+                display: flex;
+                align-items: center;
+                background-color: unset;
+                font-size: 32px;
+                border: unset;
+                color: var(--purple-primary);
+                margin-left: 8px;
+              }
+            }
+          }
+          .bottomBtn {
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            > a {
+              background-color: transparent;
+              border: unset;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.zingchart::-webkit-scrollbar {
+  width: 6px;
+}
+
+.zingchart::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}
+
+@media only screen and (max-width: 540px) {
+  .zingchart {
+    .container {
+      .bottom {
+        > a {
+          font-size: 36px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 426px) {
+  .zingchart {
+    .container {
+      .top {
+        .header {
+          h4 {
+            font-size: 32px;
+          }
+        }
+      }
+      .center {
+        padding: 0 20px;
+      }
+      .bottom {
+        padding: 40px 20px 100px;
+        > a {
+          font-size: 32px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 358px) {
+  .zingchart {
+    .container {
+      .bottom {
+        > a {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+}

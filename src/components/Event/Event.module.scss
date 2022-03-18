@@ -1,0 +1,120 @@
+.event {
+  width: calc(100% / 3);
+  padding: 0 15px;
+
+  .eventWrap {
+    width: 100%;
+
+    .eventLink {
+      display: block;
+      width: 100%;
+
+      .eventImg {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+
+        &:hover img {
+          transform: scale(1.2);
+        }
+
+        img {
+          width: 100%;
+          object-fit: cover;
+          border-radius: 10px;
+          object-position: center;
+          transition: all 0.5s;
+        }
+
+        .eventInfo {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          padding: 15px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+
+          span {
+            margin: unset;
+            font-size: 9px;
+            text-transform: uppercase;
+            padding: 2px 4px;
+            background-color: white;
+            border-radius: 2px;
+            color: #ff0101;
+            display: inline-block;
+          }
+
+          h3 {
+            margin: unset;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 5px 0;
+            text-transform: none;
+            color: var(--text-primary);
+          }
+
+          p {
+            margin: unset;
+            font-size: 14px;
+            font-weight: 400;
+            margin: 0;
+            color: var(--text-primary);
+          }
+        }
+      }
+    }
+  }
+}
+
+.eventBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eventFollow {
+  padding: 10px 0;
+
+  h4 {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    text-transform: none;
+    color: var(--text-primary);
+  }
+
+  .eventFollowImg {
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+
+    img {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+    }
+
+    span {
+      font-size: 14px;
+      margin-left: 6px;
+      color: var(--text-secondary);
+    }
+  }
+}
+
+@media only screen and(max-width:1000px) {
+  .event {
+    width: calc(100% / 2);
+  }
+}
+
+@media only screen and(max-width:600px) {
+  .event {
+    width: 100%;
+  }
+}

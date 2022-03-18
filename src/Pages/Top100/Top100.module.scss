@@ -1,0 +1,73 @@
+.top100 {
+  height: 100vh;
+  overflow-y: scroll;
+  //   padding: 100px 40px;
+  .container {
+    .header {
+      padding-top: 100px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url(https://zjs.zadn.vn/zmp3-desktop/releases/v1.5.13/static/media/banner-100.33cafe6b.png)
+          top/cover no-repeat;
+        -webkit-filter: grayscale(1);
+        filter: grayscale(1);
+      }
+      .alpha {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(
+          180deg,
+          hsla(0, 0%, 100%, 0) 37%,
+          var(--layout-bg)
+        );
+      }
+      .alpha1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(
+          180deg,
+          var(--layout-bg),
+          var(--layout-bg)
+        );
+        opacity: 0.8;
+      }
+      svg {
+        position: relative;
+      }
+    }
+    .content {
+      padding: 0 40px 100px;
+    }
+  }
+}
+.top100::-webkit-scrollbar {
+  width: 6px;
+}
+
+.top100::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}
+
+@media only screen and (max-width: 679px) {
+  .top100 {
+    .container {
+      .content {
+        padding: 0 20px 100px;
+      }
+    }
+  }
+}

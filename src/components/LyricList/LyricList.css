@@ -1,0 +1,10 @@
+.LyricList_list__gq8RF .swiper .swiper-button-next,
+.LyricList_list__gq8RF .swiper .swiper-button-prev {
+  color: var(--white);
+}
+
+.LyricList_list__gq8RF.LyricList_inviList__z9gNc .swiper .swiper-button-next,
+.LyricList_list__gq8RF.LyricList_inviList__z9gNc .swiper .swiper-button-prev {
+  opacity: 0;
+  transition: all 0.5s linear;
+}

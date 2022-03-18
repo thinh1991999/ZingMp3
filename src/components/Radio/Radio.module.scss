@@ -1,0 +1,161 @@
+.radio {
+  width: calc(100% / 7);
+  padding: 0 15px;
+
+  .radioWrap {
+    position: relative;
+    width: 100%;
+
+    .radioImg {
+      width: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+
+      &:hover img {
+        transform: scale(1.2);
+      }
+
+      &:hover .imgLayer {
+        opacity: 0.2;
+      }
+
+      &:hover .imgBtn {
+        opacity: 1;
+      }
+
+      img {
+        width: 100%;
+        object-fit: cover;
+        transition: all 0.5s;
+      }
+
+      .imgLayer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0;
+        transition: all 0.5s;
+      }
+
+      .imgBtn {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: all 0.5s;
+      }
+    }
+
+    .radioLive {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .radioHost {
+      position: absolute;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      bottom: 0;
+      right: 0;
+
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .radioInfo {
+    text-align: center;
+    margin-top: 30px;
+
+    h3 {
+      font-weight: 600;
+      font-size: 16px;
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    span {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.33;
+      color: var(--text-secondary);
+    }
+  }
+}
+
+@media only screen and(max-width:1200px) {
+  .radio {
+    width: calc(100% / 5);
+    .radioWrap {
+      .radioHost {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:769px) {
+  .radio {
+    width: calc(100% / 4);
+    margin-top: 10px;
+    .radioWrap {
+      .radioHost {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:520px) {
+  .radio {
+    .radioWrap {
+      .radioHost {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:426px) {
+  .radio {
+    width: calc(100% / 3);
+    margin-top: 10px;
+    .radioWrap {
+      .radioHost {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:321px) {
+  .radio {
+    width: calc(100% / 2);
+    margin-top: 10px;
+    .radioWrap {
+      .radioHost {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}
