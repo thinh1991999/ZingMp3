@@ -37,8 +37,15 @@ function Album() {
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(""));
-    !idCurrentSong && dispatch(actions.setTitle(`Album:${album?.title}`));
   }, []);
+
+  useEffect(() => {
+    if (loading) {
+      !idCurrentSong && dispatch(actions.setTitle(`Album`));
+    } else {
+      !idCurrentSong && dispatch(actions.setTitle(`Album:${album?.title}`));
+    }
+  }, [album, loading]);
 
   if (loading) {
     return <Loading size={50} />;
