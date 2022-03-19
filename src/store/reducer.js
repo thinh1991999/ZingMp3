@@ -277,6 +277,7 @@ const reducer = (state = initState, action) => {
         currentSong: {},
         playing: false,
         songCurrentTime: 0,
+        song: "",
       };
     }
     case "SET_INVI": {

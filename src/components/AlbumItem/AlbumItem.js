@@ -143,7 +143,9 @@ function AlbumItem({
         );
       }
     }
-    dispatch(actions.setShowLyric(true));
+    if (idSong === idCurrentSong) {
+      dispatch(actions.setShowLyric(true));
+    }
   };
 
   useEffect(() => {

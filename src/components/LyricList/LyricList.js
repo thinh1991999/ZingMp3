@@ -48,8 +48,7 @@ function LyricList() {
   };
 
   useEffect(() => {
-    if (!canMove && typeof currentIndexSong === "number") {
-      console.log(canMove);
+    if ((!canMove && typeof currentIndexSong === "number") || invi) {
       if (width >= 1024) {
         wrapRef.current.swiper.slideTo(currentIndexSong - 2);
       } else if (width >= 768) {
@@ -58,7 +57,7 @@ function LyricList() {
         wrapRef.current.swiper.slideTo(currentIndexSong);
       }
     }
-  }, [canMove, width, currentIndexSong]);
+  }, [canMove, width, currentIndexSong, invi]);
 
   const eventResize = (e) => {
     const { innerWidth } = e.target;
