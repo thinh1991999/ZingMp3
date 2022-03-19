@@ -50,11 +50,11 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
 
   const handlePlaySong = () => {
     dispatch(actions.setPlaying(!playing));
-    if (playing) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
+    // if (playing) {
+    //   audioRef.current.pause();
+    // } else {
+    //   audioRef.current.play();
+    // }
   };
 
   const handleSeekSong = (e) => {
@@ -143,7 +143,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   const endEvent = () => {
     dispatch(actions.playNextSongAuto());
   };
-  console.log(playing);
+
   useEffect(() => {
     audioRef.current.addEventListener("ended", endEvent);
     return () => {
@@ -154,12 +154,23 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   }, [currentTime]);
 
   useEffect(() => {
-    if (playing && audioRef && data) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
+    if (audioRef && data) {
+      if (playing) {
+        var playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then((_) => {
+              dispatch(actions.setPlaying(true));
+            })
+            .catch((error) => {
+              dispatch(actions.setPlaying(false));
+            });
+        }
+      } else {
+        audioRef.current.pause();
+      }
     }
-  }, [playing]);
+  }, [playing, data]);
 
   useEffect(() => {
     if (repeatSong === 1) {
@@ -254,7 +265,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
           })}
         </p>
       </div>
-      <audio src={data} autoPlay ref={audioRef}></audio>
+      <audio src={data} autoPlay={false} ref={audioRef}></audio>
     </div>
   );
 }

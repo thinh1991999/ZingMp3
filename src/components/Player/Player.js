@@ -116,7 +116,6 @@ function Player() {
 
   useEffect(() => {
     if (currentSong) {
-      console.log(currentSong.title);
       dispatch(actions.setTitle(currentSong.title));
     }
   }, [currentSong]);
