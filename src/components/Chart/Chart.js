@@ -162,7 +162,6 @@ function Chart({ data, home = false }) {
                   onMouseEnter={() => {
                     setIndexShow(index);
                   }}
-                  onClick={() => handlePlayZingChartSong(encodeId)}
                   key={encodeId}
                   className={clsx(
                     styles.leftItem,
@@ -175,7 +174,10 @@ function Chart({ data, home = false }) {
                   )}
                 >
                   <span>{index + 1}</span>
-                  <div className={styles.img}>
+                  <div
+                    className={styles.img}
+                    onClick={() => handlePlayZingChartSong(encodeId)}
+                  >
                     <img src={thumbnailM} alt={title} />
                     <div className={styles.imgLayer}></div>
                     <div className={styles.play}>
@@ -218,9 +220,10 @@ function Chart({ data, home = false }) {
                         const { id, alias, name } = artist;
                         if (index === 0) {
                           return (
-                            <a key={id} href="">
+                            <Link key={id} to={`/Singer/${alias}`}>
+                              {" "}
                               {name}
-                            </a>
+                            </Link>
                           );
                         }
                         return (

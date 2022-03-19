@@ -229,13 +229,22 @@
         .left {
           .leftItem {
             .img {
-              display: none;
+              // display: none;
             }
             .info {
               h4 {
+                text-align: left;
                 font-size: 10px;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
               }
               span {
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
                 a {
                   font-size: 8px;
                 }
