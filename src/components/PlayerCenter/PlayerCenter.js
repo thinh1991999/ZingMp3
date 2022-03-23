@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
 import { actions } from "../../store";
 import { useNavigate } from "react-router-dom";
+import { async } from "@firebase/util";
 
 function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   const {
@@ -156,16 +157,7 @@ function PlayerCenter({ data, songLoading, duration = 0, volume = 50, lyric }) {
   useEffect(() => {
     if (audioRef && data) {
       if (playing) {
-        var playPromise = audioRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then((_) => {
-              dispatch(actions.setPlaying(true));
-            })
-            .catch((error) => {
-              dispatch(actions.setPlaying(false));
-            });
-        }
+        audioRef.current.play();
       } else {
         audioRef.current.pause();
       }

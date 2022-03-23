@@ -98,6 +98,7 @@ function App() {
       }
       dispatch(actions.setLoading(false));
     });
+    dispatch(actions.setPlaying(false));
   }, []);
 
   useEffect(() => {

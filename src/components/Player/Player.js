@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Player.module.scss";
 import { actions, SONG_API } from "../../store";
 import { Row, Col } from "react-bootstrap";
@@ -36,6 +36,7 @@ function Player() {
   const navigate = useNavigate();
 
   const [volume, setVolume] = useState(50);
+  const mount = useRef(false);
 
   const { encodeId, title, thumbnail, artists = [], duration } = currentSong;
 
@@ -59,12 +60,12 @@ function Player() {
   const fetchDataSong = async () => {
     dispatch(actions.setSongLoading(true));
     try {
-      console.log(encodeId);
       const respon = await fetch(`${SONG_API}${encodeId}`);
       const { err, data } = await respon.json();
       if (err === 0) {
         dispatch(actions.setSong(data[128]));
         dispatch(actions.setSongLoading(false));
+        dispatch(actions.setPlaying(true));
         dispatch(actions.setSongCurrentTime(0));
         dispatch(actions.setFetchSong(false));
       } else if (err === -1110) {
@@ -74,6 +75,7 @@ function Player() {
           )
         );
         dispatch(actions.setSongLoading(false));
+        dispatch(actions.setPlaying(true));
         dispatch(actions.setSongCurrentTime(0));
         dispatch(actions.setFetchSong(false));
       } else {
@@ -109,10 +111,6 @@ function Player() {
       fetchDataSong();
     }
   }, [fetchSong]);
-
-  useEffect(() => {
-    dispatch(actions.setPlaying(!songLoading));
-  }, [songLoading]);
 
   useEffect(() => {
     if (currentSong) {
