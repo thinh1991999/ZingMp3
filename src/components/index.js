@@ -1,6 +1,7 @@
 export { default as Loading } from "./Loading/Loading";
 export { default as Nav } from "./Nav/Nav";
 export { default as GlobalStyles } from "./GlobalStyles/GlobalStyles";
+export { default as GlobalLayout } from "./GlobalLayout/GlobalLayout";
 export { default as Player } from "./Player/Player";
 export { default as PlayerCenter } from "./PlayerCenter/PlayerCenter";
 export { default as Header } from "./Header/Header";

@@ -1,4 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Slider,
   Topics,
@@ -11,105 +13,84 @@ import {
   Chart,
 } from "../../components";
 import styles from "./Home.module.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { actions, HOME_API } from "../../store";
+import httpService from "../../Services/http.service";
+import { actions } from "../../store";
 
 function Home() {
-  const { data, page, scroll, nextPage, loadingHome, idCurrentSong } =
-    useSelector((state) => state);
-
-  const [mount, setMount] = useState(false);
-
   const dispatch = useDispatch();
+  const { idCurrentSong } = useSelector((state) => state);
 
-  const homeRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [homeData, setHomeData] = useState([]);
+  const [hasMore, setHasmore] = useState(true);
 
-  const fetchHomeDataNextPage = async () => {
-    dispatch(actions.setLoadingHome(true));
-    try {
-      const respon = await fetch(`${HOME_API}${page}`);
-      const dataRespon = await respon.json();
-      const {
-        data: { items },
-      } = dataRespon;
-      dispatch(actions.setData(items));
-    } catch (error) {
-      dispatch(actions.setScroll(false));
-    }
-    dispatch(actions.setLoadingHome(false));
-    dispatch(actions.setNextPageHome(false));
+  const handleNext = () => {
+    setPage(page + 1);
   };
-  const eventNextPage = () => {
-    if (
-      homeRef.current.scrollTop + window.innerHeight + 600 >=
-        homeRef.current.scrollHeight &&
-      scroll
-    ) {
-      dispatch(actions.setNextPageHome(true));
-    }
+
+  const fetchHomeDataNextPage = () => {
+    httpService
+      .getHomeData(page)
+      .then((res) => {
+        const {
+          data: { items },
+        } = res.data;
+        setHomeData([...homeData, ...items]);
+      })
+      .catch(() => {
+        setHasmore(false);
+      });
   };
 
   useEffect(() => {
-    const valid = homeRef.current;
-    if (scroll && valid) {
-      homeRef.current.addEventListener("scroll", eventNextPage);
-      return () => {
-        if (homeRef.current) {
-          homeRef.current.removeEventListener("scroll", eventNextPage);
-        }
-      };
-    }
-  }, [scroll]);
-
-  useEffect(() => {
-    if (!nextPage) return;
-    dispatch(actions.setPage(page + 1));
-  }, [nextPage]);
-
-  useEffect(() => {
-    if (page > 1 && scroll && mount) {
-      fetchHomeDataNextPage();
-    }
-  }, [page, scroll]);
+    fetchHomeDataNextPage();
+  }, [page]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
-    setMount(true);
-    dispatch(actions.setCurrentNav(1));
-    dispatch(actions.setShowNavMobile(false));
+    // dispatch(actions.setCurrentNav(1));
+    // dispatch(actions.setShowNavMobile(false));
     !idCurrentSong && dispatch(actions.setTitle("Home"));
-  }, []);
+  }, [dispatch, idCurrentSong]);
 
   return (
-    <div className={styles.home} ref={homeRef}>
-      {data?.map((item, index) => {
-        const { sectionId, sectionType } = item;
-
-        if (sectionType === "banner") {
-          return <Slider data={{ ...item }} key={`${sectionId}${index}`} />;
-        } else if (
-          sectionType === "playlist" ||
-          sectionType === "recentPlaylist"
-        ) {
-          const { items = [] } = item;
-          if (items?.length === 0 || !items) return;
-          return <Topics data={{ ...item }} key={`${sectionId}${index}`} />;
-        } else if (sectionType === "RTChart") {
-          return <Chart data={{ ...item }} key={`${sectionId}${index}`} />;
-        } else if (sectionType === "livestream") {
-          return <Radios data={{ ...item }} key={`${sectionId}${index}`} />;
-        } else if (sectionType === "weekChart") {
-          return <Zingcharts data={{ ...item }} key={`${sectionId}${index}`} />;
-        } else if (sectionType === "artistSpotlight") {
-          return <Singers data={{ ...item }} key={sectionId || index} />;
-        } else if (sectionType === "mix") {
-          return <Choices data={{ ...item }} key={`${sectionId}${index}`} />;
-        } else if (sectionType === "event") {
-          return <Events data={{ ...item }} key={`${sectionId}${index}`} />;
-        }
-      })}
-      {loadingHome ? <Loading size={5} nextPage={true} /> : ""}
-    </div>
+    <InfiniteScroll
+      dataLength={homeData.length}
+      next={handleNext}
+      hasMore={hasMore}
+      loader={<Loading size={5} nextPage={true} />}
+      height="100vh"
+    >
+      <div className={styles.home}>
+        {homeData?.map((item, index) => {
+          const { sectionId, sectionType } = item;
+          if (sectionType === "banner") {
+            return <Slider data={{ ...item }} key={`${sectionId}${index}`} />;
+          } else if (
+            sectionType === "playlist" ||
+            sectionType === "recentPlaylist"
+          ) {
+            const { items = [] } = item;
+            if (items?.length === 0 || !items) return;
+            return <Topics data={{ ...item }} key={`${sectionId}${index}`} />;
+          } else if (sectionType === "RTChart") {
+            return <Chart data={{ ...item }} key={`${sectionId}${index}`} />;
+          } else if (sectionType === "livestream") {
+            return <Radios data={{ ...item }} key={`${sectionId}${index}`} />;
+          } else if (sectionType === "weekChart") {
+            return (
+              <Zingcharts data={{ ...item }} key={`${sectionId}${index}`} />
+            );
+          } else if (sectionType === "artistSpotlight") {
+            return <Singers data={{ ...item }} key={sectionId || index} />;
+          } else if (sectionType === "mix") {
+            return <Choices data={{ ...item }} key={`${sectionId}${index}`} />;
+          } else if (sectionType === "event") {
+            return <Events data={{ ...item }} key={`${sectionId}${index}`} />;
+          }
+        })}
+      </div>
+    </InfiniteScroll>
   );
 }
 

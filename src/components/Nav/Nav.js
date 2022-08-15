@@ -129,9 +129,9 @@ function Nav() {
   };
 
   useEffect(() => {
-    window.addEventListener("click", event);
+    // window.addEventListener("click", event);
     return () => {
-      window.removeEventListener("click", event);
+      // window.removeEventListener("click", event);
     };
   }, [btnMobile]);
 

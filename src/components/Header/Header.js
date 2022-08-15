@@ -128,11 +128,11 @@ function Header() {
   };
 
   useEffect(() => {
-    window.addEventListener("click", event);
-    dispatch(actions.setBtnMobile(btnMobileRef));
-    return () => {
-      window.removeEventListener("click", event);
-    };
+    // window.addEventListener("click", event);
+    // dispatch(actions.setBtnMobile(btnMobileRef));
+    // return () => {
+    //   window.removeEventListener("click", event);
+    // };
   }, []);
 
   const headerBg = blackHeader ? styles.headerBg : "";

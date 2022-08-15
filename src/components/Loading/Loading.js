@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 import styles from "./Loading.module.scss";
 
@@ -8,7 +8,7 @@ function Loading({
   nextPage = false,
   mv = false,
 }) {
-  const [colors, setColors] = useState([
+  const colors = useRef([
     "2172b8",
     "18a39b",
     "82c545",
@@ -17,8 +17,8 @@ function Loading({
     "ed2861",
     "c12680",
     "5d3191",
-  ]);
-  const [sizeFinal, setSizeFinal] = useState(size);
+  ]).current;
+  const sizeFinal = useRef(size).current;
   return (
     <div
       className={clsx(styles.loading, {

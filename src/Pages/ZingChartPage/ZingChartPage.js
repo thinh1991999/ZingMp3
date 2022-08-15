@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { actions, ZING_CHART_API } from "../../store";
+import { actions } from "../../store";
 import styles from "./ZingChartPage.module.scss";
 import { Chart, Loading, AlbumItem, PrimaryButton } from "../../components";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import httpService from "../../Services/http.service";
 
 function ZingChartPage() {
   const { idCurrentSong } = useSelector((state) => state);
@@ -16,16 +17,13 @@ function ZingChartPage() {
   const [dataZingChart, setDataZingChart] = useState({});
   const [loadMore, setLoadMore] = useState(false);
 
-  const fetchZingChartData = async () => {
-    try {
-      const respon = await fetch(ZING_CHART_API);
-      const { data } = await respon.json();
+  const fetchZingChartData = () => {
+    setLoading(true);
+    httpService.getZingChart().then((res) => {
+      const { data } = res.data;
       setDataZingChart(data);
       setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      throw new Error(error);
-    }
+    });
   };
 
   const handleScroll = (e) => {
@@ -41,19 +39,24 @@ function ZingChartPage() {
   };
 
   useEffect(() => {
+    if (!idCurrentSong) {
+      document.title = "ZingChartPage";
+    }
+  }, [idCurrentSong]);
+
+  useEffect(() => {
     fetchZingChartData();
     dispatch(actions.setBGHeader(false));
-    dispatch(actions.setCurrentNav(2));
-    dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle(`ZingChartPage`));
+    // dispatch(actions.setCurrentNav(2));
+    // dispatch(actions.setShowNavMobile(false));
   }, []);
+
   if (loading) {
     return <Loading size={50} />;
   }
 
   const { RTChart, weekChart } = dataZingChart;
   const { items } = RTChart;
-
   const weekChartKeys = Object.keys(weekChart);
 
   return (

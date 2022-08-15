@@ -1,9 +1,8 @@
 .home {
   background-color: var(--layout-bg);
   padding: 100px 40px;
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
 }
 
 .home::-webkit-scrollbar {

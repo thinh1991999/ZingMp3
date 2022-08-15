@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { actions, TOP_100_API } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
 import styles from "./Top100.module.scss";
 import { Loading, Topics } from "../../components";
-import { useDispatch, useSelector } from "react-redux";
+import httpService from "../../Services/http.service";
 
 function Top100() {
+  const dispatch = useDispatch();
+  const { idCurrentSong } = useSelector((state) => state);
+
   const [dataTop, setDataTop] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { idCurrentSong } = useSelector((state) => state);
-
-  const dispatch = useDispatch();
-
-  const fetchDataTop = async () => {
-    try {
-      const respon = await fetch(TOP_100_API);
-      const { data } = await respon.json();
+  const fetchDataTop = () => {
+    setLoading(true);
+    httpService.getTop100().then((res) => {
+      const { data } = res.data;
       setDataTop(data);
       setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
+    });
   };
   const handleScroll = (e) => {
     if (e.target.scrollTop > 0) {
@@ -33,10 +31,15 @@ function Top100() {
   useEffect(() => {
     fetchDataTop();
     dispatch(actions.setBGHeader(false));
-    dispatch(actions.setCurrentNav(7));
-    dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle(`Top100`));
+    // dispatch(actions.setCurrentNav(7));
+    // dispatch(actions.setShowNavMobile(false));
   }, []);
+
+  useEffect(() => {
+    if (!idCurrentSong) {
+      document.title = "Top100";
+    }
+  }, [idCurrentSong]);
 
   if (loading) {
     return <Loading size={50} />;

@@ -6,7 +6,6 @@ import { Artist } from "..";
 
 function Singers({ data }) {
   const { items } = data;
-  console.log(data);
   return (
     <div className={styles.singers}>
       <Row className={clsx(styles.singersContainer, "pd-15-px")}>
