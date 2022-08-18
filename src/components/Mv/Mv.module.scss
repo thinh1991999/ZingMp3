@@ -1,7 +1,26 @@
 .mv {
   width: calc(100% / 3);
   padding: 15px;
-
+  &.mvActive {
+    .mvWrap {
+      .mvImg {
+        .mvLayer {
+          opacity: 0.5;
+        }
+        .btn {
+          opacity: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          span {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+          }
+        }
+      }
+    }
+  }
   .mvWrap {
     width: 100%;
 

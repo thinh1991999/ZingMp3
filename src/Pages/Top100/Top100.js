@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
 import styles from "./Top100.module.scss";
@@ -7,7 +7,7 @@ import httpService from "../../Services/http.service";
 
 function Top100() {
   const dispatch = useDispatch();
-  const { idCurrentSong } = useSelector((state) => state);
+  const { idCurrentSong, blackHeader } = useSelector((state) => state);
 
   const [dataTop, setDataTop] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,13 +20,16 @@ function Top100() {
       setLoading(false);
     });
   };
-  const handleScroll = (e) => {
-    if (e.target.scrollTop > 0) {
-      dispatch(actions.setBGHeader(true));
-    } else {
-      dispatch(actions.setBGHeader(false));
-    }
-  };
+  const handleScroll = useCallback(
+    (e) => {
+      if (e.target.scrollTop > 0) {
+        !blackHeader && dispatch(actions.setBGHeader(true));
+      } else {
+        blackHeader && dispatch(actions.setBGHeader(false));
+      }
+    },
+    [blackHeader, dispatch]
+  );
 
   useEffect(() => {
     fetchDataTop();

@@ -35,6 +35,7 @@
       height: 1px;
       width: 100%;
       position: relative;
+      margin: 15px 0;
     }
     .divide::after {
       content: "";
@@ -52,6 +53,7 @@
       margin: 0;
       padding: unset;
       .navItem {
+        text-decoration: none;
         padding: 10px 20px;
         color: var(--navigation-text);
         display: flex;
@@ -61,7 +63,11 @@
         span {
           margin-left: 10px;
         }
-
+        &.navItemActive {
+          background-color: var(--alpha-bg);
+          border-left: 3px solid var(--purple-primary);
+          color: var(--text-primary);
+        }
         &:hover {
           color: var(--text-primary);
         }
@@ -76,11 +82,6 @@
           border-radius: 2px;
           background-color: red;
         }
-      }
-      .navItemActive {
-        background-color: var(--alpha-bg);
-        border-left: 3px solid var(--purple-primary);
-        color: var(--text-primary);
       }
     }
     .navFeatures {

@@ -28,22 +28,22 @@ function Home() {
     setPage(page + 1);
   };
 
-  const fetchHomeDataNextPage = () => {
-    httpService
-      .getHomeData(page)
-      .then((res) => {
-        const {
-          data: { items },
-        } = res.data;
-        setHomeData([...homeData, ...items]);
-      })
-      .catch(() => {
-        setHasmore(false);
-      });
-  };
-
   useEffect(() => {
+    const fetchHomeDataNextPage = () => {
+      httpService
+        .getHomeData(page)
+        .then((res) => {
+          const {
+            data: { items },
+          } = res.data;
+          setHomeData([...homeData, ...items]);
+        })
+        .catch(() => {
+          setHasmore(false);
+        });
+    };
     fetchHomeDataNextPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ function Home() {
     // dispatch(actions.setShowNavMobile(false));
     !idCurrentSong && dispatch(actions.setTitle("Home"));
   }, [dispatch, idCurrentSong]);
-
+  console.log(homeData);
   return (
     <InfiniteScroll
       dataLength={homeData.length}
@@ -71,7 +71,7 @@ function Home() {
             sectionType === "recentPlaylist"
           ) {
             const { items = [] } = item;
-            if (items?.length === 0 || !items) return;
+            if (items?.length === 0 || !items) return null;
             return <Topics data={{ ...item }} key={`${sectionId}${index}`} />;
           } else if (sectionType === "RTChart") {
             return <Chart data={{ ...item }} key={`${sectionId}${index}`} />;

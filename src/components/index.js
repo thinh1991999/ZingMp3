@@ -1,4 +1,6 @@
 export { default as Loading } from "./Loading/Loading";
+export { default as LoadingSquare } from "./LoadingSquare/LoadingSquare";
+
 export { default as Nav } from "./Nav/Nav";
 export { default as GlobalStyles } from "./GlobalStyles/GlobalStyles";
 export { default as GlobalLayout } from "./GlobalLayout/GlobalLayout";
@@ -32,6 +34,7 @@ export { default as HotSongs } from "./HotSongs/HotSongs";
 export { default as SingerInfo } from "./SingerInfo/SingerInfo";
 export { default as Mvs } from "./Mvs/Mvs";
 export { default as Mv } from "./Mv/Mv";
+export { default as MvModal } from "./MvModal/MvModal";
 export { default as SingerModal } from "./SingerModal/SingerModal";
 export { default as Events } from "./Events/Events";
 export { default as Event } from "./Event/Event";
@@ -54,3 +57,4 @@ export { default as SetTimeModal } from "./SetTimeModal/SetTimeModal";
 export { default as WarningModal } from "./WarningModal/WarningModal";
 export { default as LogInModal } from "./LogInModal/LogInModal";
 export { default as CommentModal } from "./CommentModal/CommentModal";
+export { default as TimeStopNote } from "./TimeStopNote/TimeStopNote";

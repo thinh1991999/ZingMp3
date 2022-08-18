@@ -1,0 +1,23 @@
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: black;
+  z-index: 1;
+  opacity: 0;
+  &.layerShow {
+    opacity: 0.5;
+  }
+}
+.smallBtnWrap {
+  position: absolute;
+  display: flex;
+  right: 5px;
+  top: 5px;
+  z-index: 2;
+  button:first-child {
+    margin-right: 5px;
+  }
+}

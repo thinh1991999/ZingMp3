@@ -333,3 +333,33 @@ export const setWarningModal = (payLoad) => {
     payLoad,
   };
 };
+
+// MV Reducer
+
+export const setShowMvModal = (payLoad) => {
+  return {
+    type: "SET_SHOW_MV_MODAL",
+    payLoad,
+  };
+};
+
+export const setIdMvModal = (payLoad) => {
+  return {
+    type: "SET_ID_MV_MODAL",
+    payLoad,
+  };
+};
+
+export const setMvAutoPlayer = (payLoad) => {
+  return {
+    type: "SET_MV_AUTO_PLAY",
+    payLoad,
+  };
+};
+
+export const setShowSmallScreen = (payLoad) => {
+  return {
+    type: "SET_SHOW_SMALL_SCREEN",
+    payLoad,
+  };
+};

@@ -14,7 +14,7 @@ import clsx from "clsx";
 
 function Lyric() {
   const { showLyric, currentSong, currentIndexSong, songCurrentTime, invi } =
-    useSelector((state) => state);
+    useSelector((state) => state.root);
 
   const dispatch = useDispatch();
 

@@ -10,7 +10,7 @@ function Singers({ data }) {
     <div className={styles.singers}>
       <Row className={clsx(styles.singersContainer, "pd-15-px")}>
         {items.map((item, index) => {
-          if (index > 4) return;
+          if (index > 4) return null;
           const { id } = item;
           return <Artist key={id} data={item} />;
         })}

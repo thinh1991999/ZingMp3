@@ -1,6 +1,20 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { GlobalStyles, Loading, Lyric, GlobalLayout } from "./components";
+import {
+  GlobalStyles,
+  Loading,
+  Lyric,
+  GlobalLayout,
+  CommentModal,
+  LogInModal,
+  WarningModal,
+  SetTimeModal,
+  Playlists,
+  Player,
+  Popper,
+  TimeStopNote,
+  MvModal,
+} from "./components";
 import {
   Home,
   Album,
@@ -12,6 +26,7 @@ import {
   SearchMobile,
   Profile,
   Error,
+  NewSong,
 } from "./Pages";
 import { useSelector, useDispatch } from "react-redux";
 import { HOME_API, actions } from "./store";
@@ -40,27 +55,15 @@ function App() {
     warningModal: { show: warningShow },
     showLogin,
     showComment,
+    showMvModal,
     title,
     listSong,
     indexValidSongs,
-  } = useSelector((state) => state);
+  } = useSelector((state) => state.root);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchHomeData = async () => {
-      try {
-        const respon = await fetch(`${HOME_API}${page}`);
-        const dataRespon = await respon.json();
-        const {
-          data: { items },
-        } = dataRespon;
-        dispatch(actions.setData(items));
-      } catch (error) {
-        dispatch(actions.setScroll(false));
-      }
-    };
-    fetchHomeData();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const userRef = ref(db, "users/" + user.uid);
@@ -182,6 +185,14 @@ function App() {
             }
           ></Route>
           <Route
+            path={"/NewSong"}
+            element={
+              <GlobalLayout>
+                <NewSong />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
             path={"/ListMV"}
             element={
               <GlobalLayout>
@@ -214,8 +225,9 @@ function App() {
         {timeToStop > 0 && <TimeStopNote />}
         {showTimeStop && <SetTimeModal />}
         {idCurrentSong && <Playlists />}
-        {idCurrentSong && <Player />} */}
-        {/* {show && <Popper />} */}
+        {idCurrentSong && <Player />}
+        {show && <Popper />} */}
+        <MvModal />
       </div>
       <ToastContainer autoClose={3000} />
     </GlobalStyles>

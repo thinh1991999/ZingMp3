@@ -553,8 +553,6 @@ const reducer = (state = initState, action) => {
         const { encodeId } = item;
         return encodeId === idCurrentSong;
       });
-      console.log(newIndex);
-      console.log(indexArr);
       return {
         ...state,
         indexValidSongs: indexArr,
@@ -662,98 +660,100 @@ const reducer = (state = initState, action) => {
           }
         }
       }
+      break;
     }
     case "PLAY_NEXT_SONG": {
-      const {
-        randomSong,
-        currentIndexSong,
-        indexValidSongs,
-        listSong,
-        repeatSong,
-        idCurrentSong,
-      } = state;
-      if (randomSong) {
-        const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
-        const newSong = listSong.filter((item) => {
-          const { encodeId } = item;
-          return encodeId === indexValidSongs[indexRd];
-        })[0];
+      // const {
+      //   randomSong,
+      //   currentIndexSong,
+      //   indexValidSongs,
+      //   listSong,
+      //   repeatSong,
+      //   idCurrentSong,
+      // } = state;
+      // if (randomSong) {
+      //   const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
+      //   const newSong = listSong.filter((item) => {
+      //     const { encodeId } = item;
+      //     return encodeId === indexValidSongs[indexRd];
+      //   })[0];
 
-        const newIndex = listSong.findIndex((item) => {
-          const { encodeId } = item;
-          return encodeId === indexValidSongs[indexRd];
-        });
+      //   const newIndex = listSong.findIndex((item) => {
+      //     const { encodeId } = item;
+      //     return encodeId === indexValidSongs[indexRd];
+      //   });
 
-        return {
-          ...state,
-          currentSong: newSong,
-          currentIndexSong: newIndex,
-          fetchSong: true,
-          idCurrentSong: indexValidSongs[indexRd],
-        };
-      } else {
-        const currentIndex = indexValidSongs.findIndex(
-          (item) => item === idCurrentSong
-        );
-        if (currentIndex === indexValidSongs.length - 1) {
-          const song = listSong.filter((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[0];
-          })[0];
+      //   return {
+      //     ...state,
+      //     currentSong: newSong,
+      //     currentIndexSong: newIndex,
+      //     fetchSong: true,
+      //     idCurrentSong: indexValidSongs[indexRd],
+      //   };
+      // } else {
+      //   const currentIndex = indexValidSongs.findIndex(
+      //     (item) => item === idCurrentSong
+      //   );
+      //   if (currentIndex === indexValidSongs.length - 1) {
+      //     const song = listSong.filter((item) => {
+      //       const { encodeId } = item;
+      //       return encodeId === indexValidSongs[0];
+      //     })[0];
 
-          const newIndex = listSong.findIndex((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[0];
-          });
+      //     const newIndex = listSong.findIndex((item) => {
+      //       const { encodeId } = item;
+      //       return encodeId === indexValidSongs[0];
+      //     });
 
-          if (repeatSong === 1) {
-            return {
-              ...state,
-              currentSong: song,
-              currentIndexSong: newIndex,
-              fetchSong: true,
-              repeatSong: 0,
-              idCurrentSong: indexValidSongs[0],
-            };
-          } else {
-            return {
-              ...state,
-              currentSong: song,
-              currentIndexSong: newIndex,
-              fetchSong: true,
-              idCurrentSong: indexValidSongs[0],
-            };
-          }
-        } else {
-          const song = listSong.filter((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[currentIndex + 1];
-          })[0];
+      //     if (repeatSong === 1) {
+      //       return {
+      //         ...state,
+      //         currentSong: song,
+      //         currentIndexSong: newIndex,
+      //         fetchSong: true,
+      //         repeatSong: 0,
+      //         idCurrentSong: indexValidSongs[0],
+      //       };
+      //     } else {
+      //       return {
+      //         ...state,
+      //         currentSong: song,
+      //         currentIndexSong: newIndex,
+      //         fetchSong: true,
+      //         idCurrentSong: indexValidSongs[0],
+      //       };
+      //     }
+      //   } else {
+      //     const song = listSong.filter((item) => {
+      //       const { encodeId } = item;
+      //       return encodeId === indexValidSongs[currentIndex + 1];
+      //     })[0];
 
-          const newIndex = listSong.findIndex((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[currentIndex + 1];
-          });
+      //     const newIndex = listSong.findIndex((item) => {
+      //       const { encodeId } = item;
+      //       return encodeId === indexValidSongs[currentIndex + 1];
+      //     });
 
-          if (repeatSong === 1) {
-            return {
-              ...state,
-              currentSong: song,
-              currentIndexSong: newIndex,
-              fetchSong: true,
-              repeatSong: 0,
-              idCurrentSong: indexValidSongs[currentIndex + 1],
-            };
-          }
-          return {
-            ...state,
-            currentSong: song,
-            currentIndexSong: newIndex,
-            fetchSong: true,
-            idCurrentSong: indexValidSongs[currentIndex + 1],
-          };
-        }
-      }
+      //     if (repeatSong === 1) {
+      //       return {
+      //         ...state,
+      //         currentSong: song,
+      //         currentIndexSong: newIndex,
+      //         fetchSong: true,
+      //         repeatSong: 0,
+      //         idCurrentSong: indexValidSongs[currentIndex + 1],
+      //       };
+      //     }
+      //     return {
+      //       ...state,
+      //       currentSong: song,
+      //       currentIndexSong: newIndex,
+      //       fetchSong: true,
+      //       idCurrentSong: indexValidSongs[currentIndex + 1],
+      //     };
+      //   }
+      // }
+      break;
     }
     case "PLAY_BACK_SONG": {
       const {
@@ -891,9 +891,8 @@ const reducer = (state = initState, action) => {
         timeToStop: action.payLoad,
       };
     }
-
     default:
-      return state;
+      return { ...state };
   }
 };
 

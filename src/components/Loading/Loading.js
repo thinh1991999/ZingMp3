@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import styles from "./Loading.module.scss";
 
@@ -7,6 +7,7 @@ function Loading({
   size = 80,
   nextPage = false,
   mv = false,
+  small = false,
 }) {
   const colors = useRef([
     "2172b8",
@@ -18,13 +19,18 @@ function Loading({
     "c12680",
     "5d3191",
   ]).current;
-  const sizeFinal = useRef(size).current;
+  const [sizeFinal, setSizeFinal] = useState(size);
+
+  useEffect(() => {
+    setSizeFinal(size);
+  }, [size]);
   return (
     <div
       className={clsx(styles.loading, {
         [styles.loadingFull]: loadFull,
         [styles.loadingNextPage]: nextPage,
         [styles.loadingMV]: mv,
+        [styles.loadingSmall]: small,
       })}
     >
       <section className={styles.wrapper}>

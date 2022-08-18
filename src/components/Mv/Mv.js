@@ -4,26 +4,40 @@ import { ButtonIcon } from "..";
 import { BsPlayCircle } from "react-icons/bs";
 import { getTime } from "../../funtions";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
+import clsx from "clsx";
 
 function Mv({ data }) {
+  const dispatch = useDispatch();
+
+  const { idShow, showSmallScreen } = useSelector((state) => state.mv);
+
   const {
     thumbnailM: image,
+    encodeId,
     title,
     duration,
     artist = {},
     artists = [],
   } = data;
   const { thumbnail: artistImage, alias: artistAlias, name } = artist;
-
   const newDuraton = getTime(duration);
 
   const openMv = () => {
-    toast.error("Mv chưa được hỗ trợ!");
+    if (idShow === encodeId && showSmallScreen) {
+      dispatch(actions.setShowSmallScreen(!showSmallScreen));
+    } else {
+      dispatch(actions.setIdMvModal(encodeId));
+      dispatch(actions.setShowMvModal(true));
+    }
   };
 
   return (
-    <div className={styles.mv} onClick={openMv}>
+    <div
+      className={clsx(styles.mv, idShow === encodeId ? styles.mvActive : null)}
+      onClick={openMv}
+    >
       <div className={styles.mvWrap}>
         <div className={styles.mvImg}>
           <img src={image} alt={title} />
@@ -33,9 +47,13 @@ function Mv({ data }) {
             <span>{newDuraton}</span>
           </div>
           <div className={styles.btn}>
-            <ButtonIcon circle={true} topic={true}>
-              <BsPlayCircle />
-            </ButtonIcon>
+            {idShow === encodeId ? (
+              <span>Đang phát</span>
+            ) : (
+              <ButtonIcon circle={true} topic={true}>
+                <BsPlayCircle />
+              </ButtonIcon>
+            )}
           </div>
         </div>
         <div className={styles.mvInfo}>

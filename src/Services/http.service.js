@@ -33,6 +33,17 @@ class HttpService {
   getZingChart() {
     return axiosService.getMethod("/charthome", false);
   }
+  getNewSong() {
+    return axiosService.getMethod("/newreleasechart", false);
+  }
+  getVideoMV(id) {
+    axiosService.addConfig({
+      params: {
+        id,
+      },
+    });
+    return axiosService.getMethod("/video", false);
+  }
 }
 
 export default new HttpService();

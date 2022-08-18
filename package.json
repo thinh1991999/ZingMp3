@@ -23,6 +23,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-toastify": "^8.2.0",
+    "react-tuby": "^0.1.24",
     "redux": "^4.1.2",
     "sass": "^1.46.0",
     "swiper": "^8.0.6",

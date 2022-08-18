@@ -1,4 +1,4 @@
-export { AppProvider } from "./context";
+export { AppProvider } from "./AppProvider";
 export {
   SINGER_API,
   SONG_API,
