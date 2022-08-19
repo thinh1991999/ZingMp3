@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import styles from "./AlbumItem.module.scss";
-import { PlayingIcon, ButtonIcon } from "..";
-import { getTime } from "../../funtions";
+import { toast } from "react-toastify";
 import { HiOutlineMusicNote } from "react-icons/hi";
 import { BsFillPlayFill, BsThreeDots } from "react-icons/bs";
 import { GiMicrophone } from "react-icons/gi";
@@ -11,7 +10,8 @@ import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
-import { toast } from "react-toastify";
+import { PlayingIcon, ButtonIcon } from "..";
+import { getTime } from "../../funtions";
 
 function AlbumItem({
   data,
@@ -21,11 +21,13 @@ function AlbumItem({
   albumSong = false,
   small,
   chartHome,
+  newSong = false,
   listSong,
   search,
   playLists,
   blur,
 }) {
+  const dispatch = useDispatch();
   const {
     currentAlbum,
     currentIndexSong,
@@ -42,7 +44,6 @@ function AlbumItem({
   const [playingSong, setPlayingSong] = useState(false);
   const [loadingSong, setLoadingSong] = useState(false);
 
-  const dispatch = useDispatch();
   const {
     encodeId: idSong,
     artistsNames,
@@ -55,7 +56,7 @@ function AlbumItem({
   } = data;
 
   const { title: albumTitle } = album;
-  const { id, alias } = singerCurrent;
+  const { alias } = singerCurrent;
   const newDuration = getTime(duration);
   const handlePlaySingleSong = () => {
     if (idSong === idCurrentSong) {
@@ -86,6 +87,19 @@ function AlbumItem({
               items: listSong,
             })
           );
+        }
+      }
+      if (newSong) {
+        if (currentAlbum === "ZDB6EB9C") {
+          dispatch(actions.playSongSameAlbum(idSong));
+        } else {
+          // dispatch(
+          //   actions.playSongAnotherChartHome({
+          //     id: idSong,
+          //     album: "ZDB6EB9C",
+          //     items: listSong,
+          //   })
+          // );
         }
       }
       if (search) {
@@ -156,7 +170,7 @@ function AlbumItem({
       setActiveSongAlbum(false);
       setActiveSongSinger(false);
     }
-  }, [playing, idCurrentSong]);
+  }, [playing, idCurrentSong, idSong]);
 
   useEffect(() => {
     if (activeSongAlbum || activeSongSinger) {

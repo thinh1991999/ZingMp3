@@ -1,51 +1,59 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Album.module.scss";
 import { Row, Col } from "react-bootstrap";
-import { AlbumLeft, AlbumRight, Artists, Loading } from "../../components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { ALBUM_API, actions } from "../../store";
+import { actions } from "../../store";
+import httpService from "../../Services/http.service";
+import { AlbumLeft, AlbumRight, Artists, Loading } from "../../components";
+import styles from "./Album.module.scss";
 
 function Album() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
 
-  const { album, idCurrentSong } = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const fetchAlbum = async () => {
-    setLoading(true);
-    try {
-      const respon = await fetch(`${ALBUM_API}${id}`);
-      const { data } = await respon.json();
-      if (data) {
-        dispatch(actions.setAlbum(data));
-        setLoading(false);
-      } else {
-        navigate("/");
-      }
-    } catch (error) {
-      navigate("/");
-    }
-  };
+  const { idCurrentSong } = useSelector((state) => state);
+
+  const [loading, setLoading] = useState(true);
+  const [albumData, setAlbumData] = useState(null);
 
   useEffect(() => {
+    const fetchAlbum = () => {
+      setLoading(true);
+      // try {
+      //   const respon = await fetch(`${ALBUM_API}${id}`);
+      //   const { data } = await respon.json();
+      //   if (data) {
+      //     dispatch(actions.setAlbum(data));
+      //     setLoading(false);
+      //   } else {
+      //     // navigate("/");
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      //   // navigate("/");
+      // }
+      httpService.getAlbum(id).then((res) => {
+        const { data } = res.data;
+        setAlbumData(data);
+        setLoading(false);
+      });
+    };
     fetchAlbum();
   }, [id]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(""));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (loading) {
-      !idCurrentSong && dispatch(actions.setTitle(`Album`));
+      if (!idCurrentSong) document.title = "Album";
     } else {
-      !idCurrentSong && dispatch(actions.setTitle(`Album:${album?.title}`));
+      if (!idCurrentSong) document.title = `Album:${albumData?.title}`;
     }
-  }, [album, loading]);
+  }, [albumData, loading, idCurrentSong]);
 
   if (loading) {
     return <Loading size={50} />;
@@ -60,7 +68,7 @@ function Album() {
     song,
     artists,
     encodeId: albumId,
-  } = album;
+  } = albumData;
 
   return (
     <div className={styles.album}>

@@ -12,7 +12,7 @@ function Choices({ data }) {
       <Row className={styles.choicesContainer}>
         {items.map((item, index) => {
           const { encodeId } = item;
-          if (index > 2) return;
+          if (index > 3) return null;
           return <Choice key={encodeId} data={item} />;
         })}
       </Row>

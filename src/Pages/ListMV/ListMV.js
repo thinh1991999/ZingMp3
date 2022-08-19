@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import styles from "./ListMV.module.scss";
-import { Loading, Mv } from "../../components";
-import { actions, LIST_MV_API } from "../../store";
+import React, { useEffect, useRef, useState } from "react";
 import { Row } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
+import httpService from "../../Services/http.service";
+import styles from "./ListMV.module.scss";
+import { Loading, Mv } from "../../components";
+import { actions } from "../../store";
 
 function ListMV() {
   const { idCurrentSong } = useSelector((state) => state);
 
-  const [loading, setLoading] = useState(true);
-  const [stateNav, setStateNav] = useState([
+  const stateNav = useRef([
     {
       name: "việt nam",
       id: "IWZ9Z08I",
@@ -27,11 +27,12 @@ function ListMV() {
       name: "hòa tấu",
       id: "IWZ9Z086",
     },
-  ]);
+  ]).current;
 
   const [state, setState] = useState(0);
   const [page, setPage] = useState(1);
   const [listMV, setListMV] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [pageLoading, setPageLoading] = useState(false);
   const [mount, setMount] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -39,58 +40,14 @@ function ListMV() {
   const dispatch = useDispatch();
 
   const fetchListMV = async () => {
-    try {
-      const respon = await fetch(
-        `${LIST_MV_API}${stateNav[state].id}&page=1&count=15`
-      );
+    setLoading(true);
+    httpService.getListMv(stateNav[state].id, 1, 15).then((res) => {
       const {
         data: { items },
-      } = await respon.json();
-      setListMV([...items]);
+      } = res.data;
+      setListMV(items);
       setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
-  const fetchNextMV = async () => {
-    try {
-      const respon = await fetch(
-        `${LIST_MV_API}${stateNav[state].id}&page=${page}&count=15`
-      );
-      const {
-        data: { items, hasMore },
-      } = await respon.json();
-      setListMV([...listMV, ...items]);
-      setHasMore(hasMore);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
-  const fetchMVPage = async () => {
-    setListMV([]);
-    setPageLoading(true);
-    setHasMore(false);
-    try {
-      const respon = await fetch(
-        `${LIST_MV_API}${stateNav[state].id}&page=1&count=15`
-      );
-      const {
-        data: { items },
-      } = await respon.json();
-      setListMV([...items]);
-      setPageLoading(false);
-      if (state === 3) {
-        setHasMore(false);
-        return;
-      }
-      setHasMore(true);
-    } catch (error) {
-      setPageLoading(false);
-      setHasMore(true);
-    }
+    });
   };
 
   const handleNext = () => {
@@ -99,13 +56,27 @@ function ListMV() {
 
   const handleStateNav = (index) => {
     setState(index);
+    setHasMore(false);
   };
 
   useEffect(() => {
     if (!mount) return;
     setPage(1);
+    const fetchMVPage = async () => {
+      setListMV([]);
+      setPageLoading(true);
+      setHasMore(false);
+      httpService.getListMv(stateNav[state].id, 1, 15).then((res) => {
+        const {
+          data: { items },
+        } = res.data;
+        setListMV(items);
+        setPageLoading(false);
+        setHasMore(true);
+      });
+    };
     fetchMVPage();
-  }, [state]);
+  }, [state, mount, stateNav]);
 
   useEffect(() => {
     setMount(true);
@@ -113,16 +84,25 @@ function ListMV() {
     dispatch(actions.setCurrentNav(8));
     fetchListMV();
     dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle("List MV"));
   }, []);
 
   useEffect(() => {
-    if (!mount) return;
-    if (state === 3) {
-      setHasMore(false);
-      return;
+    if (!idCurrentSong) {
+      document.title = "List MV";
     }
-    fetchNextMV();
+  }, [idCurrentSong]);
+
+  useEffect(() => {
+    const fetchNextMV = () => {
+      httpService.getListMv(stateNav[state].id, page, 15).then((res) => {
+        const {
+          data: { hasMore, items },
+        } = res.data;
+        setHasMore(hasMore);
+        setListMV([...listMV, ...items]);
+      });
+    };
+    page > 1 && fetchNextMV();
   }, [page]);
 
   if (loading) {

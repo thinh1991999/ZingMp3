@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { actions, ZING_CHART_API } from "../../store";
+import { actions } from "../../store";
 import styles from "./ZingChartPage.module.scss";
 import { Chart, Loading, AlbumItem, PrimaryButton } from "../../components";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import httpService from "../../Services/http.service";
 
 function ZingChartPage() {
-  const { idCurrentSong } = useSelector((state) => state);
+  const { idCurrentSong, blackHeader } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
@@ -16,44 +17,49 @@ function ZingChartPage() {
   const [dataZingChart, setDataZingChart] = useState({});
   const [loadMore, setLoadMore] = useState(false);
 
-  const fetchZingChartData = async () => {
-    try {
-      const respon = await fetch(ZING_CHART_API);
-      const { data } = await respon.json();
+  const fetchZingChartData = () => {
+    setLoading(true);
+    httpService.getZingChart().then((res) => {
+      const { data } = res.data;
       setDataZingChart(data);
       setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      throw new Error(error);
-    }
+    });
   };
 
-  const handleScroll = (e) => {
-    if (e.target.scrollTop > 0) {
-      dispatch(actions.setBGHeader(true));
-    } else {
-      dispatch(actions.setBGHeader(false));
-    }
-  };
+  const handleScroll = useCallback(
+    (e) => {
+      if (e.target.scrollTop > 0) {
+        !blackHeader && dispatch(actions.setBGHeader(true));
+      } else {
+        blackHeader && dispatch(actions.setBGHeader(false));
+      }
+    },
+    [blackHeader, dispatch]
+  );
 
   const handleLoadMore = () => {
-    setLoadMore(true);
+    setLoadMore(!loadMore);
   };
+
+  useEffect(() => {
+    if (!idCurrentSong) {
+      document.title = "ZingChartPage";
+    }
+  }, [idCurrentSong]);
 
   useEffect(() => {
     fetchZingChartData();
     dispatch(actions.setBGHeader(false));
-    dispatch(actions.setCurrentNav(2));
-    dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle(`ZingChartPage`));
+    // dispatch(actions.setCurrentNav(2));
+    // dispatch(actions.setShowNavMobile(false));
   }, []);
+
   if (loading) {
     return <Loading size={50} />;
   }
 
   const { RTChart, weekChart } = dataZingChart;
   const { items } = RTChart;
-
   const weekChartKeys = Object.keys(weekChart);
 
   return (
@@ -91,19 +97,17 @@ function ZingChartPage() {
               />
             );
           })}
-          {!loadMore && (
-            <div className={styles.centerBtn}>
-              <button onClick={handleLoadMore}>
-                <PrimaryButton
-                  info={{
-                    msg: "xem top 100",
-                    bgGray: true,
-                    chart: true,
-                  }}
-                ></PrimaryButton>
-              </button>
-            </div>
-          )}
+          <div className={styles.centerBtn}>
+            <button onClick={handleLoadMore}>
+              <PrimaryButton
+                info={{
+                  msg: !loadMore ? "Xem top 100" : "Xem top 10",
+                  bgGray: true,
+                  chart: true,
+                }}
+              ></PrimaryButton>
+            </button>
+          </div>
         </div>
         <Row className={styles.bottom}>
           <div className={styles.blur}></div>
@@ -147,7 +151,7 @@ function ZingChartPage() {
                     })}
                   </div>
                   <div className={styles.bottomBtn}>
-                    <a
+                    <button
                       onClick={() =>
                         toast.error("Chức năng này chưa được hỗ trợ")
                       }
@@ -159,7 +163,7 @@ function ZingChartPage() {
                           chart: true,
                         }}
                       ></PrimaryButton>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </Col>

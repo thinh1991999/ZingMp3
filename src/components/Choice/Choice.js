@@ -2,17 +2,18 @@ import React from "react";
 import styles from "./Choice.module.scss";
 import { ButtonIcon } from "..";
 import { BsPlayCircle } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 function Choice({ data }) {
   const {
+    encodeId,
     artistsNames: name,
     title,
     thumbnailM: image,
     song: { items },
   } = data;
-
   return (
-    <div className={styles.choice}>
+    <Link to={`/Album/${encodeId}`} className={styles.choice}>
       <div className={styles.choiceWrap}>
         <img src={image} alt={title} />
         <div className={styles.choiceLayer} />
@@ -36,7 +37,7 @@ function Choice({ data }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

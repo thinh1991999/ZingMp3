@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styles from "./Chart.module.scss";
 import { Row, Col } from "react-bootstrap";
 import { AiFillPlayCircle } from "react-icons/ai";
@@ -113,7 +113,7 @@ function Chart({ data, home = false }) {
         });
       }
     }
-  }, [indexShow, pointPosition]);
+  }, [indexShow, pointPosition]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setDidMount(true);

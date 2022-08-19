@@ -3,16 +3,17 @@ import { Routes, Route } from "react-router-dom";
 import {
   GlobalStyles,
   Loading,
-  Nav,
-  Player,
-  Header,
   Lyric,
-  Popper,
-  Playlists,
-  SetTimeModal,
-  WarningModal,
-  LogInModal,
+  GlobalLayout,
   CommentModal,
+  LogInModal,
+  WarningModal,
+  SetTimeModal,
+  Playlists,
+  Player,
+  Popper,
+  TimeStopNote,
+  MvModal,
 } from "./components";
 import {
   Home,
@@ -24,14 +25,13 @@ import {
   Top100,
   SearchMobile,
   Profile,
+  Error,
+  NewSong,
 } from "./Pages";
-import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { HOME_API, actions } from "./store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import clsx from "clsx";
-import TimeStopNote from "./components/TimeStopNote/TimeStopNote";
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { setCurrentUser } from "./store/actions";
@@ -55,33 +55,21 @@ function App() {
     warningModal: { show: warningShow },
     showLogin,
     showComment,
+    showMvModal,
     title,
     listSong,
     indexValidSongs,
-  } = useSelector((state) => state);
+  } = useSelector((state) => state.root);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchHomeData = async () => {
-      try {
-        const respon = await fetch(`${HOME_API}${page}`);
-        const dataRespon = await respon.json();
-        const {
-          data: { items },
-        } = dataRespon;
-        dispatch(actions.setData(items));
-      } catch (error) {
-        dispatch(actions.setScroll(false));
-      }
-    };
-    fetchHomeData();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const userRef = ref(db, "users/" + user.uid);
         onValue(userRef, (snapshot) => {
           const data = snapshot.val();
-          if (data.profile_picture) {
+          if (data?.profile_picture) {
             dispatch(setCurrentUser(data));
           } else {
             dispatch(
@@ -139,55 +127,108 @@ function App() {
   return (
     <GlobalStyles>
       <div className="app theme-dark">
-        <div className="app__container">
-          <Header />
-          <Row>
-            <Col
-              lg={1}
-              xl={2}
-              md={1}
-              className={clsx("app__nav", showNavMobile && "app__nav--active")}
-            >
-              <Nav />
-            </Col>
-            <Col lg={11} xl={10} md={11} className="app__wrap">
-              <div className="app__outer">
-                <Routes>
-                  <Route path={"/"} element={<Home />}></Route>
-                  <Route path={"/*"} element={<Home />}></Route>
-                  <Route path={"/Profile"} element={<Profile />}></Route>
-                  <Route path={"/Album/:id"} element={<Album />}></Route>
-                  <Route
-                    path={"/Singer/:SingerName"}
-                    element={<Singer />}
-                  ></Route>
-                  <Route path={"/Search/:Keyword"} element={<Search />}></Route>
-                  <Route
-                    path={"/ZingChartHome"}
-                    element={<ZingChartPage />}
-                  ></Route>
-                  <Route path={"/ListMV"} element={<ListMV />}></Route>
-                  <Route path={"/Top100"} element={<Top100 />}></Route>
-                  <Route
-                    path={"/SearchMobile"}
-                    element={<SearchMobile />}
-                  ></Route>
-                </Routes>
-              </div>
-            </Col>
-          </Row>
-        </div>
+        <Routes>
+          <Route
+            path={"/"}
+            element={
+              <GlobalLayout>
+                <Home />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/*"}
+            element={
+              <GlobalLayout>
+                <Home />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Profile"}
+            element={
+              <GlobalLayout>
+                <Profile />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Album/:id"}
+            element={
+              <GlobalLayout>
+                <Album />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Singer/:SingerName"}
+            element={
+              <GlobalLayout>
+                <Singer />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Search/:Keyword"}
+            element={
+              <GlobalLayout>
+                <Search />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/ZingChartHome"}
+            element={
+              <GlobalLayout>
+                <ZingChartPage />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/NewSong"}
+            element={
+              <GlobalLayout>
+                <NewSong />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/ListMV"}
+            element={
+              <GlobalLayout>
+                <ListMV />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Top100"}
+            element={
+              <GlobalLayout>
+                <Top100 />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/SearchMobile"}
+            element={
+              <GlobalLayout>
+                <SearchMobile />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route path={"/error"} element={<Error />}></Route>
+        </Routes>
         <Lyric />
-        {showComment.show && <CommentModal />}
+        {/* {showComment.show && <CommentModal />}
         {showLogin && <LogInModal />}
         {warningShow && <WarningModal />}
         {timeToStop > 0 && <TimeStopNote />}
         {showTimeStop && <SetTimeModal />}
         {idCurrentSong && <Playlists />}
         {idCurrentSong && <Player />}
-        {show && <Popper />}
+        {show && <Popper />} */}
+        <MvModal />
       </div>
-
       <ToastContainer autoClose={3000} />
     </GlobalStyles>
   );

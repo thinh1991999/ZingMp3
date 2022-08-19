@@ -1,0 +1,196 @@
+.rightWrap {
+  background-color: hsla(0, 0%, 100%, 0.10196078431372549);
+  border-radius: 5px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .top {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h6 {
+      font-size: 18px;
+      color: var(--text-primary);
+      margin: unset;
+    }
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      input {
+        display: none;
+      }
+      display: flex;
+      align-items: center;
+      color: var(--text-secondary);
+      .checkbox {
+        width: 30px;
+        height: 15px;
+        border-radius: 15px;
+        position: relative;
+        cursor: pointer;
+        background: gray;
+        .toggleWrap {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-radius: 15px;
+          .checkboxToggle {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            background: gray;
+          }
+
+          .checkboxToggle::before {
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            left: 0;
+            top: 0;
+            display: block;
+            content: "";
+            border-radius: 50%;
+            background-color: var(--white);
+          }
+        }
+      }
+
+      .checkbox.activeCheckBox {
+        .toggleWrap {
+          .checkboxToggle {
+            width: 100%;
+            background-color: var(--purple-primary);
+          }
+          .checkboxToggle::before {
+            right: 0;
+            left: unset;
+          }
+        }
+      }
+    }
+  }
+  .center {
+    margin-top: 10px;
+    flex: 1;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scroll-thumb-bg);
+    }
+    .item {
+      padding: 5px 20px;
+      display: flex;
+      align-items: center;
+      transition: all linear 0.3s;
+      &.itemActive {
+        background-color: hsla(0, 0%, 100%, 0.05);
+        .imgWrap {
+          .layer {
+            opacity: 0.5;
+          }
+          .icon {
+            display: flex;
+            span {
+              font-size: 12px;
+            }
+          }
+        }
+        &:hover {
+          .imgWrap {
+            cursor: default;
+            img {
+              transform: scale(1);
+            }
+          }
+        }
+      }
+      &:hover {
+        background-color: hsla(0, 0%, 100%, 0.05);
+        .imgWrap {
+          .layer {
+            opacity: 0.5;
+          }
+          .icon {
+            display: flex;
+          }
+          img {
+            transform: scale(1.2);
+          }
+        }
+      }
+      .imgWrap {
+        width: 100px;
+        margin-right: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        .layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: black;
+          opacity: 0;
+        }
+        .icon {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          align-items: center;
+          justify-content: center;
+          color: var(--white);
+          font-size: 32px;
+          display: none;
+        }
+        img {
+          width: 100%;
+          transition: all linear 0.3s;
+        }
+      }
+
+      .itemRight {
+        width: calc(100% - 110px);
+        h6 {
+          font-size: 14px;
+          color: var(--text-primary);
+          margin: unset;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        p {
+          margin: unset;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: block;
+          a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}

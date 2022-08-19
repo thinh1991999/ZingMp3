@@ -51,12 +51,14 @@
           margin: unset;
           display: flex;
           align-items: center;
-
           button {
             background-color: transparent;
             border: unset;
             color: var(--purple-primary);
             margin-left: 5px;
+            &:hover {
+              opacity: 0.8;
+            }
           }
         }
       }
@@ -142,7 +144,7 @@
             display: flex;
             justify-content: center;
             padding: 20px 0;
-            > a {
+            > button {
               background-color: transparent;
               border: unset;
             }

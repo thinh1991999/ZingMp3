@@ -99,11 +99,11 @@ function Playlists() {
   };
 
   useEffect(() => {
-    const app_container = document.querySelector(".app__container");
-    app_container.addEventListener("click", eventClick);
-    return () => {
-      app_container.removeEventListener("click", eventClick);
-    };
+    // const app_container = document.querySelector(".app__container");
+    // app_container.addEventListener("click", eventClick);
+    // return () => {
+    //   app_container.removeEventListener("click", eventClick);
+    // };
   }, []);
 
   useEffect(() => {

@@ -17,6 +17,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  &.loadingSmall {
+    height: 200px;
+  }
 }
 
 .loading.loadingNextPage {

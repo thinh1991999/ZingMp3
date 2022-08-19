@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import styles from "./SingerInfo.module.scss";
 import { PrimaryButton, SingerModal } from "..";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BsPlayFill } from "react-icons/bs";
 import { getNumberText } from "../../funtions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actions } from "../../store";
 
 function SingerInfo({ data }) {

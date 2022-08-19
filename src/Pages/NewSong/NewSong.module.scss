@@ -1,0 +1,79 @@
+.container {
+  height: 100vh;
+  overflow-y: scroll;
+  .wrap {
+    height: 100%;
+    position: relative;
+    width: 100%;
+    .blur {
+      height: 380px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url(https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.7.20/static/media/new-release-bg.73d8f976.jpg)
+        top/cover no-repeat;
+      -webkit-filter: grayscale(1);
+      filter: grayscale(1);
+    }
+    .alpha {
+      height: 380px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(
+        180deg,
+        hsla(0, 0%, 100%, 0) 37%,
+        var(--layout-bg)
+      );
+    }
+    .alpha1 {
+      height: 380px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(
+        180deg,
+        var(--layout-bg),
+        var(--layout-bg)
+      );
+      opacity: 0.8;
+    }
+    .main {
+      padding: 100px 40px;
+      position: relative;
+      h5 {
+        font-size: 48px;
+        color: var(--text-primary);
+        margin: unset;
+        display: flex;
+        align-items: center;
+        text-transform: capitalize;
+        button {
+          background-color: transparent;
+          border: unset;
+          color: var(--purple-primary);
+          margin-left: 5px;
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+      .newSongList {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb-bg);
+}

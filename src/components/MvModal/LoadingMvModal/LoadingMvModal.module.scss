@@ -1,0 +1,51 @@
+.MvModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #1e1e1e;
+  z-index: 9999;
+  transition: all linear 3s;
+  transform: translateY(100%);
+  &.MvModalSmall {
+    top: unset;
+    right: unset;
+    height: 200px;
+    width: 320px;
+    overflow: hidden;
+    .loading {
+      > button {
+        top: 5px;
+        right: 5px;
+      }
+    }
+  }
+  &.MvModalShow {
+    transform: translateY(0);
+    .loading {
+      > button {
+        top: 30px;
+        right: 30px;
+      }
+    }
+  }
+  &.MvModalLoading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loading {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    > button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: unset;
+      border: unset;
+    }
+  }
+}
