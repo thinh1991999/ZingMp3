@@ -1,30 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { actions } from "../../store";
-import styles from "./ZingChartPage.module.scss";
-import { Chart, Loading, AlbumItem, PrimaryButton } from "../../components";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import styles from "./ZingChartPage.module.scss";
 import httpService from "../../Services/http.service";
+import { actions } from "../../store";
+import { Chart, Loading, PrimaryButton, SongItem } from "../../components";
 
 function ZingChartPage() {
-  const { idCurrentSong, blackHeader } = useSelector((state) => state);
+  const { idCurrentSong, blackHeader } = useSelector((state) => state.root);
 
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
   const [dataZingChart, setDataZingChart] = useState({});
   const [loadMore, setLoadMore] = useState(false);
-
-  const fetchZingChartData = () => {
-    setLoading(true);
-    httpService.getZingChart().then((res) => {
-      const { data } = res.data;
-      setDataZingChart(data);
-      setLoading(false);
-    });
-  };
 
   const handleScroll = useCallback(
     (e) => {
@@ -48,11 +39,18 @@ function ZingChartPage() {
   }, [idCurrentSong]);
 
   useEffect(() => {
+    const fetchZingChartData = () => {
+      setLoading(true);
+      httpService.getZingChart().then((res) => {
+        const { data } = res.data;
+        setDataZingChart(data);
+        setLoading(false);
+      });
+    };
     fetchZingChartData();
     dispatch(actions.setBGHeader(false));
-    // dispatch(actions.setCurrentNav(2));
     // dispatch(actions.setShowNavMobile(false));
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return <Loading size={50} />;
@@ -86,7 +84,7 @@ function ZingChartPage() {
             const { encodeId, streamingStatus, isWorldWide } = item;
             if (index > 9 && !loadMore) return;
             return (
-              <AlbumItem
+              <SongItem
                 key={encodeId}
                 status={streamingStatus}
                 worldWide={isWorldWide}
@@ -113,7 +111,7 @@ function ZingChartPage() {
           <div className={styles.blur}></div>
           <div className={styles.alpha}></div>
           <a>Bảng xếp hạng tuần</a>
-          {weekChartKeys.map((item, index) => {
+          {weekChartKeys.map((item, indexWeek) => {
             const { country, items } = weekChart[`${item}`];
             let theme = "Việt Nam";
             if (country === "us") {
@@ -123,7 +121,7 @@ function ZingChartPage() {
               theme = "K-Pop";
             }
             return (
-              <Col lg={4} className={styles.chartWeek} key={index}>
+              <Col lg={4} className={styles.chartWeek} key={indexWeek}>
                 <div className={styles.chartWrap}>
                   <div className={styles.chartTop}>
                     <div className={styles.chartHeader}>
@@ -136,15 +134,17 @@ function ZingChartPage() {
                   <div className={styles.chartContent}>
                     {items.map((item, index) => {
                       const { encodeId, streamingStatus, isWorldWide } = item;
-                      if (index > 4 && !loadMore) return;
+                      if (index > 4 && !loadMore) return null;
                       return (
-                        <AlbumItem
+                        <SongItem
                           key={encodeId}
                           status={streamingStatus}
                           worldWide={isWorldWide}
                           data={item}
                           index={index}
                           chartHome={true}
+                          chartWeekIdx={indexWeek}
+                          listSong={items}
                           small={true}
                         />
                       );

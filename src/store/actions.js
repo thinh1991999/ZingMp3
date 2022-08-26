@@ -19,6 +19,13 @@ export const setCurrentUser = (payLoad) => {
   };
 };
 
+export const setLoginStatus = (payLoad) => {
+  return {
+    type: "SET_LOGIN_STATUS",
+    payLoad,
+  };
+};
+
 export const setShowLogin = (payLoad) => {
   return {
     type: "SET_SHOW_LOGIN",
@@ -360,6 +367,28 @@ export const setMvAutoPlayer = (payLoad) => {
 export const setShowSmallScreen = (payLoad) => {
   return {
     type: "SET_SHOW_SMALL_SCREEN",
+    payLoad,
+  };
+};
+
+// Song Reducer
+export const playNewSong = (payLoad) => {
+  return {
+    type: "PLAY_NEW_SONG",
+    payLoad,
+  };
+};
+
+export const playSearchSong = (payLoad) => {
+  return {
+    type: "PLAY_SEARCH_SONG",
+    payLoad,
+  };
+};
+
+export const playSongAfterFetch = (payLoad) => {
+  return {
+    type: "PLAY_SONG_AFTER_FETCH",
     payLoad,
   };
 };

@@ -59,6 +59,7 @@ class AxiosService {
           });
         })
         .catch((err) => {
+          console.log(err);
           this.handleError(err);
           reject({
             err: err,

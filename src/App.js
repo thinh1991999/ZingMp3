@@ -1,5 +1,13 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { onAuthStateChanged } from "firebase/auth";
+import { onValue, ref } from "firebase/database";
+import "react-toastify/dist/ReactToastify.css";
+
+import { auth, db } from "./firebase";
+
 import {
   GlobalStyles,
   Loading,
@@ -16,113 +24,82 @@ import {
   MvModal,
 } from "./components";
 import {
-  Home,
   Album,
-  Singer,
-  Search,
-  ZingChartPage,
-  ListMV,
-  Top100,
-  SearchMobile,
-  Profile,
   Error,
+  Home,
+  ListMV,
   NewSong,
+  Profile,
+  Search,
+  Singer,
+  Top100,
+  ZingChartPage,
 } from "./Pages";
-import { useSelector, useDispatch } from "react-redux";
-import { HOME_API, actions } from "./store";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { auth, db } from "./firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { setCurrentUser } from "./store/actions";
-import { onValue, ref } from "firebase/database";
+import { actions } from "./store";
 
 function App() {
   const {
-    loading,
-    page,
-    idCurrentSong,
-    currentAlbum,
-    currentIndexSong,
-    songCurrentTime,
-    currentSinger,
-    currentSong,
-    song,
     showNavMobile,
     popperInfo: { show },
-    showTimeStop,
-    timeToStop,
     warningModal: { show: warningShow },
     showLogin,
     showComment,
-    showMvModal,
+    currentUser,
     title,
-    listSong,
-    indexValidSongs,
   } = useSelector((state) => state.root);
-
+  const { showMvModal } = useSelector((state) => state.mv);
+  const { currentSong, showTimeStop, timeToStop } = useSelector(
+    (state) => state.song
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        dispatch(actions.setLoginStatus(true));
         const userRef = ref(db, "users/" + user.uid);
         onValue(userRef, (snapshot) => {
           const data = snapshot.val();
-          if (data?.profile_picture) {
-            dispatch(setCurrentUser(data));
-          } else {
-            dispatch(
-              setCurrentUser({
-                ...data,
-                profile_picture:
-                  "https://firebasestorage.googleapis.com/v0/b/my-project-2b635.appspot.com/o/unknown.jpg?alt=media&token=0ac6668a-86e6-426a-bf15-18f4e93cacd5",
-              })
-            );
-          }
+          dispatch(
+            actions.setCurrentUser({ email: user.email, id: user.uid, ...data })
+          );
         });
       } else {
-        dispatch(setCurrentUser(null));
+        dispatch(actions.setLoginStatus(false));
+        dispatch(actions.setCurrentUser(null));
       }
-      dispatch(actions.setLoading(false));
     });
-    dispatch(actions.setPlaying(false));
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
-    localStorage.setItem(
-      "infoCurrent",
-      JSON.stringify({
-        idCurrentSong,
-        currentAlbum,
-        currentSinger,
-        currentIndexSong,
-        songCurrentTime,
-        currentSong,
-        song,
-        listSong,
-        indexValidSongs,
-      })
-    );
-  }, [
-    idCurrentSong,
-    currentAlbum,
-    currentSinger,
-    currentIndexSong,
-    songCurrentTime,
-    currentSong,
-    song,
-    listSong,
-    indexValidSongs,
-  ]);
-
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     "infoCurrent",
+  //     JSON.stringify({
+  //       idCurrentSong,
+  //       currentAlbum,
+  //       currentSinger,
+  //       currentIndexSong,
+  //       songCurrentTime,
+  //       currentSong,
+  //       song,
+  //       listSong,
+  //       indexValidSongs,
+  //     })
+  //   );
+  // }, [
+  //   idCurrentSong,
+  //   currentAlbum,
+  //   currentSinger,
+  //   currentIndexSong,
+  //   songCurrentTime,
+  //   currentSong,
+  //   song,
+  //   listSong,
+  //   indexValidSongs,
+  // ]);
   useEffect(() => {
     document.title = title;
   }, [title]);
-
-  if (loading) {
-    return <Loading loadFull={true} />;
-  }
 
   return (
     <GlobalStyles>
@@ -136,43 +113,12 @@ function App() {
               </GlobalLayout>
             }
           ></Route>
-          <Route
-            path={"/*"}
-            element={
-              <GlobalLayout>
-                <Home />
-              </GlobalLayout>
-            }
-          ></Route>
-          <Route
-            path={"/Profile"}
-            element={
-              <GlobalLayout>
-                <Profile />
-              </GlobalLayout>
-            }
-          ></Route>
+
           <Route
             path={"/Album/:id"}
             element={
               <GlobalLayout>
                 <Album />
-              </GlobalLayout>
-            }
-          ></Route>
-          <Route
-            path={"/Singer/:SingerName"}
-            element={
-              <GlobalLayout>
-                <Singer />
-              </GlobalLayout>
-            }
-          ></Route>
-          <Route
-            path={"/Search/:Keyword"}
-            element={
-              <GlobalLayout>
-                <Search />
               </GlobalLayout>
             }
           ></Route>
@@ -185,18 +131,10 @@ function App() {
             }
           ></Route>
           <Route
-            path={"/NewSong"}
+            path={"/Singer/:SingerName"}
             element={
               <GlobalLayout>
-                <NewSong />
-              </GlobalLayout>
-            }
-          ></Route>
-          <Route
-            path={"/ListMV"}
-            element={
-              <GlobalLayout>
-                <ListMV />
+                <Singer />
               </GlobalLayout>
             }
           ></Route>
@@ -209,6 +147,41 @@ function App() {
             }
           ></Route>
           <Route
+            path={"/ListMV"}
+            element={
+              <GlobalLayout>
+                <ListMV />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/NewSong"}
+            element={
+              <GlobalLayout>
+                <NewSong />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Search/:Keyword"}
+            element={
+              <GlobalLayout>
+                <Search />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Profile"}
+            element={
+              <GlobalLayout>
+                <Profile />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route path={"/error"} element={<Error />}></Route>
+          <Route path={"/*"} element={<Error />}></Route>
+          {/* 
+          <Route
             path={"/SearchMobile"}
             element={
               <GlobalLayout>
@@ -216,17 +189,21 @@ function App() {
               </GlobalLayout>
             }
           ></Route>
-          <Route path={"/error"} element={<Error />}></Route>
+          */}
         </Routes>
         <Lyric />
-        {/* {showComment.show && <CommentModal />}
-        {showLogin && <LogInModal />}
-        {warningShow && <WarningModal />}
-        {timeToStop > 0 && <TimeStopNote />}
+        {currentSong && !showMvModal && <Player />}
+        {show && <Popper />}
+        {currentSong && <Playlists />}
         {showTimeStop && <SetTimeModal />}
-        {idCurrentSong && <Playlists />}
-        {idCurrentSong && <Player />}
-        {show && <Popper />} */}
+        {timeToStop > 0 && <TimeStopNote />}
+        {warningShow && <WarningModal />}
+        {showLogin && <LogInModal />}
+        {/* {showComment.show && <CommentModal />}
+        
+        
+        
+        */}
         <MvModal />
       </div>
       <ToastContainer autoClose={3000} />

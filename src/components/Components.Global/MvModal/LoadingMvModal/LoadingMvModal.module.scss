@@ -1,0 +1,18 @@
+.loading {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  &.loadingSmall {
+    > button {
+      top: 5px;
+      right: 5px;
+    }
+  }
+  > button {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: unset;
+    border: unset;
+  }
+}

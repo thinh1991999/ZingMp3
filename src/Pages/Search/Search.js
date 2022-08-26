@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   SearchAll,
@@ -9,44 +9,41 @@ import {
   SearchArtist,
 } from "../../components";
 import styles from "./Search.module.scss";
-import { actions, SEARCH_API } from "../../store";
+import { actions } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
+import httpService from "../../Services/http.service";
 
 function Search() {
   const { Keyword } = useParams();
 
-  const { idCurrentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state.song);
 
   const dispatch = useDispatch();
 
-  const [header, setHeader] = useState([
+  const header = useRef([
     "tất cả",
     "bài hát",
     "playlist/album",
     "nghệ sĩ/oa",
     "mv",
-  ]);
-  const [loading, setLoading] = useState(false);
-  const [dataSearch, setDataSearch] = useState([]);
+  ]).current;
+  const [loading, setLoading] = useState(true);
+  const [dataSearch, setDataSearch] = useState(null);
   const [controll, setControll] = useState(0);
-
-  const fetchSearch = async () => {
-    setLoading(true);
-    try {
-      const respon = await fetch(`${SEARCH_API}${Keyword}`);
-      const { data } = await respon.json();
-      setDataSearch(data);
-      setLoading(false);
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
 
   const handleControll = (index) => {
     setControll(index);
   };
 
   useEffect(() => {
+    const fetchSearch = () => {
+      setLoading(true);
+      httpService.getSearch(Keyword).then((res) => {
+        const { data } = res.data;
+        setDataSearch(data);
+        setLoading(false);
+      });
+    };
     fetchSearch();
   }, [Keyword]);
 
@@ -54,14 +51,17 @@ function Search() {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setCurrentNav(""));
     dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle(`Search:${Keyword}`));
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    !idCurrentSong && dispatch(actions.setTitle(`Tìm kiếm: ${Keyword}`));
+  }, [idCurrentSong, dispatch, Keyword]);
 
   if (loading) {
     return <Loading size={50} />;
   }
 
-  const { top, songs, videos, playlists, artists } = dataSearch;
+  const { songs, videos, playlists, artists } = dataSearch;
 
   return (
     <div className={styles.search}>

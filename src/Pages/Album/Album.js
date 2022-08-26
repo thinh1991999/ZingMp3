@@ -35,12 +35,13 @@ function Album() {
       // }
       httpService.getAlbum(id).then((res) => {
         const { data } = res.data;
+        dispatch(actions.setAlbum(data));
         setAlbumData(data);
         setLoading(false);
       });
     };
     fetchAlbum();
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
