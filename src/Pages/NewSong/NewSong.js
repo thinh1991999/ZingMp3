@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { AlbumItem, Loading } from "../../components";
+import { Loading, SongItem } from "../../components";
 import httpService from "../../Services/http.service";
 import { actions } from "../../store";
 import styles from "./NewSong.module.scss";
 
 export default function NewSong() {
   const dispatch = useDispatch();
-  const { blackHeader } = useSelector((state) => state);
+  const { blackHeader } = useSelector((state) => state.root);
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,7 +34,8 @@ export default function NewSong() {
       });
     };
     axiosNewSong();
-  }, []);
+    dispatch(actions.setBGHeader(false));
+  }, [dispatch]);
   if (loading) {
     return <Loading size={50} />;
   }
@@ -56,7 +57,7 @@ export default function NewSong() {
             {items.map((item, index) => {
               const { encodeId, streamingStatus, isWorldWide } = item;
               return (
-                <AlbumItem
+                <SongItem
                   key={encodeId}
                   status={streamingStatus}
                   worldWide={isWorldWide}

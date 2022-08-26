@@ -15,13 +15,15 @@ import { db, auth, storage } from "../../firebase";
 import { actions } from "../../store";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { constant } from "../../Share";
 
 function Profile() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const { currentUser, idCurrentSong } = useSelector((state) => state);
+  const { currentUser, loginStatus } = useSelector((state) => state.root);
   const [location, setLocation] = useState({ country: "", region: "" });
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -98,7 +100,6 @@ function Profile() {
     setImgError("");
     setMess("");
   };
-
   const handleSaveProfile = async (e) => {
     e.preventDefault();
     const valid = getValidName() & getValidPhone() & getValidImg();
@@ -119,21 +120,17 @@ function Profile() {
           .then((url) => {
             const xhr = new XMLHttpRequest();
             xhr.responseType = "blob";
-            xhr.onload = (event) => {
-              const blob = xhr.response;
-            };
+            xhr.onload = () => {};
             xhr.open("GET", url);
             xhr.send();
-            console.log("aaa");
             set(ref(db, "users/" + currentUser.id + "/profile_picture"), url);
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch((error) => {});
         setMess({
           type: "SUCCESS",
           msg: "Lưu thành công",
         });
+        imgInputRef.current.value = null;
         setSaveLoading(false);
       } else {
         setMess({
@@ -146,11 +143,7 @@ function Profile() {
   };
 
   const handleLogOut = () => {
-    signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {});
+    signOut(auth);
   };
 
   useEffect(() => {
@@ -163,29 +156,31 @@ function Profile() {
   }, [currentUser]);
 
   useEffect(() => {
-    dispatch(actions.setCurrentNav(0));
+    if (!loginStatus) {
+      navigate("/");
+      toast.error("Bạn cần phải đăng nhập để vào trang này");
+    }
+  }, [loginStatus, navigate]);
+
+  useEffect(() => {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle("Profile"));
+    // !idCurrentSong && dispatch(actions.setTitle("Profile"));
     return () => {
       dispatch(actions.setPopperInfo({ show: false }));
     };
   }, []);
-
-  let email = "";
-  let profile_picture = "";
-  if (currentUser) {
-    email = currentUser.email;
-    profile_picture = currentUser.profile_picture;
-  }
 
   return (
     <div className={styles.container}>
       <div className={styles.wrap}>
         <Row>
           <Col lg={4} sm={10} xs={10} className={styles.left}>
-            <img src={profile_picture} alt="" />
-            <p>{email}</p>
+            <img
+              src={currentUser?.profile_picture || constant.unknowUserImg}
+              alt=""
+            />
+            <p>{currentUser?.email}</p>
           </Col>
           <Col sm={2} xs={2} className={styles.mobile}>
             <button onClick={handleLogOut}>

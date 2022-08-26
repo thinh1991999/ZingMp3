@@ -44,6 +44,46 @@ class HttpService {
     });
     return axiosService.getMethod("/video", false);
   }
+  getSinger(alias) {
+    axiosService.addConfig({
+      params: {
+        name: alias,
+      },
+    });
+    return axiosService.getMethod("/artist", false);
+  }
+  getSearch(keyword) {
+    axiosService.addConfig({
+      params: {
+        keyword,
+      },
+    });
+    return axiosService.getMethod("/search", false);
+  }
+  getSongPlayer(id) {
+    axiosService.addConfig({
+      params: {
+        id,
+      },
+    });
+    return axiosService.getMethod("/song", false);
+  }
+  getSongInfo(id) {
+    axiosService.addConfig({
+      params: {
+        id,
+      },
+    });
+    return axiosService.getMethod("/infosong", false);
+  }
+  getLyric(id) {
+    axiosService.addConfig({
+      params: {
+        id,
+      },
+    });
+    return axiosService.getMethod("/lyric", false);
+  }
 }
 
 export default new HttpService();

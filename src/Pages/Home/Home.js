@@ -48,11 +48,9 @@ function Home() {
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
-    // dispatch(actions.setCurrentNav(1));
     // dispatch(actions.setShowNavMobile(false));
     !idCurrentSong && dispatch(actions.setTitle("Home"));
   }, [dispatch, idCurrentSong]);
-  console.log(homeData);
   return (
     <InfiniteScroll
       dataLength={homeData.length}

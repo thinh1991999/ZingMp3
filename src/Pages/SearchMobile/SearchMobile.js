@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { SEARCH_API } from "../../store";
 import clsx from "clsx";
 import styles from "./SearchMobile.module.scss";
 import { MdOutlineClose } from "react-icons/md";
@@ -32,16 +31,16 @@ function SearchMobile() {
 
   const fetchSearch = async () => {
     setLoading(true);
-    try {
-      const respon = await fetch(`${SEARCH_API}${searchText}`);
-      const {
-        data: { artists = [], songs = [], top },
-      } = await respon.json();
-      setDataSearch([top, ...artists.splice(0, 2), ...songs.splice(0, 3)]);
-      setLoading(false);
-    } catch (error) {
-      throw new Error(error);
-    }
+    // try {
+    //   const respon = await fetch(`${SEARCH_API}${searchText}`);
+    //   const {
+    //     data: { artists = [], songs = [], top },
+    //   } = await respon.json();
+    //   setDataSearch([top, ...artists.splice(0, 2), ...songs.splice(0, 3)]);
+    //   setLoading(false);
+    // } catch (error) {
+    //   throw new Error(error);
+    // }
   };
 
   const handleSearchForm = () => {

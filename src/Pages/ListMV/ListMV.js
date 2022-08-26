@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Row } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { Loading, Mv } from "../../components";
 import { actions } from "../../store";
 
 function ListMV() {
-  const { idCurrentSong } = useSelector((state) => state);
+  const { idCurrentSong } = useSelector((state) => state.song);
 
   const stateNav = useRef([
     {
@@ -39,7 +39,7 @@ function ListMV() {
 
   const dispatch = useDispatch();
 
-  const fetchListMV = async () => {
+  const fetchListMV = useCallback(() => {
     setLoading(true);
     httpService.getListMv(stateNav[state].id, 1, 15).then((res) => {
       const {
@@ -48,7 +48,7 @@ function ListMV() {
       setListMV(items);
       setLoading(false);
     });
-  };
+  }, [stateNav, state]);
 
   const handleNext = () => {
     setPage(page + 1);
@@ -84,7 +84,8 @@ function ListMV() {
     dispatch(actions.setCurrentNav(8));
     fetchListMV();
     dispatch(actions.setShowNavMobile(false));
-  }, []);
+    // eslint-disable-next-line
+  }, [dispatch]);
 
   useEffect(() => {
     if (!idCurrentSong) {

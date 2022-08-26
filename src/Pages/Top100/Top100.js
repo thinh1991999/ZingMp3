@@ -7,7 +7,8 @@ import httpService from "../../Services/http.service";
 
 function Top100() {
   const dispatch = useDispatch();
-  const { idCurrentSong, blackHeader } = useSelector((state) => state);
+  const { blackHeader } = useSelector((state) => state.root);
+  const { idCurrentSong } = useSelector((state) => state.song);
 
   const [dataTop, setDataTop] = useState([]);
   const [loading, setLoading] = useState(true);

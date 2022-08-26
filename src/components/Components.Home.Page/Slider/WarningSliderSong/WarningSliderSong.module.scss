@@ -1,0 +1,82 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  .wrap {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: black;
+      opacity: 0.2;
+    }
+    .content {
+      width: 320px;
+      background-color: var(--primary-bg);
+      border-radius: 8px;
+      padding: 25px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      h5 {
+        font-size: 16px;
+        color: var(--white);
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 400;
+      }
+      h6 {
+        font-size: 16px;
+        color: var(--white);
+        text-align: center;
+        margin-top: 5px;
+      }
+      p {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+      }
+      .imgWrap {
+        width: 150px;
+        border-radius: 5px;
+        overflow: hidden;
+        &:hover {
+          img {
+            transform: scale(1.2);
+          }
+        }
+        img {
+          width: 100%;
+          transition: all linear 0.3s;
+        }
+      }
+      button {
+        width: 100%;
+        background-color: unset;
+        border: unset;
+      }
+      .btnCancer {
+        margin-top: 15px;
+        font-size: 16px;
+        text-transform: uppercase;
+        color: var(--white);
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
