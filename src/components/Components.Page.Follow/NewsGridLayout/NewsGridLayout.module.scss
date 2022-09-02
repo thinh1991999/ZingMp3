@@ -1,0 +1,63 @@
+.layout {
+  position: relative;
+}
+.box {
+  padding: 20px;
+  background-color: var(--alpha-bg);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  .author {
+    display: flex;
+    img {
+      width: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .info {
+      a {
+        font-size: 16px;
+        display: block;
+      }
+      span {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+  .mess {
+    margin: 10px 0;
+    color: var(--text-secondary);
+  }
+  .content {
+    flex: 1;
+    background-position: center;
+    background-size: cover;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+      background-color: transparent;
+      border: unset;
+    }
+  }
+  .express {
+    margin-top: 20px;
+    display: flex;
+    .icon {
+      margin-right: 40px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      color: var(--white);
+      span {
+        font-size: 14px;
+        margin-left: 4px;
+      }
+    }
+  }
+}

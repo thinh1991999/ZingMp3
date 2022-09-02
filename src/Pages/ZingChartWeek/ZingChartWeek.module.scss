@@ -1,0 +1,82 @@
+.container {
+  height: 100vh;
+  position: relative;
+  .blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 450px;
+    background-image: url(https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.7.28/static/media/week-chart-bg.edf332e5.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: grayscale(1);
+  }
+  .alpha1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 450px;
+    background-image: linear-gradient(
+      180deg,
+      hsla(0, 0%, 100%, 0) 37%,
+      var(--layout-bg)
+    );
+  }
+  .alpha2 {
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 450px;
+    background-image: linear-gradient(
+      180deg,
+      var(--layout-bg),
+      var(--layout-bg)
+    );
+  }
+  .content {
+    padding: 100px 20px;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    h3 {
+      color: var(--white);
+      font-size: 32px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    ul {
+      padding: unset;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      li {
+        padding: 10px 0;
+        margin-right: 40px;
+        font-size: 28px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--white);
+        cursor: pointer;
+        &.active {
+          border-bottom: 3px solid var(--purple-primary);
+        }
+      }
+    }
+    .songWrap {
+      flex: 1;
+      overflow-y: scroll;
+    }
+    .optionsTime {
+      max-width: 230px;
+      margin-bottom: 20px;
+    }
+  }
+}

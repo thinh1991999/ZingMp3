@@ -11,9 +11,8 @@ import ButtonIcon from "../ButtonIcon/ButtonIcon";
 import PlayingIcon from "../PlayingIcon/PlayingIcon";
 import { actions } from "../../../store";
 
-function Topic({ data }) {
+function Topic({ data, padding }) {
   const navigate = useNavigate();
-
   const { currentAlbum, playing } = useSelector((state) => state);
 
   const likeBtnRef = useRef(null);
@@ -21,8 +20,9 @@ function Topic({ data }) {
 
   const dispatch = useDispatch();
 
-  const { title, sub, image, id } = data;
-  const topicActive = id === currentAlbum && playing ? styles.topicActive : "";
+  const { title, sortDescription, thumbnailM, encodeId } = data;
+  const topicActive =
+    encodeId === currentAlbum && playing ? styles.topicActive : "";
 
   const handlePlayAlbum = (e) => {
     if (
@@ -30,10 +30,10 @@ function Topic({ data }) {
       commentRef.current.contains(e.target)
     ) {
     } else {
-      if (id === currentAlbum) {
+      if (encodeId === currentAlbum) {
         dispatch(actions.setPlaying(!playing));
       } else {
-        navigate(`/Album/${id}`);
+        navigate(`/Album/${encodeId}`);
       }
     }
   };
@@ -42,17 +42,22 @@ function Topic({ data }) {
     dispatch(
       actions.setShowComment({
         show: true,
-        id,
+        encodeId,
       })
     );
   };
 
   return (
-    <div className={clsx(styles.topic, topicActive)}>
+    <div
+      className={clsx(styles.topic, topicActive)}
+      style={{
+        padding,
+      }}
+    >
       <div className={styles.topicWrap}>
         <div className={styles.topicImg}>
           <div className={styles.topicLink} onClick={handlePlayAlbum}>
-            <img src={image} alt="" />
+            <img src={thumbnailM} alt="" />
             <div className={styles.topicLayer}></div>
             <div className={styles.topicBtn}>
               <div className={styles.topicBtnWrap}>
@@ -72,10 +77,15 @@ function Topic({ data }) {
                   </ButtonIcon>
                 </button>
                 <div className={styles.playBtnWrap}>
-                  {id === currentAlbum && playing ? (
+                  {encodeId === currentAlbum && playing ? (
                     <PlayingIcon circle={true} topic={true} />
                   ) : (
-                    <ButtonIcon circle={true} topic={true}>
+                    <ButtonIcon
+                      circle={true}
+                      topic={true}
+                      size={40}
+                      fontSize={40}
+                    >
                       <BsPlayCircle />
                     </ButtonIcon>
                   )}
@@ -101,8 +111,8 @@ function Topic({ data }) {
           </div>
         </div>
         <div className={styles.topicInfo}>
-          <Link to={`/Album/${id}`}>{title}</Link>
-          <p>{sub}</p>
+          <Link to={`/Album/${encodeId}`}>{title}</Link>
+          <p>{sortDescription}</p>
         </div>
       </div>
     </div>

@@ -1,8 +1,7 @@
 .topics {
-  padding: 15px;
-  margin-top: 20px;
+  // padding: 15px;
+  // margin-top: 20px;
   color: var(--text-primary);
-
   .topicsTitle {
     display: flex;
     align-items: center;
@@ -27,33 +26,14 @@
     }
   }
 
-  .topicContainer {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
+  .content {
+    margin-left: -15px;
+    margin-right: -15px;
   }
 }
 
 .topics.topWrap {
   .topicContainer {
     flex-wrap: wrap;
-  }
-}
-@keyframes textMoveRight {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@media only screen and(max-width:768px) {
-  .topics {
-    .topicContainer {
-      flex-wrap: wrap;
-    }
   }
 }

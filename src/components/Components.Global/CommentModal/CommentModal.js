@@ -1,21 +1,22 @@
 import React, { useRef, useEffect, useState } from "react";
-import styles from "./CommentModal.module.scss";
-import ButtonIcon from "../ButtonIcon/ButtonIcon";
 import { MdOutlineClose } from "react-icons/md";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../store";
-import { db } from "../../firebase";
+import clsx from "clsx";
 import { onValue, ref, push, update, child } from "firebase/database";
 import { Timestamp } from "firebase/firestore";
+import styles from "./CommentModal.module.scss";
+import { actions } from "../../../store";
+import { db } from "../../../firebase";
+import ButtonIcon from "../ButtonIcon/ButtonIcon";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
-import clsx from "clsx";
+import { unknowUserImg } from "../../../Share/constant";
 
 function CommentModal() {
   const dispatch = useDispatch();
 
-  const { showComment, currentUser } = useSelector((state) => state);
+  const { showComment, currentUser } = useSelector((state) => state.root);
 
   const [chatList, setChatList] = useState([]);
   const [infoUser, setInfoUser] = useState([]);
@@ -200,7 +201,6 @@ function CommentModal() {
   useEffect(() => {
     ulRef.current.scrollTop = ulRef.current.scrollHeight;
   }, [chatList]);
-
   return (
     <div className={styles.container} ref={containerRef}>
       <div className={styles.wrap} ref={wrapRef}>
@@ -236,6 +236,7 @@ function CommentModal() {
                 const disliked =
                   currentUser !== null ? dislikes[currentUser.id] === 1 : false;
                 const user = infoUser.filter((item) => item.id === sentBy)[0];
+
                 if (user) {
                   const { email, profile_picture, username } = user;
                   const newData = new Date(created * 1000);
@@ -256,17 +257,10 @@ function CommentModal() {
                       ? `0${newData.getMinutes()}`
                       : newData.getMinutes()
                   }`;
-
                   return (
                     <li key={index} className={styles.commentItem}>
                       <div className={styles.leftItem}>
-                        <img
-                          src={
-                            profile_picture ||
-                            `https://firebasestorage.googleapis.com/v0/b/my-project-2b635.appspot.com/o/unknown.jpg?alt=media&token=0ac6668a-86e6-426a-bf15-18f4e93cacd5`
-                          }
-                          alt=""
-                        />
+                        <img src={profile_picture || unknowUserImg} alt="" />
                       </div>
                       <div className={styles.rightItem}>
                         <h4>

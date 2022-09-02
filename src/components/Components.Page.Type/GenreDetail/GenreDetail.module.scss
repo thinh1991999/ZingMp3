@@ -1,0 +1,24 @@
+.container {
+  margin: 25px 0;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    h5 {
+      color: var(--white);
+    }
+    button {
+      background-color: unset;
+      border: unset;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+  }
+
+  .content {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}

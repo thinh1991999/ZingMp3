@@ -11,6 +11,7 @@ import {
   Choices,
   Events,
   Chart,
+  Artists,
 } from "../../components";
 import styles from "./Home.module.scss";
 import httpService from "../../Services/http.service";
@@ -80,7 +81,7 @@ function Home() {
               <Zingcharts data={{ ...item }} key={`${sectionId}${index}`} />
             );
           } else if (sectionType === "artistSpotlight") {
-            return <Singers data={{ ...item }} key={sectionId || index} />;
+            return <Artists data={{ ...item }} key={sectionId || index} />;
           } else if (sectionType === "mix") {
             return <Choices data={{ ...item }} key={`${sectionId}${index}`} />;
           } else if (sectionType === "event") {

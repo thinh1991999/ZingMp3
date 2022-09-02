@@ -12,7 +12,10 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
+  &.wrapBorder {
+    border: 1px solid var(--border-primary);
+    background-color: unset;
+  }
   &:hover {
     opacity: 0.8;
   }

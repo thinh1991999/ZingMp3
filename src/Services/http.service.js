@@ -33,6 +33,16 @@ class HttpService {
   getZingChart() {
     return axiosService.getMethod("/charthome", false);
   }
+  getWeekChart(id, week, year) {
+    axiosService.addConfig({
+      params: {
+        id,
+        week,
+        year,
+      },
+    });
+    return axiosService.getMethod("/weekChart", false);
+  }
   getNewSong() {
     return axiosService.getMethod("/newreleasechart", false);
   }
@@ -83,6 +93,40 @@ class HttpService {
       },
     });
     return axiosService.getMethod("/lyric", false);
+  }
+  getRadio() {
+    return axiosService.getMethod("/radio", false);
+  }
+  getNewFeeds(id, page) {
+    axiosService.addConfig({
+      params: {
+        id,
+        page,
+      },
+    });
+    return axiosService.getMethod("/newFeeds", false);
+  }
+  getTypeHome() {
+    return axiosService.getMethod("/typeHome", false);
+  }
+  getTypeDetail(id) {
+    axiosService.addConfig({
+      params: {
+        id,
+      },
+    });
+    return axiosService.getMethod("/typeDetail", false);
+  }
+  getEvent() {
+    return axiosService.getMethod("/event", false);
+  }
+  getEventInfo(id) {
+    axiosService.addConfig({
+      params: {
+        id,
+      },
+    });
+    return axiosService.getMethod("/eventInfo", false);
   }
 }
 

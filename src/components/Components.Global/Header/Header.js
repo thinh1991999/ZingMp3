@@ -100,7 +100,6 @@ function Header() {
       length,
       state: { idx },
     } = window.history;
-    console.log(window.history);
     idx === 0 ? setLeftDisable(true) : setLeftDisable(false);
     idx === length - 1 ? setRightDisable(true) : setRightDisable(false);
   }, [location]);

@@ -19,7 +19,6 @@
 // export { default as LyricList } from "./LyricList/LyricList";
 
 // export { default as ChartToolTip } from "./ChartToolTip/ChartToolTip";
-// export { default as CommentModal } from "./CommentModal/CommentModal";
 
 // Global Layout and styles
 export { default as GlobalStyles } from "./Components.Layout.Global/GlobalStyles/GlobalStyles";
@@ -50,13 +49,15 @@ export { default as SetTimeModal } from "./Components.Global/SetTimeModal/SetTim
 export { default as TimeStopNote } from "./Components.Global/TimeStopNote/TimeStopNote";
 export { default as WarningModal } from "./Components.Global/WarningModal/WarningModal";
 export { default as LogInModal } from "./Components.Global/LogInModal/LogInModal";
+export { default as CommentModal } from "./Components.Global/CommentModal/CommentModal";
+export { default as Radio } from "./Components.Global/Radio/Radio";
+export { default as EventModal } from "./Components.Global/EventModal/EventModal";
 
 // Home components
 export { default as Choices } from "./Components.Home.Page/Choices/Choices";
 export { default as Choice } from "./Components.Home.Page/Choice/Choice";
 export { default as Slider } from "./Components.Home.Page/Slider/Slider";
 export { default as Radios } from "./Components.Home.Page/Radios/Radios";
-export { default as Radio } from "./Components.Home.Page/Radio/Radio";
 export { default as Zingcharts } from "./Components.Home.Page/Zingcharts/Zingcharts";
 export { default as Zingchart } from "./Components.Home.Page/Zingchart/Zingchart";
 export { default as Events } from "./Components.Home.Page/Events/Events";
@@ -79,3 +80,25 @@ export { default as SearchMv } from "./Components.Page.Search/SearchMv/SearchMv"
 export { default as SearchPlaylist } from "./Components.Page.Search/SearchPlaylist/SearchPlaylist";
 export { default as SearchArtist } from "./Components.Page.Search/SearchArtist/SearchArtist";
 export { default as SearchNoInfo } from "./Components.Page.Search/SearchNoInfo/SearchNoInfo";
+
+// Radio components
+export { default as LiveStream } from "./Components.Page.Radio/LiveStream/LiveStream";
+export { default as Podcast } from "./Components.Page.Radio/Podcast/Podcast";
+export { default as PodcastSlider } from "./Components.Page.Radio/PodcastSlider/PodcastSlider";
+export { default as PodcastCategory } from "./Components.Page.Radio/PodcastCategory/PodcastCategory";
+export { default as RadioSchedule } from "./Components.Page.Radio/RadioSchedule/RadioSchedule";
+
+// Follow components
+export { default as NewsGridLayout } from "./Components.Page.Follow/NewsGridLayout/NewsGridLayout";
+
+// Type components
+export { default as TypeBanners } from "./Components.Page.Type/TypeBanners/TypeBanners";
+export { default as GenreDetail } from "./Components.Page.Type/GenreDetail/GenreDetail";
+export { default as TypeNations } from "./Components.Page.Type/TypeNations/TypeNations";
+export { default as TypeTopic } from "./Components.Page.Type/TypeTopic/TypeTopic";
+
+// TypeDetail components
+export { default as TypePlaylist } from "./Components.Page.TypeDetail/TypePlaylist/TypePlaylist";
+
+// ZingChartWeek components
+export { default as OptionsTime } from "./Components.Page.ZingChartWeek/OptionsTime/OptionsTime";

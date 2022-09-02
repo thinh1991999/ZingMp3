@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import httpService from "../../Services/http.service";
@@ -148,7 +148,11 @@ function ListMV() {
               <Row>
                 {listMV.map((mv, index) => {
                   const { encodeId } = mv;
-                  return <Mv key={`${encodeId}${index}`} data={mv} />;
+                  return (
+                    <Col md={4} sm={6} xs={12}>
+                      <Mv key={`${encodeId}${index}`} data={mv} />
+                    </Col>
+                  );
                 })}
               </Row>
             )}

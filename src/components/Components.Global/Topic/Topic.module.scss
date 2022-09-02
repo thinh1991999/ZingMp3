@@ -1,5 +1,5 @@
 .topic {
-  width: 20%;
+  // width: 20%;
   padding: 0 15px;
 }
 
@@ -117,14 +117,14 @@
   }
 }
 
-@media only screen and(max-width:1200px) {
-  .topic {
-    width: 25%;
-  }
-}
+// @media only screen and(max-width:1200px) {
+//   .topic {
+//     width: 25%;
+//   }
+// }
 
-@media only screen and(max-width:600px) {
-  .topic {
-    width: 50%;
-  }
-}
+// @media only screen and(max-width:600px) {
+//   .topic {
+//     width: 50%;
+//   }
+// }

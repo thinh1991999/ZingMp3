@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { getFullDateTime } from "../../../funtions";
+import { actions } from "../../../store";
 import PrimaryButton from "../../Components.Global/PrimaryButton/PrimaryButton";
 import styles from "./Event.module.scss";
 
 function Event({ data }) {
+  const dispatch = useDispatch();
   const {
+    encodeId,
     coverH: image,
     followers,
     title,
@@ -12,13 +16,17 @@ function Event({ data }) {
     totalFollow,
     label,
   } = data;
+  const handleOpenEvent = () => {
+    dispatch(actions.setIDShowEvent(encodeId));
+    dispatch(actions.setShowEvent(true));
+  };
 
   const newTime = getFullDateTime(startTime);
 
   return (
     <div className={styles.event}>
       <div className={styles.eventWrap}>
-        <a className={styles.eventLink}>
+        <div className={styles.eventLink} onClick={handleOpenEvent}>
           <div className={styles.eventImg}>
             <img src={image} alt={title} />
             <div className={styles.eventInfo}>
@@ -29,7 +37,7 @@ function Event({ data }) {
               <p>{newTime}</p>
             </div>
           </div>
-        </a>
+        </div>
         <div className={styles.eventBtn}>
           <div className={styles.eventFollow}>
             <h4>Lượt quan tâm</h4>

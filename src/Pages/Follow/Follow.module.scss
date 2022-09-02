@@ -1,0 +1,32 @@
+.container {
+  padding: 100px 20px;
+  // height: 100vh;
+  // overflow-y: scroll;
+  .header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    .navList {
+      display: flex;
+      background-color: var(--alpha-bg);
+      border-radius: 20px;
+      padding: 3px;
+      .navItem {
+        color: var(--white);
+        width: 120px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 20px;
+        text-transform: uppercase;
+        font-size: 14px;
+        &.navItemActive {
+          background-color: var(--tab-active-bg);
+          color: var(--text-item-hover);
+        }
+      }
+    }
+  }
+}

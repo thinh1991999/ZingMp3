@@ -229,11 +229,11 @@ function PlayerCenter({ volume = 50 }) {
           {songLoading ? (
             <PlayingIcon loading={true} />
           ) : playing ? (
-            <ButtonIcon circle={true}>
+            <ButtonIcon circle={true} size={40} fontSize={40}>
               <BsPauseCircle />
             </ButtonIcon>
           ) : (
-            <ButtonIcon circle={true}>
+            <ButtonIcon circle={true} size={40} fontSize={40}>
               <BsPlayCircle />
             </ButtonIcon>
           )}

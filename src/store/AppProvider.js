@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { MvReducer } from "./MvReducer/MvReducer";
 import { RootReducer } from "./RootReducer/RootReducer";
 import { SongReducer } from "./SongReducer/SongReducer";
+import { EventReducer } from "./EventReducer/EventReducer";
 
 export const AppProvider = ({ children }) => {
   const store = createStore(
@@ -11,6 +12,7 @@ export const AppProvider = ({ children }) => {
       mv: MvReducer,
       root: RootReducer,
       song: SongReducer,
+      event: EventReducer,
     }),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );

@@ -1,0 +1,39 @@
+.container {
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 100px 20px;
+  position: relative;
+  .cover {
+    background-color: var(--loading-bg);
+    padding-bottom: 25%;
+    position: relative;
+    .coverImg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .coverShadow {
+      position: absolute;
+      height: 20px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgb(0, 0, 4);
+      background: linear-gradient(
+        0deg,
+        rgba(0, 0, 4, 0.7682423311121324) 0%,
+        rgba(10, 10, 10, 0.02874653279280459) 51%,
+        rgba(153, 166, 168, 0.2024160005799195) 100%
+      );
+    }
+  }
+  .content {
+    margin-top: -10px;
+    position: relative;
+  }
+}

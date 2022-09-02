@@ -70,7 +70,6 @@ function Album() {
     artists,
     encodeId: albumId,
   } = albumData;
-
   return (
     <div className={styles.album}>
       <div className={styles.albumContainer}>
@@ -92,7 +91,14 @@ function Album() {
             <AlbumRight title={sortDescription} song={song} />
           </Col>
         </Row>
-        <Artists data={artists} />
+        {artists ? (
+          <Artists
+            data={{
+              title: "Nghệ sĩ tham gia",
+              items: [...artists],
+            }}
+          />
+        ) : null}
       </div>
     </div>
   );

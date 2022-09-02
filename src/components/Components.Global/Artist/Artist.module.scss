@@ -1,5 +1,5 @@
 .item {
-  width: 20%;
+  // width: 20%;
   padding: 15px;
   text-align: center;
   .itemWrap {
@@ -86,20 +86,20 @@
   }
 }
 
-@media only screen and(max-width:769px) {
-  .item {
-    width: calc(100% / 3);
-  }
-}
+// @media only screen and(max-width:769px) {
+//   .item {
+//     width: calc(100% / 3);
+//   }
+// }
 
-@media only screen and(max-width:426px) {
-  .item {
-    width: 50%;
-  }
-}
+// @media only screen and(max-width:426px) {
+//   .item {
+//     width: 50%;
+//   }
+// }
 
-@media only screen and(max-width:326px) {
-  .item {
-    width: 100%;
-  }
-}
+// @media only screen and(max-width:326px) {
+//   .item {
+//     width: 100%;
+//   }
+// }
