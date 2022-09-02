@@ -1,5 +1,4 @@
 .mv {
-  width: calc(100% / 3);
   padding: 15px;
   &.mvActive {
     .mvWrap {
@@ -85,6 +84,19 @@
         justify-content: center;
         opacity: 0;
         transition: var(--transition-time);
+        button {
+          background-color: unset;
+          border: unset;
+        }
+      }
+      .vip {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 26px;
+        height: 12px;
+        background-size: contain;
+        background-image: url(https://zjs.zadn.vn/zmp3-desktop/releases/v1.6.0/static/media/vip-label.3dd6ac7e.svg);
       }
     }
     .mvInfo {
@@ -132,17 +144,5 @@
         }
       }
     }
-  }
-}
-
-@media only screen and (max-width: 769px) {
-  .mv {
-    width: 50%;
-  }
-}
-
-@media only screen and (max-width: 426px) {
-  .mv {
-    width: 100%;
   }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Radio.module.scss";
 import { BsPlayCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
-import ButtonIcon from "../../Components.Global/ButtonIcon/ButtonIcon";
+import ButtonIcon from "../ButtonIcon/ButtonIcon";
 
 function Radio({ data }) {
   const {
@@ -26,7 +26,7 @@ function Radio({ data }) {
           <img src={programImage} alt="" />
           <div className={styles.imgLayer}></div>
           <div className={styles.imgBtn} onClick={openRadio}>
-            <ButtonIcon circle={true} topic={true}>
+            <ButtonIcon circle={true} topic={true} size={40} fontSize={40}>
               <BsPlayCircle />
             </ButtonIcon>
           </div>

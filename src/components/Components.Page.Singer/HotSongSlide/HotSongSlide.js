@@ -1,56 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./HotSongSlide.module.scss";
 import { actions } from "../../../store";
 
 function HotSongSlide({ data }) {
-  const {
-    idCurrentSong,
-    singer: singerCurrent,
-    currentSinger,
-    playing,
-  } = useSelector((state) => state.song);
+  const { currentSong, playing } = useSelector((state) => state.song);
 
   const dispatch = useDispatch();
 
-  const [slide, setSlides] = useState(data);
+  const slide = useRef(data).current;
   const [activeIndex, setActiveIndex] = useState(0);
   const [centerIndex, setCenterIndex] = useState(1);
   const [lastIndex, setLastIndex] = useState(2);
 
-  const { alias } = singerCurrent;
-
-  const handlePlaySingerSong = (idSong) => {
-    if (idSong === idCurrentSong) {
-      dispatch(actions.setPlaying(!playing));
-    } else {
-      if (alias === currentSinger) {
-        dispatch(actions.playSongSameSinger(idSong));
+  const handlePlaySingerSong = useCallback(
+    (item) => {
+      if (item.encodeId === currentSong?.encodeId) {
+        dispatch(actions.setPlaying(!playing));
       } else {
-        dispatch(actions.playSongAnotherSinger(idSong));
+        dispatch(actions.playSongAnotherSinger(item));
       }
-    }
-  };
-
-  useEffect(() => {
-    if (activeIndex === slide.length - 2) {
-      setLastIndex(0);
-    } else if (activeIndex === slide.length - 1) {
-      setLastIndex(1);
-    }
-  }, [activeIndex, centerIndex, lastIndex]);
+    },
+    [currentSong, dispatch, playing]
+  );
 
   useEffect(() => {
     const slideInterval = setInterval(() => {
+      if (activeIndex === slide.length - 2) {
+        setLastIndex(0);
+      } else if (activeIndex === slide.length - 1) {
+        setLastIndex(1);
+      } else {
+        setLastIndex(lastIndex + 1);
+      }
       setActiveIndex(centerIndex);
       setCenterIndex(lastIndex);
-      setLastIndex(lastIndex + 1);
-    }, 3000);
+    }, 4000);
     return () => {
       clearInterval(slideInterval);
     };
-  }, [activeIndex, centerIndex, lastIndex]);
+  }, [activeIndex, centerIndex, lastIndex, slide]);
 
   return (
     <>
@@ -70,7 +60,7 @@ function HotSongSlide({ data }) {
               className={positionClass}
               key={encodeId}
               onClick={() => {
-                handlePlaySingerSong(encodeId);
+                handlePlaySingerSong(item);
               }}
             >
               <a>

@@ -24,7 +24,7 @@ function Artist({ data }) {
           <img src={thumbnailM || thumbnail} alt="" />
           <div className={styles.imgLayer} />
           <div className={styles.imgIcon}>
-            <ButtonIcon circle={true} topic={true}>
+            <ButtonIcon circle={true} topic={true} size={40} fontSize={40}>
               <BsPlayCircle />
             </ButtonIcon>
           </div>

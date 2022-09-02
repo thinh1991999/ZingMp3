@@ -1,0 +1,111 @@
+.container {
+  z-index: 99;
+  position: relative;
+  .timeShow {
+    padding: 5px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--alpha-bg);
+    color: var(--white);
+    border-radius: 999px;
+    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .optionsTimeWrap {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    padding: 10px 20px 20px 20px;
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 20%);
+    border-radius: 8px;
+    background-color: var(--primary-bg);
+    min-height: 150px;
+    display: none;
+    &::before {
+      content: "";
+      display: block;
+      border-width: 10px;
+      border-style: solid;
+      position: absolute;
+      left: 20px;
+      top: 0;
+      transform: translateY(-100%);
+      border-color: transparent transparent var(--primary-bg) transparent;
+    }
+    &.optionsTimeWrapActive {
+      display: block;
+    }
+    .itemWrap {
+      background-color: var(--primary-bg);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      // align-items: center;
+      justify-content: center;
+      .header {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button {
+          background-color: transparent;
+          border: unset;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background-color: var(--alpha-bg);
+          color: var(--white);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+        h6 {
+          color: var(--white);
+          font-size: 12px;
+          margin: unset;
+        }
+      }
+
+      .itemTime {
+        color: var(--white);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        &:hover {
+          .left {
+            background-color: var(--alpha-bg);
+          }
+          .right {
+            background-color: var(--alpha-bg);
+          }
+        }
+        .left {
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 5px;
+          border-radius: 5px;
+        }
+        .right {
+          flex: 1;
+          border-radius: 5px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

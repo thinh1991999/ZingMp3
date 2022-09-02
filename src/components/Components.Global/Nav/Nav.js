@@ -42,27 +42,27 @@ function Nav() {
       icon: <GiChart style={iconStyles} />,
       link: "/ZingChartHome",
     },
-    // {
-    //   name: "Radio",
-    //   icon: <MdOutlineRadio style={iconStyles} />,
-    //   link: "/Radio",
-    //   hint: "live",
-    // },
-    // {
-    //   name: "Theo Dõi",
-    //   icon: <BsNewspaper style={iconStyles} />,
-    //   link: "/Follow",
-    // },
+    {
+      name: "Radio",
+      icon: <MdOutlineRadio style={iconStyles} />,
+      link: "/Radio",
+      hint: "live",
+    },
+    {
+      name: "Theo Dõi",
+      icon: <BsNewspaper style={iconStyles} />,
+      link: "/Follow",
+    },
     {
       name: "Nhạc Mới",
       icon: <FiMusic style={iconStyles} />,
       link: "/NewSong",
     },
-    // {
-    //   name: "Thể Loại",
-    //   icon: <BsUiChecksGrid style={iconStyles} />,
-    //   link: "/Type",
-    // },
+    {
+      name: "Thể Loại",
+      icon: <BsUiChecksGrid style={iconStyles} />,
+      link: "/Type",
+    },
     {
       name: "Top 100",
       icon: <AiOutlineStar style={iconStyles} />,
@@ -155,7 +155,7 @@ function Nav() {
         <div className={styles.navList}>
           {stateNavTop.map((nav, index) => {
             const { name, icon, link, hint, requireLogin } = nav;
-            if (index > 2) {
+            if (index > 4) {
               return null;
             }
             if (requireLogin && !loginStatus) {
@@ -195,7 +195,7 @@ function Nav() {
           <div className={styles.navList}>
             {stateNavTop.map((nav, index) => {
               const { name, icon, link } = nav;
-              if (index < 3) {
+              if (index < 5) {
                 return null;
               }
               return (

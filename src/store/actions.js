@@ -392,3 +392,18 @@ export const playSongAfterFetch = (payLoad) => {
     payLoad,
   };
 };
+
+// Event Reducer
+export const setShowEvent = (payLoad) => {
+  return {
+    type: "SET_SHOW_EVENT",
+    payLoad,
+  };
+};
+
+export const setIDShowEvent = (payLoad) => {
+  return {
+    type: "SET_ID_SHOW_EVENT",
+    payLoad,
+  };
+};

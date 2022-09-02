@@ -7,6 +7,7 @@ import {
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styles from "./Slider.module.scss";
 import WarningSliderSong from "./WarningSliderSong/WarningSliderSong";
 
@@ -29,13 +30,16 @@ function Slider({ data }) {
     const { link, encodeId } = slider;
     if (link.includes("album")) {
       navigate(`/album/${encodeId}`);
+      return;
     }
     if (link.includes("bai-hat")) {
       setShowWarningSong({
         show: true,
         info: slider,
       });
+      return;
     }
+    toast.error("Chưa được hỗ trợ");
   };
 
   const handleBackSlider = () => {

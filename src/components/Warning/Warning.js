@@ -23,7 +23,7 @@ function Warning({ msg }) {
     return () => {
       clearTimeout(clearWarning);
     };
-  }, [show]);
+  }, [show, dispatch]);
 
   return (
     <div className={clsx(styles.content, show && styles.contentActive)}>

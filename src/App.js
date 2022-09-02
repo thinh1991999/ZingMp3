@@ -22,37 +22,42 @@ import {
   Popper,
   TimeStopNote,
   MvModal,
+  EventModal,
 } from "./components";
 import {
   Album,
   Error,
+  Follow,
   Home,
   ListMV,
   NewSong,
   Profile,
+  Radio,
   Search,
   Singer,
   Top100,
+  Type,
+  TypeDetail,
   ZingChartPage,
+  ZingChartWeek,
 } from "./Pages";
 import { actions } from "./store";
 
 function App() {
   const {
     showNavMobile,
-    popperInfo: { show },
     warningModal: { show: warningShow },
     showLogin,
     showComment,
-    currentUser,
     title,
   } = useSelector((state) => state.root);
+  const { show } = useSelector((state) => state.root.popperInfo);
   const { showMvModal } = useSelector((state) => state.mv);
+  const { showEvent } = useSelector((state) => state.event);
   const { currentSong, showTimeStop, timeToStop } = useSelector(
     (state) => state.song
   );
   const dispatch = useDispatch();
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -131,6 +136,54 @@ function App() {
             }
           ></Route>
           <Route
+            path={"/ZingChartWeek"}
+            element={
+              <GlobalLayout>
+                <ZingChartWeek />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/ZingChartWeek/:id/:week/:year"}
+            element={
+              <GlobalLayout>
+                <ZingChartWeek />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Radio"}
+            element={
+              <GlobalLayout>
+                <Radio />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Follow"}
+            element={
+              <GlobalLayout>
+                <Follow />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/Type"}
+            element={
+              <GlobalLayout>
+                <Type />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
+            path={"/TypeDetail/:id"}
+            element={
+              <GlobalLayout>
+                <TypeDetail />
+              </GlobalLayout>
+            }
+          ></Route>
+          <Route
             path={"/Singer/:SingerName"}
             element={
               <GlobalLayout>
@@ -192,6 +245,7 @@ function App() {
           */}
         </Routes>
         <Lyric />
+        <MvModal />
         {currentSong && !showMvModal && <Player />}
         {show && <Popper />}
         {currentSong && <Playlists />}
@@ -199,12 +253,8 @@ function App() {
         {timeToStop > 0 && <TimeStopNote />}
         {warningShow && <WarningModal />}
         {showLogin && <LogInModal />}
-        {/* {showComment.show && <CommentModal />}
-        
-        
-        
-        */}
-        <MvModal />
+        {showComment.show && <CommentModal />}
+        {showEvent && <EventModal />}
       </div>
       <ToastContainer autoClose={3000} />
     </GlobalStyles>

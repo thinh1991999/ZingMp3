@@ -1,8 +1,13 @@
 // export { default as SearchMobile } from "./SearchMobile/SearchMobile";
 export { default as Home } from "./Home/Home";
 export { default as ZingChartPage } from "./ZingChartPage/ZingChartPage";
+export { default as ZingChartWeek } from "./ZingChartWeek/ZingChartWeek";
+export { default as Radio } from "./Radio/Radio";
+export { default as Follow } from "./Follow/Follow";
 export { default as Album } from "./Album/Album";
 export { default as Singer } from "./Singer/Singer";
+export { default as Type } from "./Type/Type";
+export { default as TypeDetail } from "./TypeDetail/TypeDetail";
 export { default as Top100 } from "./Top100/Top100";
 export { default as ListMV } from "./ListMV/ListMV";
 export { default as NewSong } from "./NewSong/NewSong";

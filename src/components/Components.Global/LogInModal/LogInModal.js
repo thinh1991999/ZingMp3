@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   createUserWithEmailAndPassword,
   signOut,
@@ -87,17 +87,16 @@ function LogInModal() {
               email: email,
               profile_picture: "",
             });
-            signOut(auth)
-              .then(() => {})
-              .catch((error) => {});
-            setError({
-              type: "SUCCESS",
-              msg: "Đăng ký thành công",
+            signOut(auth).then(() => {
+              setError({
+                type: "SUCCESS",
+                msg: "Đăng ký thành công",
+              });
+              setEmail("");
+              setPw("");
+              setCfPw("");
+              setLoading(false);
             });
-            setEmail("");
-            setPw("");
-            setCfPw("");
-            setLoading(false);
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -111,9 +110,11 @@ function LogInModal() {
   };
 
   const setEmailValid = () => {
-    const re =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (email.match(re)) {
+    if (
+      email.match(
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+      )
+    ) {
       return true;
     } else {
       setEmailError("Trường này phải là email");

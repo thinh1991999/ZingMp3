@@ -17,6 +17,9 @@ function ButtonIcon({
   lyric,
   player = false,
   popper = { show: false, msg: "", position: "CenterUp" },
+  size = 32,
+  fontSize = 18,
+  bg,
 }) {
   const dispatch = useDispatch();
   const btnRef = useRef(null);
@@ -89,6 +92,10 @@ function ButtonIcon({
       className={finalClass}
       style={{
         display: `${display ? "" : "none"}`,
+        height: `${size}px`,
+        width: `${size}px`,
+        fontSize: `${fontSize}px`,
+        backgroundColor: `${bg}`,
       }}
       ref={btnRef}
     >

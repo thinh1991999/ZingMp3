@@ -134,7 +134,7 @@ function ZingChartPage() {
                   <div className={styles.chartContent}>
                     {items.map((item, index) => {
                       const { encodeId, streamingStatus, isWorldWide } = item;
-                      if (index > 4 && !loadMore) return null;
+                      if (index > 4) return null;
                       return (
                         <SongItem
                           key={encodeId}
@@ -151,11 +151,7 @@ function ZingChartPage() {
                     })}
                   </div>
                   <div className={styles.bottomBtn}>
-                    <button
-                      onClick={() =>
-                        toast.error("Chức năng này chưa được hỗ trợ")
-                      }
-                    >
+                    <button>
                       <PrimaryButton
                         info={{
                           msg: "xem tất cả",

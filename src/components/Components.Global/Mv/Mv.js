@@ -9,6 +9,7 @@ import styles from "./Mv.module.scss";
 import ButtonIcon from "../ButtonIcon/ButtonIcon";
 import { actions } from "../../../store";
 import { ultils } from "../../../Share";
+import { toast } from "react-toastify";
 
 function Mv({ data }) {
   const dispatch = useDispatch();
@@ -20,12 +21,16 @@ function Mv({ data }) {
     encodeId,
     title,
     duration,
+    streamingStatus,
     artist = {},
     artists = [],
   } = data;
   const { thumbnail: artistImage, alias: artistAlias, name } = artist;
-
   const openMv = () => {
+    if (streamingStatus === 2) {
+      toast.error("Mv này chưa được hỗ trợ");
+      return;
+    }
     if (idShow === encodeId && showSmallScreen) {
       dispatch(actions.setShowSmallScreen(!showSmallScreen));
     } else {
@@ -37,13 +42,11 @@ function Mv({ data }) {
   return (
     <div
       className={clsx(styles.mv, idShow === encodeId ? styles.mvActive : null)}
-      onClick={openMv}
     >
       <div className={styles.mvWrap}>
-        <div className={styles.mvImg}>
+        <div className={styles.mvImg} onClick={openMv}>
           <img src={image} alt={title} />
           <div className={styles.mvLayer} />
-
           <div className={styles.mvTime}>
             <span>{ultils.getTime(duration)}</span>
           </div>
@@ -51,11 +54,14 @@ function Mv({ data }) {
             {idShow === encodeId ? (
               <span>Đang phát</span>
             ) : (
-              <ButtonIcon circle={true} topic={true}>
-                <BsPlayCircle />
-              </ButtonIcon>
+              <button>
+                <ButtonIcon circle={true} topic={true} size={40} fontSize={40}>
+                  <BsPlayCircle />
+                </ButtonIcon>
+              </button>
             )}
           </div>
+          {streamingStatus === 2 && <div className={styles.vip}></div>}
         </div>
         <div className={styles.mvInfo}>
           <div className={styles.mvInfoLeft}>
@@ -70,13 +76,21 @@ function Mv({ data }) {
                 const { name, alias } = item;
                 if (index === 0) {
                   return (
-                    <Link to={`/Singer/${alias}`} key={index}>
+                    <Link
+                      to={`/Singer/${alias}`}
+                      key={index}
+                      className="text-link"
+                    >
                       {name}
                     </Link>
                   );
                 }
                 return (
-                  <Link to={`/Singer/${alias}`} key={index}>
+                  <Link
+                    to={`/Singer/${alias}`}
+                    key={index}
+                    className="text-link"
+                  >
                     ,{name}
                   </Link>
                 );
