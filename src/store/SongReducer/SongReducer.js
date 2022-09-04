@@ -9,24 +9,6 @@ const infoStorage = () => {
   return data;
 };
 
-const getRandomIndex = (arr, index) => {
-  const indexRD = Math.floor(Math.random() * (arr.length - 1));
-  if (indexRD === index) {
-    return getRandomIndex(arr, index);
-  }
-  return indexRD;
-};
-
-const getValidLastest = (arr = [], hint) => {
-  let valid = false;
-  arr.forEach((item) => {
-    if (item.encodeId === hint.encodeId) {
-      valid = true;
-    }
-  });
-  return valid;
-};
-
 const initState = {
   playing: false,
   currentAlbum: infoStorage()["currentAlbum"] || "",
@@ -231,59 +213,27 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
       };
     }
     case "PLAY_NEXT_SONG_AUTO": {
-      const {
-        repeatSong,
-        randomSong,
-        indexValidSongs,
-        currentIndexSong,
-        listSong,
-        idCurrentSong,
-      } = state;
+      const { repeatSong, randomSong, listSong, currentSong } = state;
+      const validArr = ultils.getListValidIdxSong(listSong);
       if (repeatSong === 1) {
-        const newSong = listSong.filter((item) => {
-          const { encodeId } = item;
-          return encodeId === idCurrentSong;
-        })[0];
-
-        const newIndex = listSong.findIndex((item) => {
-          const { encodeId } = item;
-          return encodeId === idCurrentSong;
-        });
-
         return {
           ...state,
-          idCurrentSong: idCurrentSong,
-          currentSong: newSong,
-          currentIndexSong: newIndex,
+          currentSong: currentSong,
           fetchSong: true,
         };
       } else {
         if (randomSong) {
-          const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
-
-          const newSong = listSong.filter((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[indexRd];
-          })[0];
-
-          const newIndex = listSong.findIndex((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[indexRd];
-          });
-
+          const newSong = ultils.getRandomSong(listSong, currentSong, validArr);
           return {
             ...state,
             currentSong: newSong,
-            currentIndexSong: newIndex,
-            idCurrentSong: indexValidSongs[indexRd],
             fetchSong: true,
           };
         } else {
-          const currentIndex = indexValidSongs.findIndex(
-            (item) => item === idCurrentSong
+          const currentIndex = validArr.findIndex(
+            (item) => item === currentSong.encodeId
           );
-
-          if (currentIndex === indexValidSongs.length - 1) {
+          if (currentIndex === validArr.length - 1) {
             if (repeatSong === 0) {
               return {
                 ...state,
@@ -293,39 +243,23 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
             if (repeatSong === 2) {
               const newSong = listSong.filter((item) => {
                 const { encodeId } = item;
-                return encodeId === indexValidSongs[0];
+                return encodeId === validArr[0];
               })[0];
-
-              const newIndex = listSong.findIndex((item) => {
-                const { encodeId } = item;
-                return encodeId === indexValidSongs[0];
-              });
-
               return {
                 ...state,
                 currentSong: newSong,
-                currentIndexSong: newIndex,
-                idCurrentSong: indexValidSongs[0],
                 fetchSong: true,
               };
             }
           } else {
             const newSong = listSong.filter((item) => {
               const { encodeId } = item;
-              return encodeId === indexValidSongs[currentIndex + 1];
+              return encodeId === validArr[currentIndex + 1];
             })[0];
-
-            const newIndex = listSong.findIndex((item) => {
-              const { encodeId } = item;
-              return encodeId === indexValidSongs[currentIndex + 1];
-            });
-
             return {
               ...state,
               currentSong: newSong,
-              currentIndexSong: newIndex,
               fetchSong: true,
-              idCurrentSong: indexValidSongs[currentIndex + 1],
             };
           }
         }
@@ -333,166 +267,106 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
       break;
     }
     case "PLAY_NEXT_SONG": {
-      const {
-        randomSong,
-        currentIndexSong,
-        indexValidSongs,
-        listSong,
-        repeatSong,
-        idCurrentSong,
-      } = state;
+      const { randomSong, listSong, repeatSong, currentSong } = state;
+      const validArr = ultils.getListValidIdxSong(listSong);
       if (randomSong) {
-        const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
-        const newSong = listSong.filter((item) => {
-          const { encodeId } = item;
-          return encodeId === indexValidSongs[indexRd];
-        })[0];
-
-        const newIndex = listSong.findIndex((item) => {
-          const { encodeId } = item;
-          return encodeId === indexValidSongs[indexRd];
-        });
-
+        const newSong = ultils.getRandomSong(listSong, currentSong, validArr);
+        if (repeatSong === 1) {
+          return {
+            ...state,
+            currentSong: newSong,
+            fetchSong: true,
+            repeatSong: 0,
+          };
+        }
         return {
           ...state,
           currentSong: newSong,
-          currentIndexSong: newIndex,
           fetchSong: true,
-          idCurrentSong: indexValidSongs[indexRd],
         };
       } else {
-        const currentIndex = indexValidSongs.findIndex(
-          (item) => item === idCurrentSong
+        const currentIndex = validArr.findIndex(
+          (item) => item === currentSong.encodeId
         );
-        if (currentIndex === indexValidSongs.length - 1) {
+        if (currentIndex === validArr.length - 1) {
           const song = listSong.filter((item) => {
             const { encodeId } = item;
-            return encodeId === indexValidSongs[0];
+            return encodeId === validArr[0];
           })[0];
-
-          const newIndex = listSong.findIndex((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[0];
-          });
-
           if (repeatSong === 1) {
             return {
               ...state,
               currentSong: song,
-              currentIndexSong: newIndex,
               fetchSong: true,
               repeatSong: 0,
-              idCurrentSong: indexValidSongs[0],
             };
           } else {
             return {
               ...state,
               currentSong: song,
-              currentIndexSong: newIndex,
               fetchSong: true,
-              idCurrentSong: indexValidSongs[0],
             };
           }
         } else {
           const song = listSong.filter((item) => {
             const { encodeId } = item;
-            return encodeId === indexValidSongs[currentIndex + 1];
+            return encodeId === validArr[currentIndex + 1];
           })[0];
-
-          const newIndex = listSong.findIndex((item) => {
-            const { encodeId } = item;
-            return encodeId === indexValidSongs[currentIndex + 1];
-          });
-
           if (repeatSong === 1) {
             return {
               ...state,
               currentSong: song,
-              currentIndexSong: newIndex,
               fetchSong: true,
               repeatSong: 0,
-              idCurrentSong: indexValidSongs[currentIndex + 1],
             };
           }
           return {
             ...state,
             currentSong: song,
-            currentIndexSong: newIndex,
             fetchSong: true,
-            idCurrentSong: indexValidSongs[currentIndex + 1],
           };
         }
       }
     }
     case "PLAY_BACK_SONG": {
-      const {
-        randomSong,
-        currentIndexSong,
-        indexValidSongs,
-        listSong,
-        repeatSong,
-        idCurrentSong,
-      } = state;
+      const { randomSong, listSong, repeatSong, currentSong } = state;
+      const validArr = ultils.getListValidIdxSong(listSong);
       if (randomSong) {
-        const indexRd = getRandomIndex(indexValidSongs, currentIndexSong);
-        const newSong = listSong.filter((item) => {
-          const { encodeId } = item;
-          return encodeId === indexValidSongs[indexRd];
-        })[0];
-
-        const newIndex = listSong.findIndex((item) => {
-          const { encodeId } = item;
-          return encodeId === indexValidSongs[indexRd];
-        });
-
+        const newSong = ultils.getRandomSong(listSong, currentSong, validArr);
         if (repeatSong === 1) {
           return {
             ...state,
             currentSong: newSong,
-            currentIndexSong: newIndex,
             fetchSong: true,
             repeatSong: 0,
-            idCurrentSong: indexValidSongs[indexRd],
           };
         }
         return {
           ...state,
           currentSong: newSong,
-          currentIndexSong: newIndex,
           fetchSong: true,
-          idCurrentSong: indexValidSongs[indexRd],
         };
       } else {
-        const currentIndex = indexValidSongs.findIndex(
-          (item) => item === idCurrentSong
+        const currentIndex = validArr.findIndex(
+          (item) => item === currentSong.encodeId
         );
-
         const newSong = listSong.filter((item) => {
           const { encodeId } = item;
-          return encodeId === indexValidSongs[currentIndex - 1];
+          return encodeId === validArr[currentIndex - 1];
         })[0];
-
-        const newIndex = listSong.findIndex((item) => {
-          const { encodeId } = item;
-          return encodeId === indexValidSongs[currentIndex - 1];
-        });
 
         if (repeatSong === 1) {
           return {
             ...state,
             currentSong: newSong,
-            currentIndexSong: newIndex,
             fetchSong: true,
             repeatSong: 0,
-            idCurrentSong: indexValidSongs[currentIndex - 1],
           };
         }
         return {
           ...state,
           currentSong: newSong,
-          currentIndexSong: newIndex,
           fetchSong: true,
-          idCurrentSong: indexValidSongs[currentIndex - 1],
         };
       }
     }
@@ -509,7 +383,7 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
           ...state,
         };
       }
-      const newSongInfoRD = ultils.getRandomSong(items, currentSong);
+      const newSongInfoRD = ultils.getRandomSong(items, currentSong, validArr);
       return {
         ...state,
         currentSong: newSongInfoRD,

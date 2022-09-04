@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useMemo } from "react";
 import { toast } from "react-toastify";
 import { HiOutlineMusicNote } from "react-icons/hi";
 import { BsFillPlayFill, BsThreeDots } from "react-icons/bs";
@@ -24,6 +24,8 @@ function SongItem({
   albumSong = false,
   small,
   chartHome,
+  chartWeek,
+  albumId,
   chartWeekIdx,
   newSong = false,
   listSong,
@@ -99,6 +101,19 @@ function SongItem({
             actions.playSongAnotherChartHome({
               id: idSong,
               album: finalAlbum,
+              items: listSong,
+            })
+          );
+        }
+      }
+      if (chartWeek) {
+        if (currentAlbum === albumId) {
+          dispatch(actions.playSongSameAlbum(data));
+        } else {
+          dispatch(
+            actions.playSongAnotherChartHome({
+              id: idSong,
+              album: albumId,
               items: listSong,
             })
           );

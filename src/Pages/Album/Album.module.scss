@@ -3,7 +3,7 @@
   height: 100vh;
   overflow-y: scroll;
   .albumContainer {
-    padding: 15px 40px 0;
+    padding: 15px 20px 0;
   }
 }
 
@@ -13,12 +13,4 @@
 
 .album::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-bg);
-}
-
-@media only screen and(max-width:769px) {
-  .album {
-    .albumContainer {
-      padding: 15px 20px 0;
-    }
-  }
 }

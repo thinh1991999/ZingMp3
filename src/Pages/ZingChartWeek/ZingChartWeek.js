@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import clsx from "clsx";
+import moment from "moment";
+import { useNavigate, useParams } from "react-router-dom";
 
 import styles from "./ZingChartWeek.module.scss";
 import { Loading, OptionsTime, SongItem } from "../../components";
 import { actions } from "../../store";
 import httpService from "../../Services/http.service";
-import clsx from "clsx";
-import moment from "moment";
 
 export default function ZingChartWeek() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   const options = useRef([
@@ -27,24 +30,48 @@ export default function ZingChartWeek() {
   ]).current;
 
   const [optionsTime, setOptionsTime] = useState([]);
-  const [current, setCurrent] = useState(0);
-  const [data, setData] = useState(null);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [limitTime, setLimitTime] = useState(null);
+  const [currentTime, setCurrentTime] = useState(null);
+  const [album, setAlbum] = useState(null);
 
   useEffect(() => {
     let isApiSubscribed = true;
     setLoading(true);
-    httpService.getWeekChart(options[current].id).then((res) => {
-      if (isApiSubscribed) {
-        const { data } = res.data;
-        setData(data);
-        setLoading(false);
-      }
-    });
+    if (currentTime) {
+      const { week, year } = currentTime;
+      httpService.getWeekChart(id, week, year).then((res) => {
+        if (isApiSubscribed) {
+          const {
+            data: { items, playlistId },
+          } = res.data;
+          setAlbum(playlistId);
+          setItems(items);
+          setLoading(false);
+        }
+      });
+    } else {
+      httpService.getWeekChart(id).then((res) => {
+        if (isApiSubscribed) {
+          const {
+            data: { items, week, year, playlistId },
+          } = res.data;
+          setAlbum(playlistId);
+          setItems(items);
+          setCurrentTime(null);
+          setLimitTime({
+            week,
+            year,
+          });
+          setLoading(false);
+        }
+      });
+    }
     return () => {
       isApiSubscribed = false;
     };
-  }, [current, options]);
+  }, [id, currentTime]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(false));
@@ -108,22 +135,32 @@ export default function ZingChartWeek() {
             return (
               <li
                 key={index}
-                className={current === index && styles.active}
-                onClick={() => setCurrent(index)}
+                className={option.id === id ? styles.active : null}
+                onClick={() => {
+                  setCurrentTime(null);
+                  navigate("/ZingChartWeek/" + option.id);
+                }}
               >
                 {option.name}
               </li>
             );
           })}
         </ul>
-        <div className={styles.optionsTime}>
-          <OptionsTime optionsTime={optionsTime} />
-        </div>
+        {limitTime && !loading && (
+          <div className={styles.optionsTime}>
+            <OptionsTime
+              optionsTime={optionsTime}
+              limitTime={limitTime}
+              currentTime={currentTime}
+              setCurrentTime={setCurrentTime}
+            />
+          </div>
+        )}
         {loading ? (
           <Loading size={30} mv={true} />
         ) : (
           <div className={clsx(styles.songWrap, "scroll-custom")}>
-            {data?.items.map((item, index) => {
+            {items.map((item, index) => {
               const { encodeId, streamingStatus, isWorldWide } = item;
               return (
                 <SongItem
@@ -132,9 +169,10 @@ export default function ZingChartWeek() {
                   worldWide={isWorldWide}
                   data={item}
                   index={index}
-                  chartHome={true}
+                  chartWeek={true}
                   // chartWeekIdx={indexWeek}
-                  listSong={data?.items}
+                  albumId={album}
+                  listSong={items}
                   small={true}
                 />
               );

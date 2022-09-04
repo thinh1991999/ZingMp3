@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { Player } from "react-tuby";
 import "react-tuby/css/main.css";
@@ -9,6 +9,8 @@ import "react-tuby/css/main.css";
 import styles from "./NewFeedModal.module.scss";
 
 import ButtonIcon from "../../Components.Global/ButtonIcon/ButtonIcon";
+import { FaRegComment } from "react-icons/fa";
+import clsx from "clsx";
 
 export default function NewFeedModal({ data, setShowModal }) {
   const [src, setSrc] = useState(null);
@@ -46,7 +48,7 @@ export default function NewFeedModal({ data, setShowModal }) {
   return (
     <div className={styles.container}>
       <div className={styles.layer} onClick={() => setShowModal(false)}></div>
-      <Row className={styles.content}>
+      <Row className={clsx(styles.content, "scroll-custom")}>
         <Col lg={7} className={styles.left}>
           {photos && <img src={photos[0].url} alt="" />}
           {src && (
@@ -80,7 +82,17 @@ export default function NewFeedModal({ data, setShowModal }) {
                 <span>{time}</span>
               </div>
             </div>
-            <p className={styles.mess}>{title}</p>
+            <div className={clsx(styles.mess, "scroll-custom")}>{title}</div>
+            <div className={styles.express}>
+              <div className={styles.icon}>
+                <AiOutlineHeart />
+                <span>{like}</span>
+              </div>
+              <div className={styles.icon}>
+                <FaRegComment />
+                <span>{commend}</span>
+              </div>
+            </div>
           </div>
         </Col>
       </Row>

@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import styles from "./ZingChartPage.module.scss";
 import httpService from "../../Services/http.service";
 import { actions } from "../../store";
 import { Chart, Loading, PrimaryButton, SongItem } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 function ZingChartPage() {
+  const navigate = useNavigate();
   const { idCurrentSong, blackHeader } = useSelector((state) => state.root);
 
   const dispatch = useDispatch();
@@ -30,6 +31,14 @@ function ZingChartPage() {
 
   const handleLoadMore = () => {
     setLoadMore(!loadMore);
+  };
+
+  const handleFoward = (info) => {
+    const { link } = info;
+    const idx = link.lastIndexOf("/");
+    const idxDot = link.lastIndexOf(".");
+    const id = link.substring(idx, idxDot);
+    navigate("/ZingChartWeek" + id);
   };
 
   useEffect(() => {
@@ -151,7 +160,7 @@ function ZingChartPage() {
                     })}
                   </div>
                   <div className={styles.bottomBtn}>
-                    <button>
+                    <button onClick={() => handleFoward(weekChart[`${item}`])}>
                       <PrimaryButton
                         info={{
                           msg: "xem tất cả",

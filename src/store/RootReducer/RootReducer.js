@@ -37,6 +37,8 @@ const initState = {
     type: "",
   },
   showLogin: false,
+  routerHistory: [],
+  currentRouter: null,
 };
 
 export const RootReducer = (state = initState, { type, payLoad }) => {
@@ -137,6 +139,19 @@ export const RootReducer = (state = initState, { type, payLoad }) => {
         ...state,
         warning: Object.assign({}, payLoad),
       };
+    }
+    case "SET_ROUTER_HISTORY": {
+      const findIdx = state.routerHistory.findIndex((history) => {
+        return history.key === payLoad.key;
+      });
+      if (findIdx !== -1) {
+        return { ...state };
+      }
+      const newRouterHistory = [...state.routerHistory, payLoad];
+      return { ...state, routerHistory: newRouterHistory };
+    }
+    case "SET_CURRENT_ROUTER": {
+      return { ...state, currentRouter: payLoad };
     }
     default:
       return { ...state };

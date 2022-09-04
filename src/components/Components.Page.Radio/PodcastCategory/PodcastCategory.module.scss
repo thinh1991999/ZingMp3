@@ -1,19 +1,23 @@
 .container {
-  margin: 15px 0;
-  padding: 0 15px;
-  .wrap {
-    width: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    cursor: pointer;
-    &:hover {
-      img {
-        transform: scale(1.1);
-      }
-    }
-    img {
+  margin-left: -15px;
+  margin-right: -15px;
+  .item {
+    margin: 15px 0;
+    padding: 0 15px;
+    .wrap {
       width: 100%;
-      transition: all linear 0.3s;
+      border-radius: 5px;
+      overflow: hidden;
+      cursor: pointer;
+      &:hover {
+        img {
+          transform: scale(1.1);
+        }
+      }
+      img {
+        width: 100%;
+        transition: all linear 0.3s;
+      }
     }
   }
 }

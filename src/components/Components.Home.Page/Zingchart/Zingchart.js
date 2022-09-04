@@ -4,10 +4,12 @@ import styles from "./Zingchart.module.scss";
 
 function Zingchart({ data }) {
   const navigate = useNavigate();
-  const { cover } = data;
-
+  const { cover, link } = data;
   const handleClick = () => {
-    navigate("/ZingChartWeek");
+    const idx = link.lastIndexOf("/");
+    const idxDot = link.lastIndexOf(".");
+    const id = link.substring(idx, idxDot);
+    navigate("/ZingChartWeek" + id);
   };
 
   return (

@@ -20,7 +20,7 @@
   .content {
     background-color: var(--layout-bg);
     position: relative;
-    width: 1000px;
+    width: 996px;
     height: 500px;
     display: flex;
     justify-content: space-between;
@@ -38,6 +38,8 @@
       .rightContent {
         height: 100%;
         background-color: var(--primary-bg);
+        display: flex;
+        flex-direction: column;
         .author {
           display: flex;
           padding: 10px;
@@ -58,10 +60,27 @@
           }
         }
         .mess {
+          flex: 1;
+          overflow-y: scroll;
           color: var(--white);
           padding: 10px;
           border-top: 1px solid var(--border-secondary);
           border-bottom: 1px solid var(--border-secondary);
+        }
+        .express {
+          padding: 20px;
+          display: flex;
+          .icon {
+            margin-right: 40px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            span {
+              font-size: 14px;
+              margin-left: 4px;
+            }
+          }
         }
       }
     }
@@ -72,5 +91,44 @@
     right: 10px;
     background-color: transparent;
     border: unset;
+  }
+}
+
+@media screen and (max-width: 991px) and (min-width: 500px) {
+  .container {
+    .content {
+      width: 500px;
+      height: 800px;
+      flex-direction: column;
+      .left {
+        height: 400px;
+        img {
+          height: 100%;
+        }
+      }
+      .right {
+        flex: 1;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 499px) {
+  .container {
+    .content {
+      width: 320px;
+      height: 500px;
+      flex-direction: column;
+      .left {
+        height: 200px;
+        img {
+          height: 100%;
+        }
+      }
+      .right {
+        flex: 1;
+        height: unset;
+      }
+    }
   }
 }

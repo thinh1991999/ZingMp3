@@ -46,21 +46,25 @@ function AlbumLeft({ data }) {
     );
   };
 
-  // styles.albumLeftImgActive
-  const activeClass =
-    albumId === currentAlbum && playing ? styles.albumLeftImgActive : "";
-  const classAbum = clsx(styles.albumLeftImg, activeClass);
-
   return (
     <div className={styles.albumLeft}>
       <div className={styles.albumLeftImgWrap} onClick={handleAlbum}>
-        <div className={classAbum}>
+        <div
+          className={clsx(
+            styles.albumLeftImg,
+            albumId === currentAlbum
+              ? playing
+                ? styles.albumLeftImgActive
+                : styles.albumLeftImgNotActive
+              : null
+          )}
+        >
           <div className={styles.imgWrap}>
             <img src={image} alt="" />
           </div>
           <div className={styles.albumLeftImgLayer} />
           <div className={styles.albumLeftImgIcon}>
-            <ButtonIcon circle={true} topic={true}>
+            <ButtonIcon circle={true} topic={true} size={40} fontSize={40}>
               <BsPlayCircle />
             </ButtonIcon>
           </div>

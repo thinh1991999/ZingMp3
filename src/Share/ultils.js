@@ -42,7 +42,10 @@ export const getListValidIdxSong = (items) => {
   return indexArr;
 };
 
-export const getRandomSong = (items, currentSong = null) => {
+export const getRandomSong = (items, currentSong = null, validArr) => {
+  if (validArr.length === 1) {
+    return currentSong;
+  }
   const indexRD = Math.floor(Math.random() * (items.length - 1));
   if (
     items[indexRD].encodeId === currentSong?.encodeId ||
@@ -51,4 +54,12 @@ export const getRandomSong = (items, currentSong = null) => {
     return getRandomSong(items, currentSong);
   }
   return items[indexRD];
+};
+
+export const getRandomIndex = (arr, index) => {
+  const indexRD = Math.floor(Math.random() * (arr.length - 1));
+  if (indexRD === index) {
+    return getRandomIndex(arr, index);
+  }
+  return indexRD;
 };

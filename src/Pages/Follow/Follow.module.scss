@@ -30,3 +30,29 @@
     }
   }
 }
+
+@media screen and (max-width: 520px) and (min-width: 401px) {
+  .container {
+    .header {
+      .navList {
+        .navItem {
+          width: 80px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .container {
+    .header {
+      .navList {
+        .navItem {
+          width: 70px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

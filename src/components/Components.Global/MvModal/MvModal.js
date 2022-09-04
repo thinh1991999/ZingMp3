@@ -23,6 +23,7 @@ export default function MvModal() {
   const { showMvModal, idShow, showSmallScreen } = useSelector(
     (state) => state.mv
   );
+  const { playing } = useSelector((state) => state.song);
   const [mvData, setMvData] = useState({});
   const [loading, setLoading] = useState(true);
   const [loadingMv, setLoadingMv] = useState(true);
@@ -71,6 +72,13 @@ export default function MvModal() {
       });
     }
   }, [idShow]);
+
+  useEffect(() => {
+    if (playing && showMvModal) {
+      dispatch(actions.setShowMvModal(false));
+      dispatch(actions.setIdMvModal(null));
+    }
+  }, [playing, dispatch, showMvModal]);
 
   useEffect(() => {
     if (!mount) {

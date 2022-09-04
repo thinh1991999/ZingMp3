@@ -50,12 +50,13 @@ function Event({ data }) {
               <span>+{`${totalFollow - followers.length}`}</span>
             </div>
           </div>
-          <PrimaryButton
-            info={{
-              msg: "quan tâm",
-              mr: 10,
-            }}
-          ></PrimaryButton>
+          <button>
+            <PrimaryButton
+              info={{
+                msg: "quan tâm",
+              }}
+            ></PrimaryButton>
+          </button>
         </div>
       </div>
     </div>

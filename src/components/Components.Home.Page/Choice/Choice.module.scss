@@ -1,102 +1,101 @@
-.choice {
-  width: calc(100% / 4);
+.container {
   padding: 0 15px;
-  max-width: 380px;
-
-  .choiceWrap {
-    width: 100%;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    border-radius: 8px;
-
-    &:hover .choiceLayer {
-      opacity: 0.4;
-    }
-
-    &:hover > img {
-      transform: scale(1.2);
-    }
-
-    &:hover .choiceBtn {
-      opacity: 1;
-    }
-
-    img {
+  .choice {
+    .choiceWrap {
       width: 100%;
-      object-fit: contain;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
       border-radius: 8px;
-      transition: all 0.5s;
-    }
 
-    .choiceBtn {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.5s;
-      z-index: 10;
-    }
-
-    .choiceLayer {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      background-color: black;
-      opacity: 0;
-      transition: all 0.5s;
-    }
-
-    .choiceContent {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 15px;
-
-      p {
-        color: var(--text-primary);
-        font-size: 10px;
-        letter-spacing: 1px;
-        font-weight: 700;
-        text-transform: uppercase;
-        margin: unset;
+      &:hover .choiceLayer {
+        opacity: 0.4;
       }
 
-      h4 {
-        font-size: 28px;
-        white-space: nowrap;
-        color: var(--text-primary);
-        overflow: hidden;
-        margin-bottom: 0;
-        line-height: 1.2;
-        letter-spacing: -1px;
-        text-overflow: ellipsis;
+      &:hover > img {
+        transform: scale(1.2);
       }
 
-      .choiceSong {
-        margin-top: 20px;
+      &:hover .choiceBtn {
+        opacity: 1;
+      }
+
+      img {
+        width: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        transition: all 0.5s;
+      }
+
+      .choiceBtn {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
         display: flex;
-        margin-left: -10px;
-        margin-right: -10px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s;
+        z-index: 10;
+      }
 
-        .choiceOuter {
-          width: 25%;
-          padding: 0 10px;
-          img {
-            width: 100%;
-            object-fit: cover;
+      .choiceLayer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: black;
+        opacity: 0;
+        transition: all 0.5s;
+      }
+
+      .choiceContent {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 15px;
+
+        p {
+          color: var(--text-primary);
+          font-size: 10px;
+          letter-spacing: 1px;
+          font-weight: 700;
+          text-transform: uppercase;
+          margin: unset;
+        }
+
+        h4 {
+          font-size: 28px;
+          white-space: nowrap;
+          color: var(--text-primary);
+          overflow: hidden;
+          margin-bottom: 0;
+          line-height: 1.2;
+          letter-spacing: -1px;
+          text-overflow: ellipsis;
+        }
+
+        .choiceSong {
+          margin-top: 20px;
+          display: flex;
+          margin-left: -10px;
+          margin-right: -10px;
+
+          .choiceOuter {
+            width: 25%;
+            padding: 0 10px;
+            img {
+              width: 100%;
+              object-fit: cover;
+            }
           }
         }
       }
