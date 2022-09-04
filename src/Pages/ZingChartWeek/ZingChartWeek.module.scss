@@ -58,15 +58,19 @@
       display: flex;
       align-items: center;
       li {
-        padding: 10px 0;
         margin-right: 40px;
         font-size: 28px;
         font-weight: 700;
         text-transform: uppercase;
-        color: var(--white);
+        color: var(--navigation-text);
         cursor: pointer;
+        padding: 10px 0;
+        &:hover {
+          color: var(--white);
+        }
         &.active {
           border-bottom: 3px solid var(--purple-primary);
+          color: var(--white);
         }
       }
     }

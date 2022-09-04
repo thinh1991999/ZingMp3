@@ -1,17 +1,16 @@
 import React from "react";
-import { Row } from "react-bootstrap";
-import clsx from "clsx";
-import styles from "./Radios.module.scss";
-import Radio from "../../Components.Global/Radio/Radio";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { Link } from "react-router-dom";
+
+import styles from "./Radios.module.scss";
+import Radio from "../../Components.Global/Radio/Radio";
 
 function Radios({ data }) {
   const { title, items } = data;
 
   return (
-    <div className={clsx(styles.radios, "pd-15-px")}>
+    <div className={styles.radios}>
       <h2 className={styles.radiosTitle}>
         {title} {items.length > 7 ? <Link to={"/Radio"}>Tất cả</Link> : ""}
       </h2>
@@ -36,6 +35,7 @@ function Radios({ data }) {
           }}
           modules={[Navigation]}
           navigation={true}
+          className="swiper-margin"
         >
           {items?.map((item, index) => {
             return (

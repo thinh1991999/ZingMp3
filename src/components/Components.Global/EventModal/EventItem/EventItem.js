@@ -56,6 +56,7 @@ export default function EventItem({
       style={{
         transform: `translateX(${translateX}%)`,
       }}
+      id="eventItem"
     >
       <div
         className={styles.contentWrap}

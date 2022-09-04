@@ -88,8 +88,12 @@ a {
 
 .swiper-button-next,
 .swiper-button-prev {
-  margin-top: calc(0px - (var(--swiper-navigation-size))) !important;
   color: var(--text-primary) !important;
+}
+
+.swiper-margin .swiper-button-next,
+.swiper-margin .swiper-button-prev {
+  margin-top: calc(0px - (var(--swiper-navigation-size))) !important;
 }
 
 .swiper-button-prev.swiper-button-disabled {

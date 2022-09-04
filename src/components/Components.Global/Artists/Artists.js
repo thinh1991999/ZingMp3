@@ -10,7 +10,6 @@ function Artists({ data }) {
   // const noArtists = data.length === 0 ? styles.noArtists : "";
   const finalClass = clsx(styles.artists);
   const { items, title } = data;
-  console.log(data);
   return (
     <div className={finalClass}>
       <h4 className={styles.title}>{title}</h4>

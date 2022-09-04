@@ -1,3 +1,7 @@
-.swiper-wrapper {
+#eventModal .swiper-wrapper {
   align-items: center !important;
+}
+
+#eventModal .swiper-slide.swiper-slide-active {
+  z-index: 999 !important;
 }

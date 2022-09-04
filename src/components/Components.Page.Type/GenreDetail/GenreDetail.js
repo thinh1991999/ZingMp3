@@ -37,6 +37,7 @@ export default function GenreDetail({ data }) {
           }}
           modules={[Navigation]}
           navigation={true}
+          className="swiper-margin"
         >
           {playlists.map((playlist, index) => {
             return (

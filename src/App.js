@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
@@ -10,7 +10,6 @@ import { auth, db } from "./firebase";
 
 import {
   GlobalStyles,
-  Loading,
   Lyric,
   GlobalLayout,
   CommentModal,
@@ -44,6 +43,8 @@ import {
 import { actions } from "./store";
 
 function App() {
+  const location = useLocation();
+
   const {
     showNavMobile,
     warningModal: { show: warningShow },
@@ -106,6 +107,11 @@ function App() {
     document.title = title;
   }, [title]);
 
+  useEffect(() => {
+    dispatch(actions.setRouterHistory(location));
+    dispatch(actions.setCurrentRouter(location.key));
+  }, [location, dispatch]);
+
   return (
     <GlobalStyles>
       <div className="app theme-dark">
@@ -144,13 +150,14 @@ function App() {
             }
           ></Route>
           <Route
-            path={"/ZingChartWeek/:id/:week/:year"}
+            path={"/ZingChartWeek/:id"}
             element={
               <GlobalLayout>
                 <ZingChartWeek />
               </GlobalLayout>
             }
           ></Route>
+
           <Route
             path={"/Radio"}
             element={

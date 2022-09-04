@@ -1,6 +1,7 @@
 import React from "react";
-import { Row } from "react-bootstrap";
 import clsx from "clsx";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
 import styles from "./Choices.module.scss";
 import HomeTitle from "../../Components.Global/HomeTitle/HomeTitle";
 import Choice from "../Choice/Choice";
@@ -8,15 +9,39 @@ import Choice from "../Choice/Choice";
 function Choices({ data }) {
   const { items, title } = data;
   return (
-    <div className={clsx(styles.choices, "pd-15-px")}>
+    <div className={clsx(styles.choices)}>
       <HomeTitle msg={title} />
-      <Row className={styles.choicesContainer}>
-        {items.map((item, index) => {
-          const { encodeId } = item;
-          if (index > 3) return null;
-          return <Choice key={encodeId} data={item} />;
-        })}
-      </Row>
+      <div className={styles.content}>
+        <Swiper
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            426: {
+              slidesPerView: 1.5,
+            },
+            768: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+            1440: {
+              slidesPerView: 4,
+            },
+          }}
+          modules={[Navigation]}
+          navigation={true}
+        >
+          {items?.map((item, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <Choice data={item} />;
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
     </div>
   );
 }

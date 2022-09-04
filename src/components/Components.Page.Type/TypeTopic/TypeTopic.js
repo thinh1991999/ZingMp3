@@ -16,7 +16,7 @@ export default function TypeTopic({ data }) {
           const { encodeId, playlists, thumbnail, title } = item;
           if (!showAll && index > 7) return null;
           return (
-            <Col lg={3} md={4} key={encodeId} className={styles.item}>
+            <Col lg={3} md={4} sm={6} key={encodeId} className={styles.item}>
               <Link to={`/TypeDetail/${encodeId}`} className={styles.itemWrap}>
                 <img src={thumbnail} alt="" />
                 <div className={styles.layer}></div>

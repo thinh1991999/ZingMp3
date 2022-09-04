@@ -50,7 +50,7 @@ export default function EventModal() {
     });
   }, [idEventShow]);
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="eventModal">
       <div className={styles.wrap}>
         <div className={styles.layer}></div>
         <div className={styles.content}>

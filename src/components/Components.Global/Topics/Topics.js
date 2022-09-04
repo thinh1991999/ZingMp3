@@ -1,25 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
-import { Row, Col } from "react-bootstrap";
-import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
 import styles from "./Topics.module.scss";
 import HomeTitle from "../HomeTitle/HomeTitle";
 import Topic from "../Topic/Topic";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
 
 function Topics({ data, top = false }) {
-  const [value, setValue] = useState(data);
-
-  const { title, items = [] } = value;
+  const { title, items = [] } = data;
 
   return (
     <div className={clsx(styles.topics, top && styles.topWrap)}>
       {title && (
         <div className={styles.topicsTitle}>
           <HomeTitle msg={title} />
-          {items?.length > 5 ? <a href="#">Tất cả</a> : ""}
+          {/* {items?.length > 5 ? <a href="#">Tất cả</a> : ""} */}
         </div>
       )}
       <div className={styles.content}>
@@ -43,6 +38,7 @@ function Topics({ data, top = false }) {
           }}
           modules={[Navigation]}
           navigation={true}
+          className="swiper-margin"
         >
           {items.map((item, index) => {
             return (

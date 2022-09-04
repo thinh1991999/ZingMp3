@@ -58,7 +58,7 @@ function PlayerCenter({ volume = 50 }) {
 
   const currentIdxSong = useMemo(() => {
     const idx = listSong.findIndex((item) => {
-      return item.encodeId === currentSong;
+      return item.encodeId === currentSong.encodeId;
     });
     return idx;
   }, [currentSong, listSong]);
@@ -94,21 +94,22 @@ function PlayerCenter({ volume = 50 }) {
   }, [currentTime, dispatch]);
 
   const handleBackSong = () => {
-    // const validIndex = indexValidSongs.findIndex(
-    //   (item) => item === currentIndexSong
-    // );
-    // if (current > 5) {
-    //   setCurrent(0);
-    //   dispatch(actions.setSongCurrentTime(0));
-    // } else {
-    //   if (validIndex !== 0) {
-    //     dispatch(actions.playBackSong());
-    //   }
-    // }
+    setTimeout(() => {
+      if (current > 5) {
+        setCurrent(0);
+        dispatch(actions.setSongCurrentTime(0));
+      } else {
+        if (currentIdxSong > 0) {
+          dispatch(actions.playBackSong());
+        }
+      }
+    }, 100);
   };
 
   const handleNextSong = () => {
-    dispatch(actions.playNextSong());
+    setTimeout(() => {
+      dispatch(actions.playNextSong());
+    }, 100);
   };
 
   const handleToAlbum = (e) => {
@@ -161,7 +162,9 @@ function PlayerCenter({ volume = 50 }) {
 
   useEffect(() => {
     const endEvent = () => {
-      dispatch(actions.playNextSongAuto());
+      setTimeout(() => {
+        dispatch(actions.playNextSongAuto());
+      }, 100);
     };
     if (audioRef.current) {
       audioRef.current.addEventListener("ended", endEvent);
@@ -200,8 +203,6 @@ function PlayerCenter({ volume = 50 }) {
     audioRef.current.currentTime = songCurrentTime;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // const lyricClass = lyric ? styles.lyricClass : "";
-  const mess = randomSong ? "Tắt phát lại ngẫu nhiên" : "Bật phát ngẫu nhiên";
   return (
     <div className={clsx(styles.wrap)} onClick={handleToAlbum}>
       <div className={styles.playFeatures}>
@@ -210,7 +211,9 @@ function PlayerCenter({ volume = 50 }) {
             active={randomSong}
             popper={{
               show: true,
-              msg: mess,
+              msg: randomSong
+                ? "Tắt phát lại ngẫu nhiên"
+                : "Bật phát ngẫu nhiên",
               position: "CenterUp",
             }}
             player={true}
@@ -220,9 +223,9 @@ function PlayerCenter({ volume = 50 }) {
         </div>
 
         <div className={styles.playBtn} onClick={handleBackSong}>
-          {/* <ButtonIcon noClick={currentIdxSong === 0 && current < 5}>
+          <ButtonIcon noClick={currentIdxSong === 0 && current < 5}>
             <AiFillStepBackward />
-          </ButtonIcon> */}
+          </ButtonIcon>
         </div>
 
         <div className={styles.playBtn} onClick={handlePlaySong}>

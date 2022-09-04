@@ -1,6 +1,6 @@
 .home {
   background-color: var(--layout-bg);
-  padding: 100px 40px;
+  padding: 100px 20px;
   // overflow-y: scroll;
   // overflow-x: hidden;
 }
@@ -15,6 +15,7 @@
 
 @media only screen and(max-width:768px) {
   .home {
-    padding: 100px 0;
+    padding: 100px 20px;
+    overflow: hidden;
   }
 }

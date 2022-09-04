@@ -8,7 +8,7 @@ function Zingcharts({ data }) {
   const { items } = data;
 
   return (
-    <div className={clsx(styles.zingcharts, "pd-15-px")}>
+    <div className={styles.zingcharts}>
       <Row className="zingchartsContainer">
         {items.map((item, index) => {
           return <Zingchart key={index} data={item} />;

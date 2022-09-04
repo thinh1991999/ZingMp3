@@ -15,6 +15,8 @@ export default function NewsGridLayout({ items }) {
   const [layout, setLayout] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [dataModal, setDataModal] = useState(null);
+  const [xValue, setXValue] = useState(4);
+  const [width, setWidth] = useState(1200);
 
   useEffect(() => {
     const layout = items.map((item, index) => {
@@ -39,20 +41,48 @@ export default function NewsGridLayout({ items }) {
           break;
       }
       return {
-        x: (index * 4) % 12,
+        x: (index * xValue) % 12,
         y: Math.floor(index / 6) * type,
         // y,
-        w: 4,
+        w: xValue,
         h: height,
         i: index.toString(),
       };
     });
     setLayout(layout);
-    // _.map(new Array(p.items), function (item, i) {
-    //     var y = _.result(p, 'y') || Math.ceil(Math.random() * 4) + 1;
-    //     return { x: i * 2 % 12, y: Math.floor(i / 6) * y, w: 2, h: y, i: i.toString() };
-    //   });
-  }, [items]);
+  }, [items, xValue]);
+
+  useEffect(() => {
+    const setX = (width) => {
+      let realWidth = width;
+      if (realWidth >= 1200) {
+        realWidth = (width * 10) / 12;
+      } else if (realWidth >= 768) {
+        realWidth = (width * 11) / 12;
+      }
+      setWidth(realWidth - 40);
+      if (realWidth >= 1240) {
+        setXValue(4);
+        return;
+      }
+      if (realWidth >= 500) {
+        setXValue(6);
+        return;
+      }
+      setXValue(12);
+    };
+    setX(window.innerWidth);
+
+    const resizeEvent = (e) => {
+      const width = e.target.innerWidth;
+      setX(width);
+    };
+    window.addEventListener("resize", resizeEvent);
+    return () => {
+      window.removeEventListener("resize", resizeEvent);
+    };
+  }, []);
+
   return (
     <>
       <GridLayout
@@ -60,7 +90,7 @@ export default function NewsGridLayout({ items }) {
         layout={layout}
         cols={12}
         rowHeight={30}
-        width={1200}
+        width={width}
         isDraggable={false}
       >
         {items.map((item, index) => {
@@ -85,32 +115,39 @@ export default function NewsGridLayout({ items }) {
                   <span>{time}</span>
                 </div>
               </div>
-              <p className={styles.mess}>{title}</p>
-              <div
-                className={styles.content}
-                style={{
-                  backgroundImage: `url(${
-                    photos ? photos[0].url : thumbnailVideo
-                  })`,
-                }}
-                onClick={() => {
-                  setShowModal(true);
-                  setDataModal(item);
-                }}
-              >
-                {thumbnailVideo ? (
-                  <button>
-                    <ButtonIcon
-                      circle={true}
-                      topic={true}
-                      size={80}
-                      fontSize={50}
-                    >
-                      <BsPlayCircle />
-                    </ButtonIcon>
-                  </button>
-                ) : null}
-              </div>
+              <p className={styles.mess}>
+                {title.length > 200 ? `${title.substring(0, 200)}...` : title}
+              </p>
+              {photos || thumbnailVideo ? (
+                <div
+                  className={styles.content}
+                  style={{
+                    backgroundImage: `url(${
+                      photos ? photos[0].url : thumbnailVideo
+                    })`,
+                  }}
+                  onClick={() => {
+                    setShowModal(true);
+                    setDataModal(item);
+                  }}
+                >
+                  {thumbnailVideo ? (
+                    <button>
+                      <ButtonIcon
+                        circle={true}
+                        topic={true}
+                        size={80}
+                        fontSize={50}
+                      >
+                        <BsPlayCircle />
+                      </ButtonIcon>
+                    </button>
+                  ) : null}
+                </div>
+              ) : (
+                <></>
+              )}
+
               <div className={styles.express}>
                 <div className={styles.icon}>
                   <AiOutlineHeart />

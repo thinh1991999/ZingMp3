@@ -1,7 +1,5 @@
 .event {
-  width: calc(100% / 3);
   padding: 0 15px;
-
   .eventWrap {
     width: 100%;
 
@@ -75,46 +73,39 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.eventFollow {
-  padding: 10px 0;
-
-  h4 {
-    font-size: 14px;
-    font-weight: 400;
-    margin-bottom: 4px;
-    text-transform: none;
-    color: var(--text-primary);
-  }
-
-  .eventFollowImg {
-    display: flex;
-    margin-top: 8px;
-    align-items: center;
-
-    img {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-    }
-
-    span {
+  .eventFollow {
+    padding: 10px 0;
+    max-width: 200px;
+    overflow: hidden;
+    h4 {
       font-size: 14px;
-      margin-left: 6px;
-      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 4px;
+      text-transform: none;
+      color: var(--text-primary);
+    }
+
+    .eventFollowImg {
+      display: flex;
+      margin-top: 8px;
+      align-items: center;
+
+      img {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+      }
+
+      span {
+        font-size: 14px;
+        margin-left: 6px;
+        color: var(--text-secondary);
+      }
     }
   }
-}
-
-@media only screen and(max-width:1000px) {
-  .event {
-    width: calc(100% / 2);
-  }
-}
-
-@media only screen and(max-width:600px) {
-  .event {
-    width: 100%;
+  button {
+    background-color: unset;
+    border: unset;
+    min-width: 120px;
   }
 }

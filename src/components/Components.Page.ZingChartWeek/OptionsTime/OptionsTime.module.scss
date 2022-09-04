@@ -13,6 +13,12 @@
     &:hover {
       cursor: pointer;
     }
+    .icon {
+      display: none;
+      &.iconActive {
+        display: block;
+      }
+    }
   }
   .optionsTimeWrap {
     position: absolute;
@@ -74,13 +80,25 @@
       }
 
       .itemTime {
-        color: var(--white);
+        color: var(--text-secondary);
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        cursor: pointer;
-        &:hover {
+        cursor: default;
+        &.itemTimeValid {
+          cursor: pointer;
+          color: var(--white);
+          &:hover {
+            .left {
+              background-color: var(--alpha-bg);
+            }
+            .right {
+              background-color: var(--alpha-bg);
+            }
+          }
+        }
+        &.itemTimeActive {
           .left {
             background-color: var(--alpha-bg);
           }

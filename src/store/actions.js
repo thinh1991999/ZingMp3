@@ -5,6 +5,20 @@ export const setLoading = (payLoad) => {
   };
 };
 
+export const setRouterHistory = (payLoad) => {
+  return {
+    type: "SET_ROUTER_HISTORY",
+    payLoad,
+  };
+};
+
+export const setCurrentRouter = (payLoad) => {
+  return {
+    type: "SET_CURRENT_ROUTER",
+    payLoad,
+  };
+};
+
 export const setTitle = (payLoad) => {
   return {
     type: "SET_TITLE",

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,39 +17,43 @@ import HttpService from "../../../Services/http.service";
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
 
-  const { blackHeader, activeSearch, currentUser } = useSelector(
-    (state) => state.root
-  );
+  const {
+    blackHeader,
+    activeSearch,
+    currentUser,
+    currentRouter,
+    routerHistory,
+  } = useSelector((state) => state.root);
 
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [suggest, setSuggest] = useState([
+  const suggest = useRef([
     "vui lắm nha",
     "thương em đến",
     "em đừng đi",
     "zing choice",
-  ]);
-  const [leftDisable, setLeftDisable] = useState(true);
-  const [rightDisable, setRightDisable] = useState(true);
-
+  ]).current;
   const inputRef = useRef(null);
   const formRef = useRef(null);
   const deleteBtnRef = useRef(null);
   const btnMobileRef = useRef(null);
 
-  const dispatch = useDispatch();
+  const checkIdxRouter = useMemo(() => {
+    const idx = routerHistory.findIndex((item) => {
+      return item.key === currentRouter;
+    });
+    return idx;
+  }, [currentRouter, routerHistory]);
 
   const handlePrevPage = () => {
-    if (!leftDisable) {
-      navigate(-1);
-    }
+    if (checkIdxRouter > 0) navigate(-1);
   };
 
   const handleNextPage = () => {
-    navigate(+1);
+    if (checkIdxRouter < routerHistory.length - 1) navigate(+1);
   };
 
   const handleSearchForm = () => {
@@ -94,15 +98,6 @@ function Header() {
     setSearchText("");
     inputRef.current.focus();
   };
-
-  useEffect(() => {
-    const {
-      length,
-      state: { idx },
-    } = window.history;
-    idx === 0 ? setLeftDisable(true) : setLeftDisable(false);
-    idx === length - 1 ? setRightDisable(true) : setRightDisable(false);
-  }, [location]);
 
   useEffect(() => {
     let searchDelay;
@@ -151,12 +146,12 @@ function Header() {
             </HeaderButton>
           </button>
           <button className={styles.leftBtn} onClick={handlePrevPage}>
-            <HeaderButton disable={leftDisable}>
+            <HeaderButton disable={checkIdxRouter === 0}>
               <HiOutlineArrowLeft />
             </HeaderButton>
           </button>
           <button className={styles.rightBtn} onClick={handleNextPage}>
-            <HeaderButton disable={rightDisable}>
+            <HeaderButton disable={checkIdxRouter >= routerHistory.length - 1}>
               <HiOutlineArrowRight />
             </HeaderButton>
           </button>

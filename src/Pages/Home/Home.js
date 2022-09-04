@@ -7,7 +7,6 @@ import {
   Loading,
   Radios,
   Zingcharts,
-  Singers,
   Choices,
   Events,
   Chart,
@@ -21,7 +20,7 @@ function Home() {
   const dispatch = useDispatch();
   const { idCurrentSong } = useSelector((state) => state);
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [homeData, setHomeData] = useState([]);
   const [hasMore, setHasmore] = useState(true);
 
@@ -30,20 +29,44 @@ function Home() {
   };
 
   useEffect(() => {
-    const fetchHomeDataNextPage = () => {
-      httpService
-        .getHomeData(page)
-        .then((res) => {
+    const callApi1 = httpService.getHomeData(1).then((res) => {
+      const {
+        data: { items },
+      } = res.data;
+      return items;
+    });
+    const callApi2 = httpService.getHomeData(2).then((res) => {
+      const {
+        data: { items },
+      } = res.data;
+      return items;
+    });
+    Promise.all([callApi1, callApi2]).then((res) => {
+      setHomeData([...res[0], ...res[1]]);
+    });
+  }, []);
+
+  useEffect(() => {
+    let isApiSubcribed = true;
+    if (page <= 2) return;
+    httpService
+      .getHomeData(page)
+      .then((res) => {
+        if (isApiSubcribed) {
           const {
             data: { items },
           } = res.data;
           setHomeData([...homeData, ...items]);
-        })
-        .catch(() => {
+        }
+      })
+      .catch(() => {
+        if (isApiSubcribed) {
           setHasmore(false);
-        });
+        }
+      });
+    return () => {
+      isApiSubcribed = false;
     };
-    fetchHomeDataNextPage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 

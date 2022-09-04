@@ -6,7 +6,12 @@ import styles from "./TypeBanners.module.scss";
 
 export default function TypeBanners({ banners }) {
   return (
-    <Swiper slidesPerView={1} modules={[Navigation]} navigation={true}>
+    <Swiper
+      slidesPerView={1}
+      modules={[Navigation]}
+      navigation={true}
+      className="swiper-margin"
+    >
       {banners.map((banner, index) => {
         return (
           <SwiperSlide key={index}>
