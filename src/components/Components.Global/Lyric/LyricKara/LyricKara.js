@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useSelector } from "react-redux";
 
 function LyricKara({ data }) {
-  const { songCurrentTime } = useSelector((state) => state.song);
+  const songCurrentTime = useSelector((state) => state.song.songCurrentTime);
 
   const { lyrics, textActiveIndex } = data;
 

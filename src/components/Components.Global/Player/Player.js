@@ -21,17 +21,17 @@ import HttpService from "../../../Services/http.service";
 import { ultils } from "../../../Share";
 
 function Player() {
-  const {
-    currentSong,
-    showLyric,
-    invi,
-    fetchSong,
-    currentAlbum,
-    showPlayLists,
-    timeToStop,
-  } = useSelector((state) => state.song);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
+  const showLyric = useSelector((state) => state.song.showLyric);
+  const invi = useSelector((state) => state.song.invi);
+  const fetchSong = useSelector((state) => state.song.fetchSong);
+  const showPlayLists = useSelector((state) => state.song.showPlayLists);
+  const timeToStop = useSelector((state) => state.song.timeToStop);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
 
   const [volume, setVolume] = useState(50);
 
@@ -94,16 +94,16 @@ function Player() {
   }, [fetchSong, currentSong, dispatch]);
 
   useEffect(() => {
-    if (currentSong) {
-      document.title = currentSong.title;
-    }
-  }, [currentSong]);
-
-  useEffect(() => {
     if (timeToStop === 1) {
       dispatch(actions.setPlaying(false));
     }
   }, [timeToStop, dispatch]);
+
+  useEffect(() => {
+    if (playing && currentSong) {
+      document.title = currentSong.title;
+    }
+  }, [currentSong, playing]);
 
   return (
     <div

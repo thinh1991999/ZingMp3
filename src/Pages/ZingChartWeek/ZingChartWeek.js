@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { memo, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,10 +9,11 @@ import { Loading, OptionsTime, SongItem } from "../../components";
 import { actions } from "../../store";
 import httpService from "../../Services/http.service";
 
-export default function ZingChartWeek() {
-  const navigate = useNavigate();
+function ZingChartWeek() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const playing = useSelector((state) => state.song.playing);
 
   const options = useRef([
     {
@@ -76,7 +77,11 @@ export default function ZingChartWeek() {
   useEffect(() => {
     dispatch(actions.setBGHeader(false));
   }, [dispatch]);
-
+  useEffect(() => {
+    if (!playing) {
+      document.title = "#zingchart tuần, #zingchart Zing - Bài hát";
+    }
+  }, [playing]);
   useEffect(() => {
     const from = moment("01/01/2020");
     const feature = moment("01/01/2024");
@@ -182,3 +187,5 @@ export default function ZingChartWeek() {
     </div>
   );
 }
+
+export default memo(ZingChartWeek);

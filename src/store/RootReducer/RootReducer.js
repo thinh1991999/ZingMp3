@@ -154,6 +154,6 @@ export const RootReducer = (state = initState, { type, payLoad }) => {
       return { ...state, currentRouter: payLoad };
     }
     default:
-      return { ...state };
+      return state;
   }
 };

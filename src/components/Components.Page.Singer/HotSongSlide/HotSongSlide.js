@@ -5,7 +5,8 @@ import styles from "./HotSongSlide.module.scss";
 import { actions } from "../../../store";
 
 function HotSongSlide({ data }) {
-  const { currentSong, playing } = useSelector((state) => state.song);
+  const playing = useSelector((state) => state.song.playing);
+  const currentSong = useSelector((state) => state.song.currentSong);
 
   const dispatch = useDispatch();
 

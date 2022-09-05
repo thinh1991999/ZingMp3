@@ -14,11 +14,12 @@ import styles from "./Chart.module.scss";
 import httpService from "../../../Services/http.service";
 
 function Chart({ data, home = false }) {
-  const { playing, currentAlbum, songLoading, currentSong } = useSelector(
-    (state) => state.song
-  );
-
   const dispatch = useDispatch();
+
+  const playing = useSelector((state) => state.song.playing);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
+  const songLoading = useSelector((state) => state.song.songLoading);
+  const currentSong = useSelector((state) => state.song.currentSong);
 
   const [pointPosition, setPointPosition] = useState("");
   const [indexShow, setIndexShow] = useState(0);

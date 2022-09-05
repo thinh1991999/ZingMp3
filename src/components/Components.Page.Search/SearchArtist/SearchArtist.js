@@ -7,7 +7,6 @@ import SearchNoInfo from "../SearchNoInfo/SearchNoInfo";
 import styles from "./SearchArtist.module.scss";
 
 function SearchArtist({ data }) {
-  console.log(data);
   return (
     <div className={styles.searchArtist}>
       <HomeTitle msg="Artists" />

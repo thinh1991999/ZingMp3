@@ -18,8 +18,6 @@ export const EventReducer = (state = initState, { type, payLoad }) => {
       };
     }
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };

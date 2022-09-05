@@ -46,26 +46,28 @@ import localStorageServ from "./Services/localStorage";
 
 function App() {
   const location = useLocation();
+  const { show: warningShow } = useSelector((state) => state.root.warningModal);
+  const showLogin = useSelector((state) => state.root.showLogin);
+  const showComment = useSelector((state) => state.root.warningModal);
 
-  const {
-    warningModal: { show: warningShow },
-    showLogin,
-    showComment,
-    title,
-  } = useSelector((state) => state.root);
   const { show } = useSelector((state) => state.root.popperInfo);
-  const { showMvModal } = useSelector((state) => state.mv);
-  const { showEvent } = useSelector((state) => state.event);
-  const {
-    currentSong,
-    currentSinger,
-    song,
-    songCurrentTime,
-    listSong,
-    currentAlbum,
-    showTimeStop,
-    timeToStop,
-  } = useSelector((state) => state.song);
+  const showMvModal = useSelector((state) => state.mv.showMvModal);
+  const showEvent = useSelector((state) => state.event.showEvent);
+  // const {
+  //   currentSong,
+  //   // currentSinger,
+  //   // song,
+  //   // // songCurrentTime,
+  //   // listSong,
+  //   // currentAlbum,
+  //   // showTimeStop,
+  //   // timeToStop,
+  // } = useSelector((state) => state.song);
+
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const timeToStop = useSelector((state) => state.song.timeToStop);
+  const showTimeStop = useSelector((state) => state.song.showTimeStop);
+
   const dispatch = useDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -85,26 +87,28 @@ function App() {
     });
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   localStorageServ.infoSong.set({
+  //     currentAlbum,
+  //     currentSinger,
+  //     // songCurrentTime,
+  //     currentSong,
+  //     listSong,
+  //     song,
+  //   });
+  // }, [
+  //   currentAlbum,
+  //   currentSinger,
+  //   // songCurrentTime,
+  //   currentSong,
+  //   listSong,
+  //   song,
+  // ]);
   useEffect(() => {
-    localStorageServ.infoSong.set({
-      currentAlbum,
-      currentSinger,
-      songCurrentTime,
-      currentSong,
-      listSong,
-      song,
-    });
-  }, [
-    currentAlbum,
-    currentSinger,
-    songCurrentTime,
-    currentSong,
-    listSong,
-    song,
-  ]);
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
+    if (!currentSong) {
+      document.title = "ZingMp3-Nghe nhạc hay,chất lượng";
+    }
+  }, [currentSong]);
 
   useEffect(() => {
     dispatch(actions.setRouterHistory(location));

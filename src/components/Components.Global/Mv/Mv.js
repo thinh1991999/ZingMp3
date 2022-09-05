@@ -14,7 +14,8 @@ import { toast } from "react-toastify";
 function Mv({ data }) {
   const dispatch = useDispatch();
 
-  const { idShow, showSmallScreen } = useSelector((state) => state.mv);
+  const showSmallScreen = useSelector((state) => state.mv.showSmallScreen);
+  const idShow = useSelector((state) => state.mv.idShow);
 
   const {
     thumbnailM: image,

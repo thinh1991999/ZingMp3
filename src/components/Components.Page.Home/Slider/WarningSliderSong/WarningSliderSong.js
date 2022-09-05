@@ -11,7 +11,7 @@ import { actions } from "../../../../store";
 function WarningSliderSong({ info, setShowWarningSong }) {
   const dispatch = useDispatch();
 
-  const { currentAlbum } = useSelector((state) => state.song);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
 
   const [loading, setLoading] = useState(true);
   const [songData, setSongData] = useState(null);

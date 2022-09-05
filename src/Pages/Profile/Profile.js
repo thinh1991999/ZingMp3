@@ -17,13 +17,17 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { constant } from "../../Share";
+import { memo } from "react";
 
 function Profile() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
+  const loginStatus = useSelector((state) => state.root.loginStatus);
+  const currentUser = useSelector((state) => state.root.currentUser);
 
-  const { currentUser, loginStatus } = useSelector((state) => state.root);
   const [location, setLocation] = useState({ country: "", region: "" });
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -163,6 +167,12 @@ function Profile() {
   }, [loginStatus, navigate]);
 
   useEffect(() => {
+    if (!playing) {
+      document.title = "Trang cá nhân";
+    }
+  }, [playing, currentSong]);
+
+  useEffect(() => {
     dispatch(actions.setBGHeader(true));
     dispatch(actions.setShowNavMobile(false));
     // !idCurrentSong && dispatch(actions.setTitle("Profile"));
@@ -293,4 +303,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default memo(Profile);

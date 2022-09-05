@@ -19,9 +19,10 @@ import ButtonIcon from "../../Components.Global/ButtonIcon/ButtonIcon";
 import PrimaryButton from "../../Components.Global/PrimaryButton/PrimaryButton";
 
 function AlbumLeft({ data }) {
-  const { playing, currentAlbum } = useSelector((state) => state.song);
-
   const dispatch = useDispatch();
+
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
+  const playing = useSelector((state) => state.song.playing);
 
   const { title, like, image, artists = [], update, albumId } = data;
 

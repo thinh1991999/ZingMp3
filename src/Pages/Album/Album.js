@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,7 +12,8 @@ function Album() {
 
   const { id } = useParams();
 
-  const { idCurrentSong } = useSelector((state) => state);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
 
   const [loading, setLoading] = useState(true);
   const [albumData, setAlbumData] = useState(null);
@@ -20,19 +21,6 @@ function Album() {
   useEffect(() => {
     const fetchAlbum = () => {
       setLoading(true);
-      // try {
-      //   const respon = await fetch(`${ALBUM_API}${id}`);
-      //   const { data } = await respon.json();
-      //   if (data) {
-      //     dispatch(actions.setAlbum(data));
-      //     setLoading(false);
-      //   } else {
-      //     // navigate("/");
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      //   // navigate("/");
-      // }
       httpService.getAlbum(id).then((res) => {
         const { data } = res.data;
         dispatch(actions.setAlbum(data));
@@ -49,12 +37,10 @@ function Album() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (loading) {
-      if (!idCurrentSong) document.title = "Album";
-    } else {
-      if (!idCurrentSong) document.title = `Album:${albumData?.title}`;
+    if (!playing) {
+      document.title = albumData?.title;
     }
-  }, [albumData, loading, idCurrentSong]);
+  }, [albumData, playing, currentSong]);
 
   if (loading) {
     return <Loading size={50} />;
@@ -104,4 +90,4 @@ function Album() {
   );
 }
 
-export default Album;
+export default memo(Album);

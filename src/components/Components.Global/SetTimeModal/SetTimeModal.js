@@ -8,8 +8,6 @@ import { actions } from "../../../store";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 function SetTimeModal() {
-  const { timeToStop } = useSelector((state) => state.song);
-
   const dispatch = useDispatch();
 
   const hourRef = useRef(null);
@@ -17,7 +15,6 @@ function SetTimeModal() {
   const containerRef = useRef(null);
   const wrapRef = useRef(null);
 
-  const [duration, setDuration] = useState(timeToStop);
   const [hourList, setHourList] = useState([]);
   const [minuteList, setMinuteList] = useState([]);
   const [hour, setHour] = useState("00");

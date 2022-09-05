@@ -101,12 +101,11 @@ function Header() {
         dispatch(actions.setActiveSearch(false));
       }
     };
-    window.addEventListener("click", event);
-    dispatch(actions.setShowNavMobile(false));
+    activeSearch && window.addEventListener("click", event);
     return () => {
       window.removeEventListener("click", event);
     };
-  }, [dispatch]);
+  }, [dispatch, activeSearch]);
 
   useEffect(() => {
     let searchDelay;

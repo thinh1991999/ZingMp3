@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import styles from "./Radio.module.scss";
 import {
@@ -10,11 +10,14 @@ import {
 } from "../../components";
 import httpService from "../../Services/http.service";
 import clsx from "clsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
 
-export default function Radio() {
+function Radio() {
   const dispatch = useDispatch();
+
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
 
@@ -26,6 +29,12 @@ export default function Radio() {
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (!playing) {
+      document.title = "Radio | Xem bài hát, album, MV đang hot nhất hiện tại";
+    }
+  }, [playing, currentSong]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
@@ -55,3 +64,5 @@ export default function Radio() {
     </div>
   );
 }
+
+export default memo(Radio);

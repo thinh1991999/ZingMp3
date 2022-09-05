@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useSelector, useDispatch } from "react-redux";
 import {
   Slider,
   Topics,
@@ -14,11 +13,13 @@ import {
 } from "../../components";
 import styles from "./Home.module.scss";
 import httpService from "../../Services/http.service";
+import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../store";
 
 function Home() {
   const dispatch = useDispatch();
-  const { idCurrentSong } = useSelector((state) => state);
+
+  const playing = useSelector((state) => state.song.playing);
 
   const [page, setPage] = useState(2);
   const [homeData, setHomeData] = useState([]);
@@ -45,7 +46,7 @@ function Home() {
       setHomeData([...res[0], ...res[1]]);
     });
   }, []);
-
+  console.log("home");
   useEffect(() => {
     let isApiSubcribed = true;
     if (page <= 2) return;
@@ -69,12 +70,16 @@ function Home() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
-
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
-    // dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle("Home"));
-  }, [dispatch, idCurrentSong]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!playing) {
+      document.title = "ZingMp3-Nghe nhạc hay,chất lượng";
+    }
+  }, [playing]);
+
   return (
     <InfiniteScroll
       dataLength={homeData.length}
@@ -116,4 +121,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);

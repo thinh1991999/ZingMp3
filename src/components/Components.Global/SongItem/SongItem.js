@@ -34,13 +34,11 @@ function SongItem({
   blur,
 }) {
   const dispatch = useDispatch();
-  const {
-    currentAlbum,
-    album: albumCurrent,
-    playing,
-    songLoading,
-    currentSong,
-  } = useSelector((state) => state.song);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
+  const playing = useSelector((state) => state.song.playing);
+  const songLoading = useSelector((state) => state.song.songLoading);
+  const albumCurrent = useSelector((state) => state.song.album);
 
   const {
     encodeId: idSong,

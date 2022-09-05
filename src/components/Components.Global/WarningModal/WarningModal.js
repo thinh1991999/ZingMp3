@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../../../store";
 
 function WarningModal() {
-  const { warningModal } = useSelector((state) => state.root);
+  const warningModal = useSelector((state) => state.root.warningModal);
 
   const dispatch = useDispatch();
 

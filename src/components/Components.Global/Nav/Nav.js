@@ -19,7 +19,7 @@ import styles from "./Nav.module.scss";
 function Nav() {
   const dispatch = useDispatch();
 
-  const { loginStatus } = useSelector((state) => state.root);
+  const loginStatus = useSelector((state) => state.root.loginStatus);
 
   const navRef = useRef(null);
 

@@ -11,7 +11,6 @@ function ChartToolTip({ songs, indexShow, position, totalScore }) {
   const currentTop = xTop - 80;
 
   useEffect(() => {
-    const { width } = wrapRef.current.getBoundingClientRect();
     if (indexPoint < 2) {
       setPositionShow("left1");
     } else if (indexPoint < 5) {

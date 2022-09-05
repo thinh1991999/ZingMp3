@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import styles from "./ButtonIcon.module.scss";
 import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actions } from "../../../store";
 
 function ButtonIcon({
@@ -61,8 +61,8 @@ function ButtonIcon({
 
   useEffect(() => {
     return () => {
-      // dispatch(actions.setPopperInfo({ show: false }));
-      // dispatch(actions.setPopperMess(""));
+      dispatch(actions.setPopperInfo({ show: false }));
+      dispatch(actions.setPopperMess(""));
     };
   }, [dispatch]);
 

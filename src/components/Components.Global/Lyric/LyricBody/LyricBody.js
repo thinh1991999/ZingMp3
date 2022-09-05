@@ -7,7 +7,9 @@ import styles from "./LyricBody.module.scss";
 import PlayingIcon from "../../PlayingIcon/PlayingIcon";
 
 function LyricBody({ setCount, data }) {
-  const { playing, songCurrentTime } = useSelector((state) => state.song);
+  const songCurrentTime = useSelector((state) => state.song.songCurrentTime);
+  const playing = useSelector((state) => state.song.playing);
+
   const [size, setSize] = useState(20);
 
   const { image, title, lyricsText, textActiveIndex, count, sizes, textSize } =

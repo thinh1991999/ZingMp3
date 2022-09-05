@@ -18,9 +18,11 @@ import { actions } from "../../../../store";
 SwiperCore.use([Navigation]);
 
 function LyricList() {
-  const { listSong, playing, invi, songLoading, currentSong } = useSelector(
-    (state) => state.song
-  );
+  const playing = useSelector((state) => state.song.playing);
+  const listSong = useSelector((state) => state.song.listSong);
+  const invi = useSelector((state) => state.song.invi);
+  const songLoading = useSelector((state) => state.song.songLoading);
+  const currentSong = useSelector((state) => state.song.currentSong);
 
   const dispatch = useDispatch();
 

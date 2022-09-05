@@ -12,13 +12,14 @@ import styles from "./Search.module.scss";
 import { actions } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import httpService from "../../Services/http.service";
+import { memo } from "react";
 
 function Search() {
   const { Keyword } = useParams();
-
-  const { idCurrentSong } = useSelector((state) => state.song);
-
   const dispatch = useDispatch();
+
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
 
   const header = useRef([
     "tất cả",
@@ -54,8 +55,10 @@ function Search() {
   }, [dispatch]);
 
   useEffect(() => {
-    !idCurrentSong && dispatch(actions.setTitle(`Tìm kiếm: ${Keyword}`));
-  }, [idCurrentSong, dispatch, Keyword]);
+    if (!playing) {
+      document.title = "Tìm kiếm | " + Keyword;
+    }
+  }, [playing, currentSong, Keyword]);
 
   if (loading) {
     return <Loading size={50} />;
@@ -100,4 +103,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default memo(Search);

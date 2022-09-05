@@ -6,21 +6,21 @@ let infoStorageInit = localStorageServ.infoSong.get();
 
 const initState = {
   playing: false,
-  currentAlbum: infoStorageInit["currentAlbum"] || "",
+  currentAlbum: infoStorageInit?.["currentAlbum"] || "",
   album: {},
-  listSong: infoStorageInit["listSong"] || [],
-  currentSong: infoStorageInit["currentSong"] || null,
+  listSong: infoStorageInit?.["listSong"] || [],
+  currentSong: infoStorageInit?.["currentSong"] || null,
   randomSong: true,
   repeatSong: 0,
   songLoading: false,
-  song: infoStorageInit["song"] || {},
-  songCurrentTime: infoStorageInit["songCurrentTime"] || 0,
+  song: infoStorageInit?.["song"] || {},
+  songCurrentTime: infoStorageInit?.["songCurrentTime"] || 0,
   fetchSong: false,
   showLyric: false,
   showPlayLists: false,
   invi: false,
   singer: {},
-  currentSinger: infoStorageInit["currentSinger"] || "",
+  currentSinger: infoStorageInit?.["currentSinger"] || "",
   timeToStop: 0,
   showTimeStop: false,
 };
@@ -195,6 +195,7 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
     }
     case "PLAY_NEXT_SONG_AUTO": {
       const { repeatSong, randomSong, listSong, currentSong } = state;
+      console.log(listSong);
       const validArr = ultils.getListValidIdxSong(listSong);
       if (repeatSong === 1) {
         return {
@@ -467,8 +468,6 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
       };
     }
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };

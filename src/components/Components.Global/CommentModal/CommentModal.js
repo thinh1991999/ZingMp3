@@ -16,7 +16,8 @@ import { unknowUserImg } from "../../../Share/constant";
 function CommentModal() {
   const dispatch = useDispatch();
 
-  const { showComment, currentUser } = useSelector((state) => state.root);
+  const currentUser = useSelector((state) => state.root.currentUser);
+  const showComment = useSelector((state) => state.root.showComment);
 
   const [chatList, setChatList] = useState([]);
   const [infoUser, setInfoUser] = useState([]);

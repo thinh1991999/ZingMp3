@@ -28,7 +28,7 @@ function Slider({ data }) {
 
   const handleClick = (slider) => {
     const { link, encodeId } = slider;
-    if (link.includes("album")) {
+    if (link.includes("album") || link.includes("playlist")) {
       navigate(`/album/${encodeId}`);
       return;
     }

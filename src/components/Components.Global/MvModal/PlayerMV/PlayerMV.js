@@ -15,7 +15,7 @@ import styles from "./PlayerMV.module.scss";
 export default function PlayerMV({ info, thumbnailMv, handleEndPlayer }) {
   const dispatch = useDispatch();
 
-  const { showSmallScreen } = useSelector((state) => state.mv);
+  const showSmallScreen = useSelector((state) => state.mv.showSmallScreen);
 
   const [src, setSrc] = useState([{ quality: "", url: "" }]);
   const [layerShow, setLayerShow] = useState(false);

@@ -9,6 +9,7 @@ import styles from "./SearchMobile.module.scss";
 import { actions } from "../../store";
 import HeaderFormSuggest from "../../components/Components.Global/HeaderFormSuggest/HeaderFormSuggest";
 import httpService from "../../Services/http.service";
+import { memo } from "react";
 
 function SearchMobile() {
   const navigate = useNavigate();
@@ -158,4 +159,4 @@ function SearchMobile() {
   );
 }
 
-export default SearchMobile;
+export default memo(SearchMobile);

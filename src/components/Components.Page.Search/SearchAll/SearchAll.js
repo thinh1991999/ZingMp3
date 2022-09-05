@@ -16,9 +16,9 @@ import SearchNoInfo from "../SearchNoInfo/SearchNoInfo";
 import httpService from "../../../Services/http.service";
 
 function SearchAll({ dataSearch, Keyword }) {
-  const { currentSong, playing, currentAlbum } = useSelector(
-    (state) => state.song
-  );
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
 
   const {
     top = {},

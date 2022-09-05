@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   AiOutlineDown,

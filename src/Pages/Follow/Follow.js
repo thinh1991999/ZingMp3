@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch } from "react-redux";
 import { Loading, NewsGridLayout } from "../../components";
@@ -7,7 +7,7 @@ import httpService from "../../Services/http.service";
 import { actions } from "../../store";
 import styles from "./Follow.module.scss";
 
-export default function Follow() {
+function Follow() {
   const dispatch = useDispatch();
   const navTitles = useRef([
     {
@@ -130,3 +130,5 @@ export default function Follow() {
     </InfiniteScroll>
   );
 }
+
+export default memo(Follow);
