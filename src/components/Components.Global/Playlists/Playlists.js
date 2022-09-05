@@ -89,19 +89,18 @@ function Playlists() {
     dispatch(actions.setShowPlayLists(false));
   }, [location, dispatch]);
 
-  const eventClick = (e) => {
-    if (!playListRef.current.contains(e.target)) {
-      dispatch(actions.setShowPlayLists(false));
-    }
-  };
-
   useEffect(() => {
-    // const app_container = document.querySelector(".app__container");
-    // app_container.addEventListener("click", eventClick);
-    // return () => {
-    //   app_container.removeEventListener("click", eventClick);
-    // };
-  }, []);
+    const eventClick = (e) => {
+      if (!playListRef.current.contains(e.target)) {
+        dispatch(actions.setShowPlayLists(false));
+      }
+    };
+    const app_container = document.querySelector(".app__container");
+    app_container?.addEventListener("click", eventClick);
+    return () => {
+      app_container?.removeEventListener("click", eventClick);
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (timeToStop > 0) {
@@ -177,7 +176,6 @@ function Playlists() {
                       index={index}
                       playLists={true}
                       blur={true}
-                      albumSong={true}
                     />
                   );
                 }
@@ -190,7 +188,6 @@ function Playlists() {
                     data={item}
                     index={index}
                     playLists={true}
-                    albumSong={true}
                   />
                 );
               })}
@@ -208,7 +205,6 @@ function Playlists() {
                     data={item}
                     index={index}
                     playLists={true}
-                    albumSong={true}
                   />
                 );
               })}

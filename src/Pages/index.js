@@ -1,4 +1,3 @@
-// export { default as SearchMobile } from "./SearchMobile/SearchMobile";
 export { default as Home } from "./Home/Home";
 export { default as ZingChartPage } from "./ZingChartPage/ZingChartPage";
 export { default as ZingChartWeek } from "./ZingChartWeek/ZingChartWeek";
@@ -14,3 +13,4 @@ export { default as NewSong } from "./NewSong/NewSong";
 export { default as Error } from "./Error/Error";
 export { default as Search } from "./Search/Search";
 export { default as Profile } from "./Profile/Profile";
+export { default as SearchMobile } from "./SearchMobile/SearchMobile";

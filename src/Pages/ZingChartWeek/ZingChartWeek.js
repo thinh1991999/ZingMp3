@@ -170,7 +170,6 @@ export default function ZingChartWeek() {
                   data={item}
                   index={index}
                   chartWeek={true}
-                  // chartWeekIdx={indexWeek}
                   albumId={album}
                   listSong={items}
                   small={true}

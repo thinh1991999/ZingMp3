@@ -1,31 +1,26 @@
 import { toast } from "react-toastify";
+import localStorageServ from "../../Services/localStorage";
 import { ultils } from "../../Share";
 
-const infoStorage = () => {
-  const data = JSON.parse(localStorage.getItem("infoCurrent"));
-  if (typeof data !== "object" || data === null) {
-    return {};
-  }
-  return data;
-};
+let infoStorageInit = localStorageServ.infoSong.get();
 
 const initState = {
   playing: false,
-  currentAlbum: infoStorage()["currentAlbum"] || "",
+  currentAlbum: infoStorageInit["currentAlbum"] || "",
   album: {},
-  listSong: infoStorage()["listSong"] || [],
-  currentSong: null,
+  listSong: infoStorageInit["listSong"] || [],
+  currentSong: infoStorageInit["currentSong"] || null,
   randomSong: true,
   repeatSong: 0,
   songLoading: false,
-  song: infoStorage()["song"] || {},
-  songCurrentTime: infoStorage()["songCurrentTime"] || 0,
+  song: infoStorageInit["song"] || {},
+  songCurrentTime: infoStorageInit["songCurrentTime"] || 0,
   fetchSong: false,
   showLyric: false,
   showPlayLists: false,
   invi: false,
   singer: {},
-  currentSinger: infoStorage()["currentSinger"] || "",
+  currentSinger: infoStorageInit["currentSinger"] || "",
   timeToStop: 0,
   showTimeStop: false,
 };
@@ -153,38 +148,24 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
     }
 
     case "PLAY_SONG_ANOTHER_CHART_HOME": {
-      const { id, album, items } = payLoad;
-      const indexArr = [];
-      items.forEach((item) => {
-        const { encodeId, streamingStatus: statusSong } = item;
-        if (statusSong === 1) {
-          indexArr.push(encodeId);
-        }
-      });
-      if (indexArr.includes(id)) {
-        const newIndex = items.findIndex((item) => item.encodeId === id);
-        const newSong = items.filter((item) => {
-          const { encodeId } = item;
-          return encodeId === id;
-        })[0];
+      const { song, album, items } = payLoad;
+      if (song) {
         return {
           ...state,
           currentAlbum: album,
-          indexValidSongs: indexArr,
-          idCurrentSong: id,
           listSong: items,
-          currentIndexSong: newIndex,
-          currentSong: newSong,
+          currentSong: song,
           fetchSong: true,
-          // showLyric: true,
           currentSinger: "",
         };
-      } else {
-        toast.error("Bài hát này chưa được hỗ trợ!");
-        return {
-          ...state,
-        };
       }
+      return {
+        ...state,
+        currentAlbum: album,
+        listSong: items,
+        fetchSong: true,
+        currentSinger: "",
+      };
     }
     case "SET_SONG_CURRENT_INFO": {
       return {
@@ -371,7 +352,7 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
       }
     }
     case "PLAY_ALBUM": {
-      const { album, currentSong, lastest } = state;
+      const { album, currentSong } = state;
       const {
         encodeId,
         song: { items },
@@ -402,7 +383,7 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
       };
     }
     case "PLAY_SONG_ANOTHER_ALBUM": {
-      const { lastest, album } = state;
+      const { album } = state;
       const {
         encodeId,
         song: { items },

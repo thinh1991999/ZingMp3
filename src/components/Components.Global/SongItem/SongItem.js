@@ -99,7 +99,7 @@ function SongItem({
         } else {
           dispatch(
             actions.playSongAnotherChartHome({
-              id: idSong,
+              song: data,
               album: finalAlbum,
               items: listSong,
             })
@@ -112,7 +112,7 @@ function SongItem({
         } else {
           dispatch(
             actions.playSongAnotherChartHome({
-              id: idSong,
+              song: data,
               album: albumId,
               items: listSong,
             })
@@ -152,6 +152,9 @@ function SongItem({
             );
           });
         }
+      }
+      if (playLists) {
+        dispatch(actions.playSongSameAlbum(data));
       }
     }
   };

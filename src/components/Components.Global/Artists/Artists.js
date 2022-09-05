@@ -1,15 +1,15 @@
 import React from "react";
-import styles from "./Artists.module.scss";
-import { Row } from "react-bootstrap";
-import clsx from "clsx";
-import Artist from "../Artist/Artist";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
+import clsx from "clsx";
+
+import styles from "./Artists.module.scss";
+import Artist from "../Artist/Artist";
 
 function Artists({ data }) {
-  // const noArtists = data.length === 0 ? styles.noArtists : "";
-  const finalClass = clsx(styles.artists);
   const { items, title } = data;
+  const noArtists = items?.length === 0 ? styles.noArtists : "";
+  const finalClass = clsx(styles.artists, noArtists ? styles.noArtists : null);
   return (
     <div className={finalClass}>
       <h4 className={styles.title}>{title}</h4>
@@ -34,6 +34,7 @@ function Artists({ data }) {
           }}
           modules={[Navigation]}
           navigation={true}
+          className="swiper-margin"
         >
           {items?.map((item, index) => {
             return (

@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper/core";
 import { BsPlayCircle, BsPauseCircle } from "react-icons/bs";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 import "swiper/css";
 import "swiper/css/navigation";
+
 import styles from "./LyricList.module.scss";
 import "./LyricList.css";
 
@@ -15,7 +18,7 @@ import { actions } from "../../../../store";
 SwiperCore.use([Navigation]);
 
 function LyricList() {
-  const { listSong, playing, invi, songLoading } = useSelector(
+  const { listSong, playing, invi, songLoading, currentSong } = useSelector(
     (state) => state.song
   );
 
@@ -27,12 +30,23 @@ function LyricList() {
   const listRef = useRef(null);
   const wrapRef = useRef(null);
 
-  const handleSong = (id) => {
-    // if (id === idCurrentSong) {
-    //   dispatch(actions.setPlaying(!playing));
-    // } else {
-    //   dispatch(actions.playSongSameAlbum(id));
-    // }
+  const currentIndexSong = useMemo(() => {
+    return listSong.findIndex((item) => {
+      return item.encodeId === currentSong.encodeId;
+    });
+  }, [currentSong, listSong]);
+
+  const handleSong = (item) => {
+    if (item.encodeId === currentSong?.encodeId) {
+      dispatch(actions.setPlaying(!playing));
+    } else {
+      const { streamingStatus } = item;
+      if (streamingStatus === 1) {
+        dispatch(actions.playSongSameAlbum(item));
+      } else {
+        toast.error("Bài hát này chưa được hỗ trợ");
+      }
+    }
   };
 
   const handleEnter = () => {
@@ -43,17 +57,17 @@ function LyricList() {
     setCanMove(false);
   };
 
-  // useEffect(() => {
-  //   if ((!canMove && typeof currentIndexSong === "number") || invi) {
-  //     if (width >= 1024) {
-  //       wrapRef.current.swiper.slideTo(currentIndexSong - 2);
-  //     } else if (width >= 768) {
-  //       wrapRef.current.swiper.slideTo(currentIndexSong - 1);
-  //     } else {
-  //       wrapRef.current.swiper.slideTo(currentIndexSong);
-  //     }
-  //   }
-  // }, [canMove, width, currentIndexSong, invi]);
+  useEffect(() => {
+    if ((!canMove && typeof currentIndexSong === "number") || invi) {
+      if (width >= 1024) {
+        wrapRef.current.swiper.slideTo(currentIndexSong - 2);
+      } else if (width >= 768) {
+        wrapRef.current.swiper.slideTo(currentIndexSong - 1);
+      } else {
+        wrapRef.current.swiper.slideTo(currentIndexSong);
+      }
+    }
+  }, [canMove, width, currentIndexSong, invi]);
 
   const eventResize = (e) => {
     const { innerWidth } = e.target;
@@ -83,7 +97,7 @@ function LyricList() {
     >
       <Swiper
         id="swiper"
-        className={styles.wrap}
+        className={clsx("swiper-margin", styles.wrap)}
         ref={wrapRef}
         slidesPerView={3}
         spaceBetween={10}
@@ -92,6 +106,9 @@ function LyricList() {
           0: {
             slidesPerView: 1,
           },
+          500: {
+            slidesPerView: 2,
+          },
           768: {
             slidesPerView: 3,
           },
@@ -99,11 +116,12 @@ function LyricList() {
             slidesPerView: 5,
           },
         }}
+        centeredSlides={true}
       >
-        {/* {listSong.map((item, index) => {
+        {listSong.map((item, index) => {
           const { encodeId, title, artistsNames, thumbnailM } = item;
           const newImage = thumbnailM.replace("w240", "w480");
-          const valid = index === currentIndexSong;
+          const valid = encodeId === currentSong?.encodeId;
           const activeClass = valid ? styles.itemActive : "";
           return (
             <SwiperSlide
@@ -120,7 +138,7 @@ function LyricList() {
                   <div className={styles.btn}>
                     <button
                       className={styles.btnWrap}
-                      onClick={() => handleSong(encodeId)}
+                      onClick={() => handleSong(item)}
                     >
                       {!valid && <BsPlayCircle />}
                       {valid && playing ? <BsPauseCircle /> : ""}
@@ -133,7 +151,7 @@ function LyricList() {
               </div>
             </SwiperSlide>
           );
-        })} */}
+        })}
       </Swiper>
     </div>
   );

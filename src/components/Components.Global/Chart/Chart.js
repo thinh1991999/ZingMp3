@@ -11,6 +11,7 @@ import ChartLine from "../ChartLine/ChartLine";
 import PlayingIcon from "../PlayingIcon/PlayingIcon";
 import { actions } from "../../../store";
 import styles from "./Chart.module.scss";
+import httpService from "../../../Services/http.service";
 
 function Chart({ data, home = false }) {
   const { playing, currentAlbum, songLoading, currentSong } = useSelector(
@@ -44,13 +45,22 @@ function Chart({ data, home = false }) {
         if (currentAlbum === "ZO68OC68") {
           dispatch(actions.playSongSameAlbum(item));
         } else {
-          dispatch(
-            actions.playSongAnotherChartHome({
-              id: item.encodeId,
-              album: "ZO68OC68",
-              items: items,
-            })
-          );
+          dispatch(actions.setSongCurrentInfo(item));
+          dispatch(actions.setFetchSong(true));
+          httpService.getAlbum("ZO68OC68").then((res) => {
+            const {
+              data: {
+                song: { items },
+              },
+            } = res.data;
+            dispatch(
+              actions.playSongAnotherChartHome({
+                song: null,
+                album: "ZO68OC68",
+                items: items,
+              })
+            );
+          });
         }
       }
     },
@@ -187,18 +197,15 @@ function Chart({ data, home = false }) {
                     <span>
                       {artists.map((artist, index) => {
                         const { id, alias, name } = artist;
-                        if (index === 0) {
-                          return (
-                            <Link key={id} to={`/Singer/${alias}`}>
-                              {" "}
-                              {name}
-                            </Link>
-                          );
-                        }
                         return (
-                          <a key={id} href="">
-                            , {name}
-                          </a>
+                          <Link
+                            key={id}
+                            to={`/Singer/${alias}`}
+                            className="text-link"
+                          >
+                            {index > 0 ? "," : ""}
+                            {name}
+                          </Link>
                         );
                       })}
                     </span>

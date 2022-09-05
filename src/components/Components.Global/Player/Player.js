@@ -9,7 +9,6 @@ import {
   BsMusicNoteList,
 } from "react-icons/bs";
 import { GiMicrophone } from "react-icons/gi";
-import { BiWindows } from "react-icons/bi";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,6 @@ import { ultils } from "../../../Share";
 function Player() {
   const {
     currentSong,
-    song,
     showLyric,
     invi,
     fetchSong,
@@ -36,8 +34,6 @@ function Player() {
   const navigate = useNavigate();
 
   const [volume, setVolume] = useState(50);
-
-  // const { title, thumbnail, artists = [], duration } = currentSong;
 
   const handleToAlbum = (e) => {
     const arr = Array.from([...e.target.classList]);
@@ -128,7 +124,7 @@ function Player() {
               <h3 className={styles.playTitle}>{currentSong?.title}</h3>
             </div>
             <p>
-              {currentSong?.artists.map((artist, index) => {
+              {currentSong?.artists?.map((artist, index) => {
                 const { id, name, alias } = artist;
                 if (index === 0) {
                   return (
@@ -198,17 +194,6 @@ function Player() {
                 }}
               >
                 <GiMicrophone />
-              </ButtonIcon>
-            </div>
-            <div className={styles.btnWrap}>
-              <ButtonIcon
-                popper={{
-                  show: true,
-                  msg: "Chế độ cửa sổ",
-                  position: "CenterUp",
-                }}
-              >
-                <BiWindows />
               </ButtonIcon>
             </div>
             <div className={styles.playRightAudio}>

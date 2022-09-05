@@ -1,6 +1,6 @@
 import React from "react";
 import { GiMusicalScore } from "react-icons/gi";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import styles from "./SearchPlaylist.module.scss";
 import HomeTitle from "../../Components.Global/HomeTitle/HomeTitle";
 import Topic from "../../Components.Global/Topic/Topic";
@@ -13,17 +13,10 @@ function SearchPlaylist({ data }) {
       <Row className={styles.playWrap}>
         {data &&
           data.map((item, index) => {
-            const { encodeId, sortDescription, title, thumbnail } = item;
             return (
-              <Topic
-                data={{
-                  title,
-                  sub: sortDescription,
-                  image: thumbnail,
-                  id: encodeId,
-                }}
-                key={encodeId}
-              />
+              <Col lg={2} md={3} xs={6} sm={4}>
+                <Topic data={item} key={index} padding={0} />
+              </Col>
             );
           })}
       </Row>

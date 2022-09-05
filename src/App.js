@@ -33,6 +33,7 @@ import {
   Profile,
   Radio,
   Search,
+  SearchMobile,
   Singer,
   Top100,
   Type,
@@ -41,12 +42,12 @@ import {
   ZingChartWeek,
 } from "./Pages";
 import { actions } from "./store";
+import localStorageServ from "./Services/localStorage";
 
 function App() {
   const location = useLocation();
 
   const {
-    showNavMobile,
     warningModal: { show: warningShow },
     showLogin,
     showComment,
@@ -55,9 +56,16 @@ function App() {
   const { show } = useSelector((state) => state.root.popperInfo);
   const { showMvModal } = useSelector((state) => state.mv);
   const { showEvent } = useSelector((state) => state.event);
-  const { currentSong, showTimeStop, timeToStop } = useSelector(
-    (state) => state.song
-  );
+  const {
+    currentSong,
+    currentSinger,
+    song,
+    songCurrentTime,
+    listSong,
+    currentAlbum,
+    showTimeStop,
+    timeToStop,
+  } = useSelector((state) => state.song);
   const dispatch = useDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -77,32 +85,23 @@ function App() {
     });
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   localStorage.setItem(
-  //     "infoCurrent",
-  //     JSON.stringify({
-  //       idCurrentSong,
-  //       currentAlbum,
-  //       currentSinger,
-  //       currentIndexSong,
-  //       songCurrentTime,
-  //       currentSong,
-  //       song,
-  //       listSong,
-  //       indexValidSongs,
-  //     })
-  //   );
-  // }, [
-  //   idCurrentSong,
-  //   currentAlbum,
-  //   currentSinger,
-  //   currentIndexSong,
-  //   songCurrentTime,
-  //   currentSong,
-  //   song,
-  //   listSong,
-  //   indexValidSongs,
-  // ]);
+  useEffect(() => {
+    localStorageServ.infoSong.set({
+      currentAlbum,
+      currentSinger,
+      songCurrentTime,
+      currentSong,
+      listSong,
+      song,
+    });
+  }, [
+    currentAlbum,
+    currentSinger,
+    songCurrentTime,
+    currentSong,
+    listSong,
+    song,
+  ]);
   useEffect(() => {
     document.title = title;
   }, [title]);
@@ -240,7 +239,7 @@ function App() {
           ></Route>
           <Route path={"/error"} element={<Error />}></Route>
           <Route path={"/*"} element={<Error />}></Route>
-          {/* 
+
           <Route
             path={"/SearchMobile"}
             element={
@@ -249,7 +248,6 @@ function App() {
               </GlobalLayout>
             }
           ></Route>
-          */}
         </Routes>
         <Lyric />
         <MvModal />

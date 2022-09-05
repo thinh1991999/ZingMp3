@@ -90,7 +90,7 @@ function PlayerCenter({ volume = 50 }) {
   };
 
   const handlePause = useCallback(() => {
-    dispatch(actions.setSongCurrentTime(currentTime));
+    // dispatch(actions.setSongCurrentTime(currentTime));
   }, [currentTime, dispatch]);
 
   const handleBackSong = () => {

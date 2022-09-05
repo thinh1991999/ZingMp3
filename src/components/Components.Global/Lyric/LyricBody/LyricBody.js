@@ -7,9 +7,7 @@ import styles from "./LyricBody.module.scss";
 import PlayingIcon from "../../PlayingIcon/PlayingIcon";
 
 function LyricBody({ setCount, data }) {
-  const playing = useSelector((state) => state.playing);
-  const songCurrentTime = useSelector((state) => state.songCurrentTime);
-
+  const { playing, songCurrentTime } = useSelector((state) => state.song);
   const [size, setSize] = useState(20);
 
   const { image, title, lyricsText, textActiveIndex, count, sizes, textSize } =
@@ -17,11 +15,10 @@ function LyricBody({ setCount, data }) {
 
   const ulRef = useRef(null);
 
-  const scrollEvent = () => {
-    setCount(0);
-  };
-
   useEffect(() => {
+    const scrollEvent = () => {
+      setCount(0);
+    };
     if (ulRef.current) {
       ulRef.current.addEventListener("scroll", scrollEvent);
     }
@@ -30,7 +27,7 @@ function LyricBody({ setCount, data }) {
         ulRef.current.removeEventListener("scroll", scrollEvent);
       }
     };
-  }, [songCurrentTime, ulRef]);
+  }, [songCurrentTime, ulRef, setCount]);
 
   useEffect(() => {
     if (count > 5 && ulRef.current) {
@@ -39,7 +36,7 @@ function LyricBody({ setCount, data }) {
         (textActiveIndex - 2);
       ulRef.current.scrollTop = pos;
     }
-  }, [textActiveIndex]);
+  }, [textActiveIndex, count, lyricsText]);
 
   useEffect(() => {
     const sizeFilter = sizes.filter((size) => {
@@ -48,7 +45,7 @@ function LyricBody({ setCount, data }) {
     });
 
     setSize(sizeFilter[0].size);
-  }, [textSize]);
+  }, [textSize, sizes]);
 
   return (
     <Row className={styles.lyricBody}>

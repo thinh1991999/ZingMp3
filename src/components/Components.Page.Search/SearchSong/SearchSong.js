@@ -11,7 +11,17 @@ function SearchSong({ data }) {
       <HomeTitle msg="Bài hát" />
       {data ? (
         data.map((item, index) => {
-          return <SongItem key={index} data={item} />;
+          const { status, worldWide } = item;
+          return (
+            <SongItem
+              data={item}
+              status={status}
+              worldWide={worldWide}
+              index={index}
+              key={index}
+              search={true}
+            />
+          );
         })
       ) : (
         <SearchNoInfo msg="Không có Bài Hát được tìm thấy">

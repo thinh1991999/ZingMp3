@@ -1,4 +1,4 @@
-import react, { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 import { Link, NavLink } from "react-router-dom";
 import { RiFolderMusicLine } from "react-icons/ri";
@@ -19,8 +19,7 @@ import styles from "./Nav.module.scss";
 function Nav() {
   const dispatch = useDispatch();
 
-  const { btnMobile } = useSelector((state) => state);
-  const { currentUser, loginStatus } = useSelector((state) => state.root);
+  const { loginStatus } = useSelector((state) => state.root);
 
   const navRef = useRef(null);
 
@@ -78,71 +77,7 @@ function Nav() {
   const handleCloseShowNavMobile = () => {
     dispatch(actions.setShowNavMobile(false));
   };
-  const handleNav = (index) => {
-    // switch (index) {
-    //   case 0: {
-    //     if (currentUser) {
-    //       navigate("/Profile");
-    //     } else {
-    //       dispatch(actions.setShowLogin(true));
-    //       dispatch(actions.setShowNavMobile(false));
-    //     }
-    //     break;
-    //   }
-    //   case 1:
-    //     dispatch(actions.setCurrentNav(1));
-    //     navigate("/");
-    //     break;
-    //   case 2:
-    //     dispatch(actions.setCurrentNav(2));
-    //     navigate("/ZingChartHome");
-    //     break;
-    //   case 3:
-    //     toast.error("Radio chưa sẵn sàng!");
-    //     dispatch(actions.setShowNavMobile(false));
-    //     break;
-    //   case 4:
-    //     toast.error("Theo dõi chưa sẵn sàng!");
-    //     dispatch(actions.setShowNavMobile(false));
-    //     break;
-    //   case 5:
-    //     navigate("/NewSong");
-    //     dispatch(actions.setCurrentNav(5));
-    //     break;
-    //   case 6:
-    //     toast.error("Thể loại chưa sẵn sàng!");
-    //     dispatch(actions.setShowNavMobile(false));
-    //     break;
-    //   case 7:
-    //     dispatch(actions.setCurrentNav(7));
-    //     navigate("/Top100");
-    //     break;
-    //   case 8:
-    //     dispatch(actions.setCurrentNav(8));
-    //     navigate("/ListMV");
-    //     break;
-    //   default:
-    //     break;
-    // }
-  };
 
-  const event = (e) => {
-    if (
-      !navRef.current.contains(e.target) &&
-      !btnMobile.current.contains(e.target)
-    ) {
-      dispatch(actions.setShowNavMobile(false));
-    } else if (btnMobile.current.contains(e.target)) {
-      dispatch(actions.setShowNavMobile(true));
-    }
-  };
-
-  useEffect(() => {
-    // window.addEventListener("click", event);
-    return () => {
-      // window.removeEventListener("click", event);
-    };
-  }, [btnMobile]);
   return (
     <div className={styles.nav} ref={navRef}>
       <div className={styles.navWrap}>
@@ -160,7 +95,7 @@ function Nav() {
             }
             if (requireLogin && !loginStatus) {
               return (
-                <a
+                <button
                   onClick={() => dispatch(actions.setShowLogin(true))}
                   key={index}
                   className={styles.navItem}
@@ -170,7 +105,7 @@ function Nav() {
                   {hint ? (
                     <span className={styles.itemHint}>{hint}</span>
                   ) : null}
-                </a>
+                </button>
               );
             }
             return (

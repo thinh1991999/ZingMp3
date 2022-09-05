@@ -1,47 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
 import clsx from "clsx";
-import styles from "./SearchMobile.module.scss";
 import { MdOutlineClose } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
-import { HeaderFormSuggest } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../store";
 import { useNavigate } from "react-router-dom";
 
+import styles from "./SearchMobile.module.scss";
+import { actions } from "../../store";
+import HeaderFormSuggest from "../../components/Components.Global/HeaderFormSuggest/HeaderFormSuggest";
+import httpService from "../../Services/http.service";
+
 function SearchMobile() {
-  const { idCurrentSong } = useSelector((state) => state);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentSong } = useSelector((state) => state.song);
 
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [suggest, setSuggest] = useState([
+  const suggest = useRef([
     "vui lắm nha",
     "thương em đến",
     "em đừng đi",
     "zing choice",
-  ]);
+  ]).current;
   const [activeSearch, setActiveSearch] = useState(false);
 
   const inputRef = useRef(null);
   const formRef = useRef(null);
   const deleteBtnRef = useRef(null);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const fetchSearch = async () => {
-    setLoading(true);
-    // try {
-    //   const respon = await fetch(`${SEARCH_API}${searchText}`);
-    //   const {
-    //     data: { artists = [], songs = [], top },
-    //   } = await respon.json();
-    //   setDataSearch([top, ...artists.splice(0, 2), ...songs.splice(0, 3)]);
-    //   setLoading(false);
-    // } catch (error) {
-    //   throw new Error(error);
-    // }
-  };
 
   const handleSearchForm = () => {
     setActiveSearch(true);
@@ -72,25 +59,56 @@ function SearchMobile() {
   };
 
   useEffect(() => {
+    let searchDelay;
+    let isApiSubcribed = true;
     if (searchText.trim().length > 0) {
-      fetchSearch();
+      setLoading(true);
+      searchDelay = setTimeout(() => {
+        httpService.getSearch(searchText).then((res) => {
+          if (isApiSubcribed) {
+            const {
+              data: { artists = [], songs = [], top },
+            } = res.data;
+            setDataSearch([
+              top,
+              ...artists.splice(0, 2),
+              ...songs.splice(0, 3),
+            ]);
+            setLoading(false);
+          }
+        });
+      }, 400);
+      return () => {
+        clearTimeout(searchDelay);
+        isApiSubcribed = false;
+      };
+    } else {
+      setDataSearch([]);
+      setLoading(false);
     }
   }, [searchText]);
 
-  const event = (e) => {
-    if (!formRef.current.contains(e.target)) {
-      setActiveSearch(false);
-    }
-  };
-
   useEffect(() => {
+    const event = (e) => {
+      if (!formRef.current.contains(e.target)) {
+        setActiveSearch(false);
+      }
+    };
     window.addEventListener("click", event);
     dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle(`SearchMobile`));
     return () => {
       window.removeEventListener("click", event);
     };
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    !currentSong && dispatch(actions.setTitle(`Tìm kiếm`));
+  }, [currentSong, dispatch]);
+
+  useEffect(() => {
+    const sizeWindow = window.innerWidth;
+    if (sizeWindow > 426) navigate("/");
+  }, [navigate]);
 
   return (
     <div className={styles.container}>

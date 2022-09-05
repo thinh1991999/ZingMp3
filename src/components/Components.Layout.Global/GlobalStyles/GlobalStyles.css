@@ -99,25 +99,3 @@ a {
 .swiper-button-prev.swiper-button-disabled {
   color: var(--text-secondary) !important;
 }
-
-@media only screen and (max-width: 767px) {
-  .app__nav {
-    width: 0%;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 999999999;
-    transition: all 0.2s linear;
-  }
-  .app__nav--active {
-    width: 50%;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .app__nav--active {
-    width: 80%;
-  }
-}
