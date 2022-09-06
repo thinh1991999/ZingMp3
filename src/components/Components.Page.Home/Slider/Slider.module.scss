@@ -1,8 +1,7 @@
 .slider {
   height: 250px;
-  width: 100%;
-  padding: 0 10px 0 30px;
-
+  // width: 100%;
+  // padding: 0 20px;
   .sliderContainer {
     height: 100%;
     width: 100%;
@@ -15,7 +14,8 @@
       transition: all 0.5s linear;
       .sliderLink {
         cursor: pointer;
-        padding: 15px 0;
+        // padding: 15px 0;
+        padding: 15px;
         display: block;
         height: 100%;
         width: 100%;
@@ -35,20 +35,20 @@
       opacity: 1;
       z-index: 998;
       .sliderLink {
-        padding: 15px;
+        // padding: 15px;
       }
     }
     .sliderItemNotShow {
       left: 100%;
       opacity: 0;
-      padding: 15px;
+      // padding: 15px;
     }
     .sliderItemLeft {
       left: 0;
       opacity: 1;
       z-index: 997;
       .sliderLink {
-        padding: 15px 15px 15px 0;
+        // padding: 15px 15px 15px 0;
       }
     }
     .sliderItemRight {
@@ -56,7 +56,7 @@
       opacity: 1;
       z-index: 999;
       .sliderLink {
-        padding: 15px 0 15px 15px;
+        // padding: 15px 0 15px 15px;
       }
     }
   }

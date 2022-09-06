@@ -1,13 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { MdOutlineClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { actions } from "../../../store";
 import ButtonIcon from "../../Components.Global/ButtonIcon/ButtonIcon";
 import styles from "./SingerModal.module.scss";
 
 function SingerModal({ data, setModal }) {
-  const dispatch = useDispatch();
-
   const modalRef = useRef(null);
   const modalTextRef = useRef(null);
   const { image, name, desc } = data;
@@ -24,10 +20,7 @@ function SingerModal({ data, setModal }) {
 
   useEffect(() => {
     modalTextRef.current.innerHTML = desc;
-    return () => {
-      dispatch(actions.setPopperInfo({ show: false }));
-    };
-  }, []);
+  }, [desc]);
 
   return (
     <div className={styles.modal} onClick={handleCloseModal} ref={modalRef}>

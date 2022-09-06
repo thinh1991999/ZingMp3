@@ -63,3 +63,100 @@ export const getRandomIndex = (arr, index) => {
   }
   return indexRD;
 };
+
+export const cleanStringify = (object) => {
+  if (object && typeof object === "object") {
+    object = copyWithoutCircularReferences([object], object);
+  }
+  return JSON.stringify(object);
+
+  function copyWithoutCircularReferences(references, object) {
+    var cleanObject = {};
+    Object.keys(object).forEach(function (key) {
+      var value = object[key];
+      if (value && typeof value === "object") {
+        if (references.indexOf(value) < 0) {
+          references.push(value);
+          cleanObject[key] = copyWithoutCircularReferences(references, value);
+          references.pop();
+        } else {
+          cleanObject[key] = "###_Circular_###";
+        }
+      } else if (typeof value !== "function") {
+        cleanObject[key] = value;
+      }
+    });
+    return cleanObject;
+  }
+};
+
+export const getDate = (nb) => {
+  const date = new Date(nb * 1000);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  if (day < 10 && month < 10) {
+    return `0${day}/0${month}/${year}`;
+  } else if (day < 10) {
+    return `0${day}/${month}/${year}`;
+  } else if (month < 10) {
+    return `${day}/0${month}/${year}`;
+  }
+  return `${day}/${month}/${year}`;
+};
+
+export const getFullDateTime = (nb) => {
+  const date = new Date(nb * 1000);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minute =
+    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const rank = date.getDay();
+  let rankText = "";
+  switch (rank) {
+    case 0:
+      rankText = "Chủ Nhật";
+      break;
+    case 1:
+      rankText = "Thứ Hai";
+      break;
+    case 2:
+      rankText = "Thứ Ba";
+      break;
+    case 3:
+      rankText = "Thứ Tư";
+      break;
+    case 4:
+      rankText = "Thứ Năm";
+      break;
+    case 5:
+      rankText = "Thứ Sáu";
+      break;
+    case 6:
+      rankText = "Thứ Bảy";
+      break;
+
+    default:
+      break;
+  }
+
+  return `${hour}:${minute} ${rankText}, ${day} tháng ${month}`;
+};
+
+export const getNumberText = (value) => {
+  if (!value) return 0;
+  if (value < 1000) {
+    return value;
+  } else {
+    const nb = Math.round(value / 1000);
+    return `${nb}K`;
+  }
+};
+
+export const getTimeText = (value) => {
+  const hour = Math.floor(value / 3600);
+  const minute = Math.floor((value % 3600) / 60);
+
+  return `${hour} giờ ${minute} phút`;
+};

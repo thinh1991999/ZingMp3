@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { memo, useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Loading, NewsGridLayout } from "../../components";
 import httpService from "../../Services/http.service";
 import { actions } from "../../store";
@@ -9,6 +9,9 @@ import styles from "./Follow.module.scss";
 
 function Follow() {
   const dispatch = useDispatch();
+
+  const playing = useSelector((state) => state.song.playing);
+
   const navTitles = useRef([
     {
       title: "Việt nam",
@@ -87,7 +90,12 @@ function Follow() {
     setMounted(true);
     // eslint-disable-next-line
   }, [dispatch]);
-
+  useEffect(() => {
+    if (!playing) {
+      document.title =
+        "Nghệ sĩ | Xem bài hát, album, MV đang hot nhất hiện tại";
+    }
+  }, [playing]);
   if (loading) {
     return <Loading size={50} />;
   }

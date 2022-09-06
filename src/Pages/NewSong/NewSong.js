@@ -10,7 +10,6 @@ import styles from "./NewSong.module.scss";
 function NewSong() {
   const dispatch = useDispatch();
   const blackHeader = useSelector((state) => state.root.blackHeader);
-  const currentSong = useSelector((state) => state.song.currentSong);
   const playing = useSelector((state) => state.song.playing);
 
   const [data, setData] = useState(null);
@@ -44,7 +43,7 @@ function NewSong() {
     if (!playing) {
       document.title = "#zingchart tuần, #zingchart Zing - Bài hát";
     }
-  }, [playing, currentSong]);
+  }, [playing]);
 
   if (loading) {
     return <Loading size={50} />;

@@ -147,26 +147,24 @@ function CommentModal() {
     }
   };
 
-  const eventClickCloseModal = (e) => {
-    if (!wrapRef.current.contains(e.target)) {
-      dispatch(
-        actions.setShowComment({
-          show: false,
-          id: "",
-        })
-      );
-    }
-  };
-
   useEffect(() => {
+    const eventClickCloseModal = (e) => {
+      if (!wrapRef.current.contains(e.target)) {
+        dispatch(
+          actions.setShowComment({
+            show: false,
+            id: "",
+          })
+        );
+      }
+    };
     containerRef.current.addEventListener("click", eventClickCloseModal);
     return () => {
       if (containerRef.current) {
         containerRef.current.removeEventListener("click", eventClickCloseModal);
       }
-      dispatch(actions.setPopperInfo({ show: false }));
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (showComment.show) {

@@ -2,7 +2,6 @@ import React, { memo, useEffect, useRef, useState } from "react";
 import styles from "./ButtonIcon.module.scss";
 import clsx from "clsx";
 import { useDispatch } from "react-redux";
-import { actions } from "../../../store";
 
 function ButtonIcon({
   children,
@@ -22,32 +21,18 @@ function ButtonIcon({
   bg,
 }) {
   const dispatch = useDispatch();
+
+  const [showPopper, setShowPopper] = useState(false);
+
   const btnRef = useRef(null);
   useEffect(() => {
     const handleEnter = (e) => {
       if (popper.show) {
-        const { width, height, top, left, bottom, right } =
-          e.target.getBoundingClientRect();
-        dispatch(
-          actions.setPopperInfo({
-            show: true,
-            top,
-            left,
-            bottom,
-            right,
-            width,
-            height,
-            position: popper.position,
-          })
-        );
-        popper?.msg && dispatch(actions.setPopperMess(popper.msg));
+        setShowPopper(true);
       }
     };
-    const handleLeave = (e) => {
-      if (popper.show) {
-        dispatch(actions.setPopperInfo({ show: false }));
-        dispatch(actions.setPopperMess(""));
-      }
+    const handleLeave = () => {
+      setShowPopper(false);
     };
     btnRef.current.addEventListener("mouseenter", handleEnter);
     btnRef.current.addEventListener("mouseleave", handleLeave);
@@ -58,13 +43,6 @@ function ButtonIcon({
       }
     };
   }, [popper, dispatch]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(actions.setPopperInfo({ show: false }));
-      dispatch(actions.setPopperMess(""));
-    };
-  }, [dispatch]);
 
   const circleClass = circle ? styles.iconBtnCircle : "";
   const topicClass = topic ? styles.iconBtnTopic : "";
@@ -88,18 +66,25 @@ function ButtonIcon({
   );
 
   return (
-    <div
-      className={finalClass}
-      style={{
-        display: `${display ? "" : "none"}`,
-        height: `${size}px`,
-        width: `${size}px`,
-        fontSize: `${fontSize}px`,
-        backgroundColor: `${bg}`,
-      }}
-      ref={btnRef}
-    >
-      {children}
+    <div className={styles.btnWrap}>
+      <div
+        className={finalClass}
+        style={{
+          display: `${display ? "" : "none"}`,
+          height: `${size}px`,
+          width: `${size}px`,
+          fontSize: `${fontSize}px`,
+          backgroundColor: `${bg}`,
+        }}
+        ref={btnRef}
+      >
+        {children}
+      </div>
+      {showPopper && (
+        <div className={clsx(styles.btnPopper, styles[popper.position])}>
+          <div className={styles.btnPopperWrap}>{popper.msg}</div>
+        </div>
+      )}
     </div>
   );
 }

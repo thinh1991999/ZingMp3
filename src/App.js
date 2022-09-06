@@ -18,7 +18,6 @@ import {
   SetTimeModal,
   Playlists,
   Player,
-  Popper,
   TimeStopNote,
   MvModal,
   EventModal,
@@ -42,27 +41,14 @@ import {
   ZingChartWeek,
 } from "./Pages";
 import { actions } from "./store";
-import localStorageServ from "./Services/localStorage";
 
 function App() {
   const location = useLocation();
   const { show: warningShow } = useSelector((state) => state.root.warningModal);
   const showLogin = useSelector((state) => state.root.showLogin);
-  const showComment = useSelector((state) => state.root.warningModal);
+  const showComment = useSelector((state) => state.root.showComment);
 
-  const { show } = useSelector((state) => state.root.popperInfo);
-  const showMvModal = useSelector((state) => state.mv.showMvModal);
   const showEvent = useSelector((state) => state.event.showEvent);
-  // const {
-  //   currentSong,
-  //   // currentSinger,
-  //   // song,
-  //   // // songCurrentTime,
-  //   // listSong,
-  //   // currentAlbum,
-  //   // showTimeStop,
-  //   // timeToStop,
-  // } = useSelector((state) => state.song);
 
   const currentSong = useSelector((state) => state.song.currentSong);
   const timeToStop = useSelector((state) => state.song.timeToStop);
@@ -87,23 +73,6 @@ function App() {
     });
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   localStorageServ.infoSong.set({
-  //     currentAlbum,
-  //     currentSinger,
-  //     // songCurrentTime,
-  //     currentSong,
-  //     listSong,
-  //     song,
-  //   });
-  // }, [
-  //   currentAlbum,
-  //   currentSinger,
-  //   // songCurrentTime,
-  //   currentSong,
-  //   listSong,
-  //   song,
-  // ]);
   useEffect(() => {
     if (!currentSong) {
       document.title = "ZingMp3-Nghe nhạc hay,chất lượng";
@@ -255,8 +224,7 @@ function App() {
         </Routes>
         <Lyric />
         <MvModal />
-        {currentSong && !showMvModal && <Player />}
-        {show && <Popper />}
+        {currentSong && <Player />}
         {currentSong && <Playlists />}
         {showTimeStop && <SetTimeModal />}
         {timeToStop > 0 && <TimeStopNote />}

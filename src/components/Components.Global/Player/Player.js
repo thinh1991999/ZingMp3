@@ -32,6 +32,7 @@ function Player() {
   const showPlayLists = useSelector((state) => state.song.showPlayLists);
   const timeToStop = useSelector((state) => state.song.timeToStop);
   const currentAlbum = useSelector((state) => state.song.currentAlbum);
+  const showMvModal = useSelector((state) => state.mv.showMvModal);
 
   const [volume, setVolume] = useState(50);
 
@@ -71,6 +72,7 @@ function Player() {
   };
 
   useEffect(() => {
+    console.log(currentSong);
     const fetchDataSong = () => {
       dispatch(actions.setSongLoading(true));
       HttpService.getSongPlayer(currentSong?.encodeId).then((res) => {
@@ -78,6 +80,7 @@ function Player() {
         if (err === 0) {
           dispatch(actions.playSongAfterFetch(data[128]));
         } else if (err === -1110) {
+          console.log("123");
           dispatch(
             actions.playSongAfterFetch(
               ultils.getHighLvSong(currentSong?.encodeId)
@@ -110,7 +113,8 @@ function Player() {
       className={clsx(
         styles.play,
         showLyric ? styles.lyricClass : null,
-        invi ? styles.inviClass : null
+        invi ? styles.inviClass : null,
+        showMvModal ? styles.hide : null
       )}
       onClick={handleToAlbum}
     >

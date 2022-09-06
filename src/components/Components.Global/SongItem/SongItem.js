@@ -158,30 +158,104 @@ function SongItem({
   };
 
   const handleShowLyric = () => {
-    if (albumSong) {
-      if (albumCurrent?.encodeId === currentAlbum) {
-        if (idSong !== currentSong?.encodeId) {
-          dispatch(actions.playSongSameAlbum(idSong));
-        }
-      } else {
-        dispatch(actions.playSongAnotherAlbum(idSong));
-      }
-    }
-    if (chartHome) {
-      if (currentAlbum === "ZO68OC68") {
-        dispatch(actions.playSongSameAlbum(idSong));
-      } else {
-        dispatch(
-          actions.playSongAnotherChartHome({
-            id: idSong,
-            album: "ZO68OC68",
-            items: listSong,
-          })
-        );
-      }
+    if (streamingStatus === 2) {
+      toast.error("Bài hát này chưa được hỗ trợ");
+      return;
     }
     if (idSong === currentSong?.encodeId) {
       dispatch(actions.setShowLyric(true));
+    } else {
+      if (albumSong) {
+        if (albumCurrent?.encodeId === currentAlbum) {
+          dispatch(actions.playSongSameAlbum(data));
+          dispatch(actions.setShowLyric(true));
+        } else {
+          dispatch(actions.playSongAnotherAlbum(data));
+        }
+      } else {
+        dispatch(actions.setShowLyric(true));
+        if (singer) {
+          dispatch(actions.playSongAnotherSinger(data));
+        }
+        if (chartHome) {
+          let finalAlbum;
+          switch (chartWeekIdx) {
+            case 0:
+              finalAlbum = "6BZZEEFE";
+              break;
+            case 1:
+              finalAlbum = "6BZZF0ED";
+              break;
+            case 2:
+              finalAlbum = "6BZ6Z8IF";
+              break;
+            default:
+              finalAlbum = "ZO68OC68";
+              break;
+          }
+          if (currentAlbum === finalAlbum) {
+            dispatch(actions.playSongSameAlbum(data));
+          } else {
+            dispatch(
+              actions.playSongAnotherChartHome({
+                song: data,
+                album: finalAlbum,
+                items: listSong,
+              })
+            );
+          }
+        }
+        if (chartWeek) {
+          if (currentAlbum === albumId) {
+            dispatch(actions.playSongSameAlbum(data));
+          } else {
+            dispatch(
+              actions.playSongAnotherChartHome({
+                song: data,
+                album: albumId,
+                items: listSong,
+              })
+            );
+          }
+        }
+        if (newSong) {
+          if (currentAlbum === "ZDB6EB9C") {
+            dispatch(actions.playSongSameAlbum(data));
+          } else {
+            dispatch(
+              actions.playNewSong({
+                songInfo: data,
+                album: "ZDB6EB9C",
+                items: listSong,
+              })
+            );
+          }
+        }
+        if (search) {
+          if (currentAlbum === album.encodeId) {
+            dispatch(actions.playSongSameAlbum(data));
+          } else {
+            dispatch(actions.setSongCurrentInfo(data));
+            dispatch(actions.setFetchSong(true));
+            httpService.getAlbum(album.encodeId).then((res) => {
+              const {
+                data: {
+                  song: { items },
+                },
+              } = res.data;
+              dispatch(
+                actions.playSearchSong({
+                  album: album.encodeId,
+                  items: items,
+                })
+              );
+            });
+          }
+        }
+        if (playLists) {
+          dispatch(actions.playSongSameAlbum(data));
+        }
+      }
     }
   };
 
@@ -198,7 +272,6 @@ function SongItem({
     chartHome && index === 2 && styles.spanThird,
     small && styles.itemSmall
   );
-
   return (
     <div className={finalClass}>
       <div className={styles.left}>

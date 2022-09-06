@@ -1,56 +1,143 @@
-.iconBtn {
-  // margin: 0 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: var(--player-text);
-  background-color: transparent;
-  border: none;
+.btnWrap {
   position: relative;
-  transition: all 0.5s;
-  &:hover {
-    background-color: hsla(0, 0%, 100%, 0.1);
-    color: var(--text-secondary);
-  }
-}
-
-.iconBtnCircle {
-  font-size: 40px;
-  height: auto;
-  width: auto;
-  &:hover {
-    color: var(--purple-primary);
-    background-color: transparent;
-  }
-}
-
-.iconBtnTopic {
-  &:hover {
+  color: var(--white);
+  .iconBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     color: var(--player-text);
     background-color: transparent;
-    opacity: 0.6;
+    border: none;
+    transition: all 0.5s;
+    &:hover {
+      background-color: hsla(0, 0%, 100%, 0.1);
+      color: var(--text-secondary);
+    }
+    &.iconBtnCircle {
+      font-size: 40px;
+      height: auto;
+      width: auto;
+      &:hover {
+        color: var(--purple-primary);
+        background-color: transparent;
+      }
+    }
+
+    &.iconBtnTopic {
+      &:hover {
+        color: var(--player-text);
+        background-color: transparent;
+        opacity: 0.6;
+      }
+    }
+
+    &.iconBtnFill {
+      background-color: hsla(0, 0%, 100%, 0.1);
+    }
+
+    &.iconActive {
+      color: var(--purple-primary);
+    }
+    &.iconNoClick {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    &.iconLyric {
+      font-size: 40px;
+      width: auto;
+      height: auto;
+    }
+  }
+  .btnPopper {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    .btnPopperWrap {
+      position: relative;
+      font-size: 12px;
+      padding: 2px 4px;
+      background-color: var(--popper-bg);
+      border-radius: 4px;
+      animation: popperShow 1s;
+      color: var(--text-primary);
+      z-index: 9999999;
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 100%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: var(--popper-bg) transparent transparent transparent;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    &.CenterUp {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &.RightUp {
+      right: 0;
+      left: unset;
+      transform: unset;
+      .btnPopperWrap {
+        &::before {
+          left: unset;
+          transform: unset;
+          right: 10px;
+        }
+      }
+    }
+    &.CenterDown {
+      top: calc(100% + 10px);
+      .btnPopperWrap {
+        &::before {
+          bottom: 100%;
+          top: unset;
+          border-color: transparent transparent var(--popper-bg) transparent;
+        }
+      }
+    }
+    &.CenterDownRight {
+      top: calc(100% + 10px);
+      right: 0;
+      left: unset;
+      transform: unset;
+      .btnPopperWrap {
+        &::before {
+          left: unset;
+          transform: unset;
+          right: 10px;
+          bottom: 100%;
+          top: unset;
+          border-color: transparent transparent var(--popper-bg) transparent;
+        }
+      }
+    }
+    &.CenterUpRight {
+      right: 0;
+      left: unset;
+      transform: unset;
+      .btnPopperWrap {
+        &::before {
+          left: unset;
+          transform: unset;
+          right: 10px;
+          border-color: transparent transparent var(--popper-bg) transparent;
+        }
+      }
+    }
   }
 }
-
-.iconBtnFill {
-  background-color: hsla(0, 0%, 100%, 0.1);
-}
-
-.iconBtn.iconModal {
-  // font-size: 20px;
-}
-.iconBtn.iconActive {
-  color: var(--purple-primary);
-}
-.iconBtn.iconNoClick {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.iconBtn.iconLyric {
-  font-size: 40px;
-  width: auto;
-  height: auto;
+@keyframes popperShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

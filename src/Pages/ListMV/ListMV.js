@@ -9,7 +9,6 @@ import { actions } from "../../store";
 import { memo } from "react";
 
 function ListMV() {
-  const currentSong = useSelector((state) => state.song.currentSong);
   const playing = useSelector((state) => state.song.playing);
 
   const stateNav = useRef([
@@ -93,7 +92,7 @@ function ListMV() {
     if (!playing) {
       document.title = "Video-Tuyển tập nhạc hay";
     }
-  }, [playing, currentSong]);
+  }, [playing]);
 
   useEffect(() => {
     const fetchNextMV = () => {

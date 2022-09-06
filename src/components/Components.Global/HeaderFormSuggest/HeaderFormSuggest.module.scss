@@ -35,7 +35,7 @@
     list-style: none;
     li {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       border-radius: 4px;
       padding: 8px 10px;
       position: relative;
@@ -47,7 +47,6 @@
       &:hover {
         background-color: var(--alpha-bg);
       }
-
       span {
         transform: rotate(180deg);
       }

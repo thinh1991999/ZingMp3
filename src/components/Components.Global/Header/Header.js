@@ -92,6 +92,7 @@ function Header() {
 
   const handleDeleteSearchText = () => {
     setSearchText("");
+    setDataSearch([]);
     inputRef.current.focus();
   };
 
@@ -109,18 +110,26 @@ function Header() {
 
   useEffect(() => {
     let searchDelay;
+    let isApiSubcribed = true;
     if (searchText.trim().length > 0) {
+      setLoading(true);
       searchDelay = setTimeout(() => {
-        setLoading(true);
         HttpService.getSearch(searchText).then((res) => {
-          const {
-            data: { artists = [], songs = [], top },
-          } = res.data;
-          setDataSearch([top, ...artists.splice(0, 2), ...songs.splice(0, 3)]);
-          setLoading(false);
+          if (isApiSubcribed) {
+            const {
+              data: { artists = [], songs = [], top },
+            } = res.data;
+            setDataSearch([
+              top,
+              ...artists.splice(0, 2),
+              ...songs.splice(0, 3),
+            ]);
+            setLoading(false);
+          }
         });
-      }, 400);
+      }, 100);
       return () => {
+        isApiSubcribed = false;
         clearTimeout(searchDelay);
       };
     }

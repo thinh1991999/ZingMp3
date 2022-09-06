@@ -28,7 +28,6 @@ function Home() {
   const handleNext = () => {
     setPage(page + 1);
   };
-
   useEffect(() => {
     const callApi1 = httpService.getHomeData(1).then((res) => {
       const {
@@ -46,7 +45,6 @@ function Home() {
       setHomeData([...res[0], ...res[1]]);
     });
   }, []);
-  console.log("home");
   useEffect(() => {
     let isApiSubcribed = true;
     if (page <= 2) return;
@@ -115,6 +113,7 @@ function Home() {
           } else if (sectionType === "event") {
             return <Events data={{ ...item }} key={`${sectionId}${index}`} />;
           }
+          return <></>;
         })}
       </div>
     </InfiniteScroll>

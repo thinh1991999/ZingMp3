@@ -183,13 +183,10 @@ function PlayerCenter({ volume = 50 }) {
   useEffect(() => {
     if (repeatSong === 1) {
       setInfoRepeat({ msg: "Tắt phát lại", active: true });
-      dispatch(actions.setPopperMess("Tắt phát lại"));
     } else if (repeatSong === 0) {
       setInfoRepeat({ msg: "Bật phát lại tất cả", active: false });
-      dispatch(actions.setPopperMess("Bật phát lại tất cả"));
     } else {
       setInfoRepeat({ msg: "Bật phát lại một bài", active: true });
-      dispatch(actions.setPopperMess("Bật phát lại một bài"));
     }
   }, [repeatSong, dispatch]);
 

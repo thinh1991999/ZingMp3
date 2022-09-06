@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styles from "./HeaderFormSuggest.module.scss";
 import { actions } from "../../../store";
-import { getNumberText } from "../../../funtions";
+import { ultils } from "../../../Share";
 
 function HeaderFormSuggest({
   data,
@@ -34,7 +34,7 @@ function HeaderFormSuggest({
     setSearchText(item);
     dispatch(actions.setActiveSearch(false));
   };
-
+  console.log(data, loading);
   return (
     <div className={styles.searchSuggest}>
       <div className={styles.searchSuggestWrap}>
@@ -46,12 +46,12 @@ function HeaderFormSuggest({
                 {suggest.map((item, index) => {
                   return (
                     <li key={index} onClick={() => handleSearch(item)}>
-                      <a>
+                      <p>
                         <span>
                           <GiTronArrow />
-                        </span>{" "}
+                        </span>
                         {item}
-                      </a>
+                      </p>
                     </li>
                   );
                 })}
@@ -81,7 +81,7 @@ function HeaderFormSuggest({
                     album,
                   } = item;
 
-                  const newTotalFollow = getNumberText(totalFollow);
+                  const newTotalFollow = ultils.getNumberText(totalFollow);
                   if (!encodeId) {
                     return (
                       <li
@@ -94,7 +94,7 @@ function HeaderFormSuggest({
                             <img src={thumbnailM} alt="" />
                           </div>
                           <div className={styles.seachMvRight}>
-                            <a>{name}</a>
+                            <span>{name}</span>
                             <p>Nghệ sĩ • {newTotalFollow} quan tâm</p>
                           </div>
                         </div>
@@ -112,10 +112,10 @@ function HeaderFormSuggest({
                             <img src={thumbnailM} alt="" />
                           </div>
                           <div className={styles.searchSongRight}>
-                            <a>{title}</a>
+                            <span>{title}</span>
                             <p>
                               {artists.map((artist, index) => {
-                                const { id, name } = artist;
+                                const { name } = artist;
                                 if (index === 0) {
                                   return `${name}`;
                                 }

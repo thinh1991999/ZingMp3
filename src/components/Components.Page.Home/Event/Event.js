@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { getFullDateTime } from "../../../funtions";
+import { ultils } from "../../../Share";
 import { actions } from "../../../store";
 import PrimaryButton from "../../Components.Global/PrimaryButton/PrimaryButton";
 import styles from "./Event.module.scss";
@@ -21,7 +21,7 @@ function Event({ data }) {
     dispatch(actions.setShowEvent(true));
   };
 
-  const newTime = getFullDateTime(startTime);
+  const newTime = ultils.getFullDateTime(startTime);
 
   return (
     <div className={styles.event}>

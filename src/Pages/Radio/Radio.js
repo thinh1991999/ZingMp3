@@ -16,7 +16,6 @@ import { actions } from "../../store";
 function Radio() {
   const dispatch = useDispatch();
 
-  const currentSong = useSelector((state) => state.song.currentSong);
   const playing = useSelector((state) => state.song.playing);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
@@ -34,7 +33,7 @@ function Radio() {
     if (!playing) {
       document.title = "Radio | Xem bài hát, album, MV đang hot nhất hiện tại";
     }
-  }, [playing, currentSong]);
+  }, [playing]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
