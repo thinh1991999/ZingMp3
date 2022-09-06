@@ -102,7 +102,6 @@ function Slider({ data }) {
               position = styles.sliderItemRight;
             }
             const classNameSlider = clsx(styles.sliderItem, position);
-
             return (
               <Col
                 lg={4}

@@ -191,23 +191,21 @@ function LogInModal() {
       setPwError("");
       setCfPwError("");
     }
-  }, [state]);
-
-  const eventClickCloseModal = (e) => {
-    if (!wrapRef.current.contains(e.target) && !loading) {
-      dispatch(actions.setShowLogin(false));
-    }
-  };
+  }, [state, loading]);
 
   useEffect(() => {
+    const eventClickCloseModal = (e) => {
+      if (!wrapRef.current.contains(e.target) && !loading) {
+        dispatch(actions.setShowLogin(false));
+      }
+    };
     containerRef.current.addEventListener("click", eventClickCloseModal);
     return () => {
       if (containerRef.current) {
         containerRef.current.removeEventListener("click", eventClickCloseModal);
       }
-      dispatch(actions.setPopperInfo({ show: false }));
     };
-  }, []);
+  }, [dispatch, loading]);
 
   return (
     <div className={styles.container} ref={containerRef}>

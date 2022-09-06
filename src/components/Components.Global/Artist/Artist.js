@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./Artist.module.scss";
 import { BsPlayCircle } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { getNumberText } from "../../../funtions";
 import ButtonIcon from "../ButtonIcon/ButtonIcon";
+
+import styles from "./Artist.module.scss";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import { ultils } from "../../../Share";
 
 function Artist({ data }) {
   const { name, totalFollow, thumbnailM, alias, thumbnail } = data;
@@ -16,7 +17,7 @@ function Artist({ data }) {
     navigate(`/Singer/${alias}`);
   };
 
-  const newFollow = getNumberText(totalFollow);
+  const newFollow = ultils.getNumberText(totalFollow);
   return (
     <div className={styles.item}>
       <div className={styles.itemWrap}>

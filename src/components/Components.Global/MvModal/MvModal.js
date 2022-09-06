@@ -25,6 +25,7 @@ export default function MvModal() {
   const showSmallScreen = useSelector((state) => state.mv.showSmallScreen);
 
   const playing = useSelector((state) => state.song.playing);
+  const fetchSong = useSelector((state) => state.song.fetchSong);
 
   const [mvData, setMvData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -76,11 +77,11 @@ export default function MvModal() {
   }, [idShow]);
 
   useEffect(() => {
-    if (playing && showMvModal) {
+    if ((playing || fetchSong) && showMvModal) {
       dispatch(actions.setShowMvModal(false));
       dispatch(actions.setIdMvModal(null));
     }
-  }, [playing, dispatch, showMvModal]);
+  }, [playing, fetchSong, dispatch, showMvModal]);
 
   useEffect(() => {
     if (!mount) {

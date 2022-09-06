@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { BsPlayFill } from "react-icons/bs";
 import styles from "./SingerInfo.module.scss";
-import { getNumberText } from "../../../funtions";
 import { actions } from "../../../store";
 import PrimaryButton from "../../Components.Global/PrimaryButton/PrimaryButton";
 import SingerModal from "../SingerModal/SingerModal";
+import { ultils } from "../../../Share";
 
 function SingerInfo({ data }) {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function SingerInfo({ data }) {
 
   const { title, thumbnail: imageAb, releaseDate: dateAb } = topAlbum;
 
-  const newFollow = getNumberText(follow);
+  const newFollow = ultils.getNumberText(follow);
 
   const handleModal = () => {
     setModal(true);

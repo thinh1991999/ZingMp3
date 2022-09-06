@@ -15,7 +15,6 @@ import httpService from "../../Services/http.service";
 import { memo } from "react";
 
 function Singer() {
-  const currentSong = useSelector((state) => state.song.currentSong);
   const playing = useSelector((state) => state.song.playing);
   const blackHeader = useSelector((state) => state.root.blackHeader);
 
@@ -54,7 +53,7 @@ function Singer() {
     if (!playing) {
       document.title = SingerName;
     }
-  }, [playing, currentSong, SingerName]);
+  }, [playing, SingerName]);
 
   if (loading) {
     return <Loading size={50} />;

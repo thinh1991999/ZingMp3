@@ -26,8 +26,8 @@ export default function PlayerMV({ info, thumbnailMv, handleEndPlayer }) {
 
   const handleCloseModal = () => {
     dispatch(actions.setIdMvModal(null));
-    dispatch(actions.setShowMvModal(false));
     dispatch(actions.setShowSmallScreen(false));
+    dispatch(actions.setShowMvModal(false));
   };
 
   const handleSizeModal = () => {
@@ -81,6 +81,7 @@ export default function PlayerMV({ info, thumbnailMv, handleEndPlayer }) {
             ref={ref}
             {...props}
             onEnded={handleEnd}
+            autoPlay={true}
             style={{ backgroundColor: "black" }}
             className={styles.video}
           />

@@ -14,7 +14,7 @@ import { memo } from "react";
 function SearchMobile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentSong } = useSelector((state) => state.song);
+  const currentSong = useSelector((state) => state.song.currentSong);
 
   const [searchText, setSearchText] = useState("");
   const [dataSearch, setDataSearch] = useState([]);

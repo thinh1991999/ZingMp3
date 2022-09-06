@@ -421,8 +421,8 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
       };
     }
     case "PLAY_SINGER": {
-      const { singer } = state;
-      const newListSong = Array.from([...singer.sections[0].items]);
+      const { singer, currentSong } = state;
+      const newListSong = singer.sections[0].items;
       const indexArrValid = ultils.getListValidIdxSong(newListSong);
       if (indexArrValid.length === 0) {
         toast.error("List nhạc không có bài được hỗ trợ");
@@ -430,7 +430,11 @@ export const SongReducer = (state = initState, { type, payLoad }) => {
           ...state,
         };
       }
-      const newSong = ultils.getRandomSong(newListSong);
+      const newSong = ultils.getRandomSong(
+        newListSong,
+        currentSong,
+        indexArrValid
+      );
       return {
         ...state,
         currentSong: newSong,

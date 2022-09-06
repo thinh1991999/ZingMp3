@@ -1,13 +1,13 @@
 import React from "react";
 import { BiSort } from "react-icons/bi";
-import { getTimeText } from "../../../funtions";
+import { ultils } from "../../../Share";
 import SongItem from "../../Components.Global/SongItem/SongItem";
 import styles from "./AlbumRight.module.scss";
 
 function AlbumRight({ title, song }) {
   const { items, total, totalDuration } = song;
 
-  const newTotalDuration = getTimeText(totalDuration);
+  const newTotalDuration = ultils.getTimeText(totalDuration);
 
   return (
     <div className={styles.albumRight}>

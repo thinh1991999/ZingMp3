@@ -18,7 +18,6 @@ function Search() {
   const { Keyword } = useParams();
   const dispatch = useDispatch();
 
-  const currentSong = useSelector((state) => state.song.currentSong);
   const playing = useSelector((state) => state.song.playing);
 
   const header = useRef([
@@ -58,7 +57,7 @@ function Search() {
     if (!playing) {
       document.title = "Tìm kiếm | " + Keyword;
     }
-  }, [playing, currentSong, Keyword]);
+  }, [playing, Keyword]);
 
   if (loading) {
     return <Loading size={50} />;

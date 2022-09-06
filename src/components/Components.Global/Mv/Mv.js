@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import { BsPlayCircle } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 import styles from "./Mv.module.scss";
 
 import ButtonIcon from "../ButtonIcon/ButtonIcon";
 import { actions } from "../../../store";
 import { ultils } from "../../../Share";
-import { toast } from "react-toastify";
 
 function Mv({ data }) {
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ function Mv({ data }) {
     if (idShow === encodeId && showSmallScreen) {
       dispatch(actions.setShowSmallScreen(!showSmallScreen));
     } else {
+      dispatch(actions.setPlaying(false));
       dispatch(actions.setIdMvModal(encodeId));
       dispatch(actions.setShowMvModal(true));
     }

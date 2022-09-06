@@ -12,7 +12,6 @@ function Album() {
 
   const { id } = useParams();
 
-  const currentSong = useSelector((state) => state.song.currentSong);
   const playing = useSelector((state) => state.song.playing);
 
   const [loading, setLoading] = useState(true);
@@ -38,9 +37,9 @@ function Album() {
 
   useEffect(() => {
     if (!playing) {
-      document.title = albumData?.title;
+      document.title = albumData?.title || "Album";
     }
-  }, [albumData, playing, currentSong]);
+  }, [albumData, playing]);
 
   if (loading) {
     return <Loading size={50} />;

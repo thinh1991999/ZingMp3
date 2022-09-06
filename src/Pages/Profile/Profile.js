@@ -23,7 +23,6 @@ function Profile() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const currentSong = useSelector((state) => state.song.currentSong);
   const playing = useSelector((state) => state.song.playing);
   const loginStatus = useSelector((state) => state.root.loginStatus);
   const currentUser = useSelector((state) => state.root.currentUser);
@@ -170,16 +169,11 @@ function Profile() {
     if (!playing) {
       document.title = "Trang cá nhân";
     }
-  }, [playing, currentSong]);
+  }, [playing]);
 
   useEffect(() => {
     dispatch(actions.setBGHeader(true));
-    dispatch(actions.setShowNavMobile(false));
-    // !idCurrentSong && dispatch(actions.setTitle("Profile"));
-    return () => {
-      dispatch(actions.setPopperInfo({ show: false }));
-    };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.container}>

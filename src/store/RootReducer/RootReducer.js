@@ -16,17 +16,6 @@ const initState = {
   activeSearch: false,
   showNavMobile: false,
   btnMobile: null,
-  popperInfo: {
-    show: false,
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    width: 0,
-    height: 0,
-    position: "",
-  },
-  popperMess: "",
   currentChart: "",
   showComment: {
     show: false,
@@ -89,18 +78,6 @@ export const RootReducer = (state = initState, { type, payLoad }) => {
       return {
         ...state,
         scroll: payLoad,
-      };
-    }
-    case "SET_POPPER_INFO": {
-      return {
-        ...state,
-        popperInfo: payLoad,
-      };
-    }
-    case "SET_POPPER_MESS": {
-      return {
-        ...state,
-        popperMess: payLoad,
       };
     }
     case "SET_SHOW_NAV_MOBILE": {

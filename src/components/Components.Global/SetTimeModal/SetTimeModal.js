@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import clsx from "clsx";
 
 import styles from "./SetTimeModal.module.scss";
@@ -95,31 +95,30 @@ function SetTimeModal() {
     }
   };
 
-  const eventClick = (e) => {
-    let date = new Date(Date.now());
-    if (e.target !== hourRef.current) {
-      setHourActive(false);
-      if (hour.length === 1) {
-        setHour(`0${hour}`);
-      }
-      date.setHours(date.getHours() + hour * 1);
-      setTimeStop(
-        `${date.getHours()}:${minute} ${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
-      );
-    }
-    if (e.target !== minuteRef.current) {
-      setMinuteActive(false);
-      if (minute.length === 1) {
-        setMinute(`0${minute}`);
-      }
-      date.setMinutes(date.getMinutes() + minute * 1);
-      setTimeStop(
-        `${hour}:${date.getMinutes()} ${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
-      );
-    }
-  };
-
   useEffect(() => {
+    const eventClick = (e) => {
+      let date = new Date(Date.now());
+      if (e.target !== hourRef.current) {
+        setHourActive(false);
+        if (hour.length === 1) {
+          setHour(`0${hour}`);
+        }
+        date.setHours(date.getHours() + hour * 1);
+        setTimeStop(
+          `${date.getHours()}:${minute} ${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
+        );
+      }
+      if (e.target !== minuteRef.current) {
+        setMinuteActive(false);
+        if (minute.length === 1) {
+          setMinute(`0${minute}`);
+        }
+        date.setMinutes(date.getMinutes() + minute * 1);
+        setTimeStop(
+          `${hour}:${date.getMinutes()} ${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
+        );
+      }
+    };
     window.addEventListener("click", eventClick);
     return () => {
       window.removeEventListener("click", eventClick);
@@ -150,9 +149,6 @@ function SetTimeModal() {
     minuteArr.pop();
     setHourList(hourArr);
     setMinuteList(minuteArr);
-    return () => {
-      dispatch(actions.setPopperInfo({ show: false }));
-    };
   }, []);
 
   useEffect(() => {

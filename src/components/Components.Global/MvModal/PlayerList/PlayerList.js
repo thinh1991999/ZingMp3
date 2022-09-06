@@ -1,7 +1,9 @@
 import clsx from "clsx";
 import React from "react";
 import { BsFillPlayFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { actions } from "../../../../store";
 import styles from "./PlayerList.module.scss";
 
 export default function PlayerList({
@@ -11,6 +13,7 @@ export default function PlayerList({
   currentId,
   setCurrentId,
 }) {
+  const dispatch = useDispatch();
   return (
     <div className={styles.rightWrap}>
       <div className={styles.top}>
@@ -69,7 +72,14 @@ export default function PlayerList({
                   {artists.map((artist, index) => {
                     const { id, alias, name } = artist;
                     return (
-                      <Link key={id} to={"/singer/" + alias}>
+                      <Link
+                        key={id}
+                        to={"/singer/" + alias}
+                        className="text-link"
+                        onClick={() =>
+                          dispatch(actions.setShowSmallScreen(true))
+                        }
+                      >
                         {name}
                         {index === artists.length - 1 ? "" : ","}
                       </Link>

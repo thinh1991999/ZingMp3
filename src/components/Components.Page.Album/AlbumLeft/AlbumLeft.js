@@ -12,11 +12,11 @@ import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./AlbumLeft.module.scss";
-import { getDate, getNumberText } from "../../../funtions";
 import { actions } from "../../../store";
 import PlayingIcon from "../../Components.Global/PlayingIcon/PlayingIcon";
 import ButtonIcon from "../../Components.Global/ButtonIcon/ButtonIcon";
 import PrimaryButton from "../../Components.Global/PrimaryButton/PrimaryButton";
+import { ultils } from "../../../Share";
 
 function AlbumLeft({ data }) {
   const dispatch = useDispatch();
@@ -26,9 +26,9 @@ function AlbumLeft({ data }) {
 
   const { title, like, image, artists = [], update, albumId } = data;
 
-  const newLike = getNumberText(like);
+  const newLike = ultils.getNumberText(like);
 
-  const newUpdateDate = getDate(update);
+  const newUpdateDate = ultils.getDate(update);
 
   const handleAlbum = () => {
     if (albumId === currentAlbum) {
