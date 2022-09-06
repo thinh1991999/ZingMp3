@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+// import { toast } from "react-toastify";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 import { MdOutlineClose } from "react-icons/md";
 import { AiOutlineSearch, AiOutlineMenu } from "react-icons/ai";
-import { FiSettings } from "react-icons/fi";
+// import { FiSettings } from "react-icons/fi";
 import { FaUserAlt } from "react-icons/fa";
 import clsx from "clsx";
 
@@ -60,10 +60,6 @@ function Header() {
     dispatch(actions.setActiveSearch(true));
   };
 
-  const handleOutSearch = () => {
-    // dispatch(actions.setActiveSearch(false));
-  };
-
   const handleLogin = () => {
     if (currentUser) {
       navigate("/Profile");
@@ -100,6 +96,18 @@ function Header() {
   };
 
   useEffect(() => {
+    const event = (e) => {
+      if (!formRef.current.contains(e.target)) {
+        dispatch(actions.setActiveSearch(false));
+      }
+    };
+    activeSearch && window.addEventListener("click", event);
+    return () => {
+      window.removeEventListener("click", event);
+    };
+  }, [dispatch, activeSearch]);
+
+  useEffect(() => {
     let searchDelay;
     if (searchText.trim().length > 0) {
       searchDelay = setTimeout(() => {
@@ -111,26 +119,12 @@ function Header() {
           setDataSearch([top, ...artists.splice(0, 2), ...songs.splice(0, 3)]);
           setLoading(false);
         });
-      }, 100);
+      }, 400);
       return () => {
         clearTimeout(searchDelay);
       };
     }
   }, [searchText]);
-
-  const event = (e) => {
-    if (!formRef.current.contains(e.target)) {
-      dispatch(actions.setActiveSearch(false));
-    }
-  };
-
-  useEffect(() => {
-    // window.addEventListener("click", event);
-    // dispatch(actions.setBtnMobile(btnMobileRef));
-    // return () => {
-    //   window.removeEventListener("click", event);
-    // };
-  }, []);
 
   const headerBg = blackHeader ? styles.headerBg : "";
 
@@ -140,7 +134,11 @@ function Header() {
     <header className={finalClass}>
       <div className={styles.featuresLeft}>
         <div className={styles.featuresLeftBtn}>
-          <button className={styles.menuBtn} ref={btnMobileRef}>
+          <button
+            className={styles.menuBtn}
+            ref={btnMobileRef}
+            onClick={() => dispatch(actions.setShowNavMobile(true))}
+          >
             <HeaderButton>
               <AiOutlineMenu />
             </HeaderButton>
@@ -171,7 +169,6 @@ function Header() {
                 placeholder="Nhập tên bài hát,nghệ sĩ,MV,...."
                 value={searchText}
                 onFocus={handleSearchForm}
-                onBlur={handleOutSearch}
                 onChange={handleSearchText}
                 ref={inputRef}
               />
@@ -204,11 +201,11 @@ function Header() {
         </div>
       </div>
       <div className={styles.featuresRight}>
-        <button onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}>
+        {/* <button onClick={() => toast.error("Chức năng này chưa được hỗ trợ")}>
           <HeaderButton circle={true}>
             <FiSettings />
           </HeaderButton>
-        </button>
+        </button> */}
         <button onClick={handleLogin}>
           <HeaderButton circle={true} white={true}>
             {currentUser ? (

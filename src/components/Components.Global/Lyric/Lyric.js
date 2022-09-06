@@ -18,14 +18,17 @@ import LyricSetting from "./LyricSetting/LyricSetting";
 import LyricKara from "./LyricKara/LyricKara";
 import LyricList from "./LyricList/LyricList";
 import httpService from "../../../Services/http.service";
+import { useMemo } from "react";
 
 function Lyric() {
-  const { showLyric, currentSong, currentIndexSong, songCurrentTime, invi } =
-    useSelector((state) => state.song);
+  const listSong = useSelector((state) => state.song.listSong);
+  const showLyric = useSelector((state) => state.song.showLyric);
+  const invi = useSelector((state) => state.song.invi);
+  const songCurrentTime = useSelector((state) => state.song.songCurrentTime);
+  const currentSong = useSelector((state) => state.song.currentSong);
 
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(true);
   const [lyrics, setLyrics] = useState([]);
   const [images, setImages] = useState([]);
   const [lyricsText, setLyricsText] = useState([]);
@@ -50,17 +53,19 @@ function Lyric() {
   const [bgShow, setBgShow] = useState(0);
   const [count, setCount] = useState(0);
   const [controll, setControll] = useState(2);
-  const [features, setFeatures] = useState([
-    "Danh sách phát",
-    "Karaoke",
-    "Lời bài hát",
-  ]);
   const [showSetting, setShowSetting] = useState(false);
   const [fullscreen, setFullScreen] = useState(false);
+
+  const features = useRef(["Danh sách phát", "Karaoke", "Lời bài hát"]).current;
 
   const lyricRef = useRef(null);
   const settingRef = useRef(null);
   const settingBtnRef = useRef(null);
+  const currentIndexSong = useMemo(() => {
+    return listSong.findIndex((item) => {
+      return item.encodeId === currentSong.encodeId;
+    });
+  }, [currentSong, listSong]);
 
   const closeLyric = () => {
     dispatch(actions.setShowLyric(false));

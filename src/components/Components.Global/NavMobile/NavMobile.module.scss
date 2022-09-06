@@ -1,0 +1,41 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999999999;
+  .wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .layer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: black;
+      opacity: 0.5;
+    }
+    .content {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      animation-name: sizeWith;
+      animation-timing-function: linear;
+      animation-duration: 0.3s;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+@keyframes sizeWith {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 320px;
+  }
+}

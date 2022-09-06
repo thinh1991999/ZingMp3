@@ -6,7 +6,7 @@ import { ultils } from "../../../Share";
 import { actions } from "../../../store";
 
 function TimeStopNote() {
-  const { timeToStop } = useSelector((state) => state.song);
+  const timeToStop = useSelector((state) => state.song.timeToStop);
 
   const dispatch = useDispatch();
 

@@ -7,8 +7,9 @@ import styles from "./TypeDetail.module.scss";
 import httpService from "../../Services/http.service";
 import { Artists, Loading, Mvs, Topics, TypePlaylist } from "../../components";
 import { actions } from "../../store";
+import { memo } from "react";
 
-export default function TypeDetail() {
+function TypeDetail() {
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -66,3 +67,5 @@ export default function TypeDetail() {
     </div>
   );
 }
+
+export default memo(TypeDetail);

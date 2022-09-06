@@ -11,8 +11,8 @@ import { Link } from "react-router-dom";
 
 import httpService from "../../../Services/http.service";
 import { actions } from "../../../store";
-import LoadingSquare from "../../LoadingSquare/LoadingSquare";
 import ButtonIcon from "../ButtonIcon/ButtonIcon";
+import LoadingSquare from "../LoadingSquare/LoadingSquare";
 import LoadingMvModal from "./LoadingMvModal/LoadingMvModal";
 import styles from "./MvModal.module.scss";
 import PlayerList from "./PlayerList/PlayerList";
@@ -20,10 +20,12 @@ import PlayerMV from "./PlayerMV/PlayerMV";
 
 export default function MvModal() {
   const dispatch = useDispatch();
-  const { showMvModal, idShow, showSmallScreen } = useSelector(
-    (state) => state.mv
-  );
-  const { playing } = useSelector((state) => state.song);
+  const showMvModal = useSelector((state) => state.mv.showMvModal);
+  const idShow = useSelector((state) => state.mv.idShow);
+  const showSmallScreen = useSelector((state) => state.mv.showSmallScreen);
+
+  const playing = useSelector((state) => state.song.playing);
+
   const [mvData, setMvData] = useState({});
   const [loading, setLoading] = useState(true);
   const [loadingMv, setLoadingMv] = useState(true);

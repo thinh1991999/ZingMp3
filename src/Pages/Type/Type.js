@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   GenreDetail,
   Loading,
@@ -13,8 +14,9 @@ import { actions } from "../../store";
 
 import styles from "./Type.module.scss";
 
-export default function Type() {
+function Type() {
   const dispatch = useDispatch();
+  const playing = useSelector((state) => state.song.playing);
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,6 +28,12 @@ export default function Type() {
       setLoading(false);
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!playing) {
+      document.title = "Chủ Đề Nhạc Hot | Tuyển tập nhạc hay chọn lọc";
+    }
+  }, [playing]);
 
   if (loading) {
     return <Loading size={50} />;
@@ -42,3 +50,5 @@ export default function Type() {
     </div>
   );
 }
+
+export default memo(Type);

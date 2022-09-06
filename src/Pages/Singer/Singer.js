@@ -9,13 +9,15 @@ import {
   Mvs,
 } from "../../components";
 import { actions } from "../../store";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import httpService from "../../Services/http.service";
+import { memo } from "react";
 
 function Singer() {
-  const { idCurrentSong } = useSelector((state) => state.song);
-  const { blackHeader } = useSelector((state) => state.root);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
+  const blackHeader = useSelector((state) => state.root.blackHeader);
 
   const [loading, setLoading] = useState(true);
   const [dataSinger, setDataSinger] = useState([]);
@@ -49,9 +51,10 @@ function Singer() {
   }, [SingerName, dispatch]);
 
   useEffect(() => {
-    // dispatch(actions.setShowNavMobile(false));
-    !idCurrentSong && dispatch(actions.setTitle(`Singer:${SingerName}`));
-  }, [SingerName, idCurrentSong, dispatch]);
+    if (!playing) {
+      document.title = SingerName;
+    }
+  }, [playing, currentSong, SingerName]);
 
   if (loading) {
     return <Loading size={50} />;
@@ -88,4 +91,4 @@ function Singer() {
   );
 }
 
-export default Singer;
+export default memo(Singer);

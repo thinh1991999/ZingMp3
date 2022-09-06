@@ -4,11 +4,13 @@ import { actions } from "../../store";
 import styles from "./Top100.module.scss";
 import { Loading, Topics } from "../../components";
 import httpService from "../../Services/http.service";
+import { memo } from "react";
 
 function Top100() {
   const dispatch = useDispatch();
-  const { blackHeader } = useSelector((state) => state.root);
-  const { idCurrentSong } = useSelector((state) => state.song);
+  const blackHeader = useSelector((state) => state.root.blackHeader);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
 
   const [dataTop, setDataTop] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,15 +37,13 @@ function Top100() {
   useEffect(() => {
     fetchDataTop();
     dispatch(actions.setBGHeader(false));
-    // dispatch(actions.setCurrentNav(7));
-    // dispatch(actions.setShowNavMobile(false));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!idCurrentSong) {
-      document.title = "Top100";
+    if (!playing) {
+      document.title = "Top 100 | Tuyển tập nhạc hay chọn lọc";
     }
-  }, [idCurrentSong]);
+  }, [playing]);
 
   if (loading) {
     return <Loading size={50} />;
@@ -118,4 +118,4 @@ function Top100() {
   );
 }
 
-export default Top100;
+export default memo(Top100);

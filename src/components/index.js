@@ -1,25 +1,3 @@
-// export { default as LoadingSquare } from "./LoadingSquare/LoadingSquare";
-
-// export { default as Nav } from "./Nav/Nav";
-
-// export { default as Header } from "./Header/Header";
-// export { default as HeaderFormSuggest } from "./HeaderFormSuggest/HeaderFormSuggest";
-// export { default as HeaderButton } from "./HeaderButton/HeaderButton";
-
-// export { default as AlbumRight } from "./AlbumRight/AlbumRight";
-// export { default as AlbumItem } from "./AlbumItem/AlbumItem";
-
-// export { default as Choices } from "./Choices/Choices";
-// export { default as Choice } from "./Choice/Choice";
-// export { default as HomeTitle } from "./HomeTitle/HomeTitle";
-
-// export { default as LyricBody } from "./LyricBody/LyricBody";
-// export { default as LyricKara } from "./LyricKara/LyricKara";
-// export { default as LyricSetting } from "./LyricSetting/LyricSetting";
-// export { default as LyricList } from "./LyricList/LyricList";
-
-// export { default as ChartToolTip } from "./ChartToolTip/ChartToolTip";
-
 // Global Layout and styles
 export { default as GlobalStyles } from "./Components.Layout.Global/GlobalStyles/GlobalStyles";
 export { default as GlobalLayout } from "./Components.Layout.Global/GlobalLayout/GlobalLayout";
@@ -52,16 +30,17 @@ export { default as LogInModal } from "./Components.Global/LogInModal/LogInModal
 export { default as CommentModal } from "./Components.Global/CommentModal/CommentModal";
 export { default as Radio } from "./Components.Global/Radio/Radio";
 export { default as EventModal } from "./Components.Global/EventModal/EventModal";
+export { default as LoadingSquare } from "./Components.Global/LoadingSquare/LoadingSquare";
 
 // Home components
-export { default as Choices } from "./Components.Home.Page/Choices/Choices";
-export { default as Choice } from "./Components.Home.Page/Choice/Choice";
-export { default as Slider } from "./Components.Home.Page/Slider/Slider";
-export { default as Radios } from "./Components.Home.Page/Radios/Radios";
-export { default as Zingcharts } from "./Components.Home.Page/Zingcharts/Zingcharts";
-export { default as Zingchart } from "./Components.Home.Page/Zingchart/Zingchart";
-export { default as Events } from "./Components.Home.Page/Events/Events";
-export { default as Event } from "./Components.Home.Page/Event/Event";
+export { default as Choices } from "./Components.Page.Home/Choices/Choices";
+export { default as Choice } from "./Components.Page.Home/Choice/Choice";
+export { default as Slider } from "./Components.Page.Home/Slider/Slider";
+export { default as Radios } from "./Components.Page.Home/Radios/Radios";
+export { default as Zingcharts } from "./Components.Page.Home/Zingcharts/Zingcharts";
+export { default as Zingchart } from "./Components.Page.Home/Zingchart/Zingchart";
+export { default as Events } from "./Components.Page.Home/Events/Events";
+export { default as Event } from "./Components.Page.Home/Event/Event";
 
 // Album components
 export { default as AlbumLeft } from "./Components.Page.Album/AlbumLeft/AlbumLeft";

@@ -10,9 +10,7 @@ import styles from "./LoadingMvModal.module.scss";
 
 export default function LoadingMvModal() {
   const dispatch = useDispatch();
-  const { showMvModal, idShow, showSmallScreen } = useSelector(
-    (state) => state.mv
-  );
+  const showSmallScreen = useSelector((state) => state.mv.showSmallScreen);
   const handleCloseModal = () => {
     dispatch(actions.setIdMvModal(null));
     dispatch(actions.setShowMvModal(false));

@@ -6,7 +6,6 @@ function HeaderButton({ children, disable = false, circle = false, white }) {
   const disableClass = disable ? styles.headerBtnDisable : "";
   const circleClass = circle ? styles.headerBtnCircle : "";
   const whiteClass = white ? styles.headerBtnWhite : "";
-
   return (
     <div
       className={clsx(styles.headerBtn, disableClass, circleClass, whiteClass)}

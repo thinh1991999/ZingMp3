@@ -2,7 +2,6 @@ import React from "react";
 import { BsPlayCircle } from "react-icons/bs";
 import { GiMusicSpell } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import clsx from "clsx";
 import styles from "./SearchAll.module.scss";
 import { actions } from "../../../store";
@@ -14,11 +13,12 @@ import Topics from "../../Components.Global/Topics/Topics";
 import Mvs from "../../Components.Global/Mvs/Mvs";
 import Artists from "../../Components.Global/Artists/Artists";
 import SearchNoInfo from "../SearchNoInfo/SearchNoInfo";
+import httpService from "../../../Services/http.service";
 
 function SearchAll({ dataSearch, Keyword }) {
-  const { idCurrentSong, playing, currentAlbum } = useSelector(
-    (state) => state.song
-  );
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
 
   const {
     top = {},
@@ -31,43 +31,28 @@ function SearchAll({ dataSearch, Keyword }) {
   const dispatch = useDispatch();
 
   const handlePlayTopSong = () => {
-    const { streamingStatus, encodeId } = top;
-    if (encodeId === idCurrentSong) {
+    const { encodeId, album = {} } = top;
+    if (encodeId === currentSong.encodeId) {
       dispatch(actions.setPlaying(!playing));
     } else {
-      if (songs.length > 0 && top && streamingStatus === 1) {
-        const song = songs.filter((item) => {
-          const { encodeId } = item;
-          return encodeId === top.encodeId;
-        })[0];
-        const {
-          album: { encodeId: idAlbum },
-        } = song;
-        if (idAlbum === currentAlbum) {
-          dispatch(actions.playSongSameAlbum(encodeId));
-        } else {
-          const setSong = async () => {
-            dispatch(actions.setSongCurrentInfo(song));
-          };
-          const setListSong = async () => {
-            try {
-              const respon = await fetch(
-                `https://music-player-pink.vercel.app/api/playlist?id=${idAlbum}`
-              );
-              const {
-                data: {
-                  song: { items },
-                },
-              } = await respon.json();
-              dispatch(actions.setListSong(items));
-            } catch (error) {
-              toast.error("Bài hát này chưa được hỗ trợ!");
-            }
-          };
-          Promise.all([setSong(), setListSong()]);
-        }
+      if (currentAlbum === album.encodeId) {
+        dispatch(actions.playSongSameAlbum(top));
       } else {
-        toast.error("Bài hát này chưa được hỗ trợ!");
+        dispatch(actions.setSongCurrentInfo(top));
+        dispatch(actions.setFetchSong(true));
+        httpService.getAlbum(album.encodeId).then((res) => {
+          const {
+            data: {
+              song: { items },
+            },
+          } = res.data;
+          dispatch(
+            actions.playSearchSong({
+              album: album.encodeId,
+              items: items,
+            })
+          );
+        });
       }
     }
   };
@@ -83,21 +68,21 @@ function SearchAll({ dataSearch, Keyword }) {
             <div
               className={clsx(
                 styles.topSong,
-                top.encodeId === idCurrentSong && styles.topSongActive
+                top.encodeId === currentSong.encodeId && styles.topSongActive
               )}
             >
               <div className={styles.topSongImg} onClick={handlePlayTopSong}>
                 <img src={top.thumbnail} alt="" />
                 <div className={styles.layer}></div>
                 <div className={styles.play}>
-                  {(!playing || top.encodeId !== idCurrentSong) && (
+                  {(!playing || top.encodeId !== currentSong.encodeId) && (
                     <div className={styles.btn}>
                       <ButtonIcon circle={true} topic={true}>
                         <BsPlayCircle />
                       </ButtonIcon>
                     </div>
                   )}
-                  {playing && top.encodeId === idCurrentSong && (
+                  {playing && top.encodeId === currentSong.encodeId && (
                     <div className={styles.playing}>
                       <PlayingIcon className={styles.playingIcon} />
                     </div>

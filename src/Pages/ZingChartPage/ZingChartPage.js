@@ -7,10 +7,12 @@ import httpService from "../../Services/http.service";
 import { actions } from "../../store";
 import { Chart, Loading, PrimaryButton, SongItem } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { memo } from "react";
 
 function ZingChartPage() {
   const navigate = useNavigate();
-  const { idCurrentSong, blackHeader } = useSelector((state) => state.root);
+  const blackHeader = useSelector((state) => state.root.blackHeader);
+  const playing = useSelector((state) => state.song.playing);
 
   const dispatch = useDispatch();
 
@@ -42,10 +44,11 @@ function ZingChartPage() {
   };
 
   useEffect(() => {
-    if (!idCurrentSong) {
-      document.title = "ZingChartPage";
+    if (!playing) {
+      document.title =
+        "#zingchart | Xem bài hát, album, MV đang hot nhất hiện tại";
     }
-  }, [idCurrentSong]);
+  }, [playing]);
 
   useEffect(() => {
     const fetchZingChartData = () => {
@@ -180,4 +183,4 @@ function ZingChartPage() {
   );
 }
 
-export default ZingChartPage;
+export default memo(ZingChartPage);

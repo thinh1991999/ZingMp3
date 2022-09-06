@@ -9,7 +9,6 @@ import {
   BsMusicNoteList,
 } from "react-icons/bs";
 import { GiMicrophone } from "react-icons/gi";
-import { BiWindows } from "react-icons/bi";
 import clsx from "clsx";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -22,22 +21,19 @@ import HttpService from "../../../Services/http.service";
 import { ultils } from "../../../Share";
 
 function Player() {
-  const {
-    currentSong,
-    song,
-    showLyric,
-    invi,
-    fetchSong,
-    currentAlbum,
-    showPlayLists,
-    timeToStop,
-  } = useSelector((state) => state.song);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [volume, setVolume] = useState(50);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
+  const showLyric = useSelector((state) => state.song.showLyric);
+  const invi = useSelector((state) => state.song.invi);
+  const fetchSong = useSelector((state) => state.song.fetchSong);
+  const showPlayLists = useSelector((state) => state.song.showPlayLists);
+  const timeToStop = useSelector((state) => state.song.timeToStop);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
 
-  // const { title, thumbnail, artists = [], duration } = currentSong;
+  const [volume, setVolume] = useState(50);
 
   const handleToAlbum = (e) => {
     const arr = Array.from([...e.target.classList]);
@@ -98,16 +94,16 @@ function Player() {
   }, [fetchSong, currentSong, dispatch]);
 
   useEffect(() => {
-    if (currentSong) {
-      document.title = currentSong.title;
-    }
-  }, [currentSong]);
-
-  useEffect(() => {
     if (timeToStop === 1) {
       dispatch(actions.setPlaying(false));
     }
   }, [timeToStop, dispatch]);
+
+  useEffect(() => {
+    if (playing && currentSong) {
+      document.title = currentSong.title;
+    }
+  }, [currentSong, playing]);
 
   return (
     <div
@@ -128,7 +124,7 @@ function Player() {
               <h3 className={styles.playTitle}>{currentSong?.title}</h3>
             </div>
             <p>
-              {currentSong?.artists.map((artist, index) => {
+              {currentSong?.artists?.map((artist, index) => {
                 const { id, name, alias } = artist;
                 if (index === 0) {
                   return (
@@ -198,17 +194,6 @@ function Player() {
                 }}
               >
                 <GiMicrophone />
-              </ButtonIcon>
-            </div>
-            <div className={styles.btnWrap}>
-              <ButtonIcon
-                popper={{
-                  show: true,
-                  msg: "Chế độ cửa sổ",
-                  position: "CenterUp",
-                }}
-              >
-                <BiWindows />
               </ButtonIcon>
             </div>
             <div className={styles.playRightAudio}>

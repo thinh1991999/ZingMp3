@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Mvs.module.scss";
-import { Row } from "react-bootstrap";
 import HomeTitle from "../HomeTitle/HomeTitle";
 import Mv from "../Mv/Mv";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -38,6 +37,7 @@ function Mvs({ data }) {
           }}
           modules={[Navigation]}
           navigation={true}
+          className="swiper-margin"
         >
           {items?.map((item, index) => {
             return (

@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiSort } from "react-icons/bi";
 import { getTimeText } from "../../../funtions";
 import SongItem from "../../Components.Global/SongItem/SongItem";
 import styles from "./AlbumRight.module.scss";
 
 function AlbumRight({ title, song }) {
-  const [songs, setSongs] = useState(song);
-
-  const { items, total, totalDuration } = songs;
+  const { items, total, totalDuration } = song;
 
   const newTotalDuration = getTimeText(totalDuration);
 

@@ -12,8 +12,12 @@ import ButtonIcon from "../ButtonIcon/ButtonIcon";
 import SongItem from "../SongItem/SongItem";
 
 function Playlists() {
-  const { listSong, randomSong, currentSong, showPlayLists, timeToStop } =
-    useSelector((state) => state.song);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const listSong = useSelector((state) => state.song.listSong);
+  const randomSong = useSelector((state) => state.song.randomSong);
+  const showPlayLists = useSelector((state) => state.song.showPlayLists);
+  const timeToStop = useSelector((state) => state.song.timeToStop);
+
   const [listCurrent, setListCurrent] = useState([]);
   const [listNext, setListNext] = useState([]);
   const options = useRef([
@@ -89,19 +93,18 @@ function Playlists() {
     dispatch(actions.setShowPlayLists(false));
   }, [location, dispatch]);
 
-  const eventClick = (e) => {
-    if (!playListRef.current.contains(e.target)) {
-      dispatch(actions.setShowPlayLists(false));
-    }
-  };
-
   useEffect(() => {
-    // const app_container = document.querySelector(".app__container");
-    // app_container.addEventListener("click", eventClick);
-    // return () => {
-    //   app_container.removeEventListener("click", eventClick);
-    // };
-  }, []);
+    const eventClick = (e) => {
+      if (!playListRef.current.contains(e.target)) {
+        dispatch(actions.setShowPlayLists(false));
+      }
+    };
+    const app_container = document.querySelector(".app__container");
+    showPlayLists && app_container?.addEventListener("click", eventClick);
+    return () => {
+      app_container?.removeEventListener("click", eventClick);
+    };
+  }, [dispatch, showPlayLists]);
 
   useEffect(() => {
     if (timeToStop > 0) {
@@ -177,7 +180,6 @@ function Playlists() {
                       index={index}
                       playLists={true}
                       blur={true}
-                      albumSong={true}
                     />
                   );
                 }
@@ -190,7 +192,6 @@ function Playlists() {
                     data={item}
                     index={index}
                     playLists={true}
-                    albumSong={true}
                   />
                 );
               })}
@@ -208,7 +209,6 @@ function Playlists() {
                     data={item}
                     index={index}
                     playLists={true}
-                    albumSong={true}
                   />
                 );
               })}

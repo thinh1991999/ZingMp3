@@ -33,6 +33,7 @@ import {
   Profile,
   Radio,
   Search,
+  SearchMobile,
   Singer,
   Top100,
   Type,
@@ -41,23 +42,32 @@ import {
   ZingChartWeek,
 } from "./Pages";
 import { actions } from "./store";
+import localStorageServ from "./Services/localStorage";
 
 function App() {
   const location = useLocation();
+  const { show: warningShow } = useSelector((state) => state.root.warningModal);
+  const showLogin = useSelector((state) => state.root.showLogin);
+  const showComment = useSelector((state) => state.root.warningModal);
 
-  const {
-    showNavMobile,
-    warningModal: { show: warningShow },
-    showLogin,
-    showComment,
-    title,
-  } = useSelector((state) => state.root);
   const { show } = useSelector((state) => state.root.popperInfo);
-  const { showMvModal } = useSelector((state) => state.mv);
-  const { showEvent } = useSelector((state) => state.event);
-  const { currentSong, showTimeStop, timeToStop } = useSelector(
-    (state) => state.song
-  );
+  const showMvModal = useSelector((state) => state.mv.showMvModal);
+  const showEvent = useSelector((state) => state.event.showEvent);
+  // const {
+  //   currentSong,
+  //   // currentSinger,
+  //   // song,
+  //   // // songCurrentTime,
+  //   // listSong,
+  //   // currentAlbum,
+  //   // showTimeStop,
+  //   // timeToStop,
+  // } = useSelector((state) => state.song);
+
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const timeToStop = useSelector((state) => state.song.timeToStop);
+  const showTimeStop = useSelector((state) => state.song.showTimeStop);
+
   const dispatch = useDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -78,34 +88,27 @@ function App() {
   }, [dispatch]);
 
   // useEffect(() => {
-  //   localStorage.setItem(
-  //     "infoCurrent",
-  //     JSON.stringify({
-  //       idCurrentSong,
-  //       currentAlbum,
-  //       currentSinger,
-  //       currentIndexSong,
-  //       songCurrentTime,
-  //       currentSong,
-  //       song,
-  //       listSong,
-  //       indexValidSongs,
-  //     })
-  //   );
+  //   localStorageServ.infoSong.set({
+  //     currentAlbum,
+  //     currentSinger,
+  //     // songCurrentTime,
+  //     currentSong,
+  //     listSong,
+  //     song,
+  //   });
   // }, [
-  //   idCurrentSong,
   //   currentAlbum,
   //   currentSinger,
-  //   currentIndexSong,
-  //   songCurrentTime,
+  //   // songCurrentTime,
   //   currentSong,
-  //   song,
   //   listSong,
-  //   indexValidSongs,
+  //   song,
   // ]);
   useEffect(() => {
-    document.title = title;
-  }, [title]);
+    if (!currentSong) {
+      document.title = "ZingMp3-Nghe nhạc hay,chất lượng";
+    }
+  }, [currentSong]);
 
   useEffect(() => {
     dispatch(actions.setRouterHistory(location));
@@ -240,7 +243,7 @@ function App() {
           ></Route>
           <Route path={"/error"} element={<Error />}></Route>
           <Route path={"/*"} element={<Error />}></Route>
-          {/* 
+
           <Route
             path={"/SearchMobile"}
             element={
@@ -249,7 +252,6 @@ function App() {
               </GlobalLayout>
             }
           ></Route>
-          */}
         </Routes>
         <Lyric />
         <MvModal />

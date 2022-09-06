@@ -52,6 +52,10 @@ class AxiosService {
     return new Promise((resolve, reject) => {
       method
         .then((res) => {
+          const { err } = res.data;
+          if (err === -1031) {
+            window.location.assign("/error");
+          }
           resolve({
             data: res.data,
             status: res.status,
@@ -59,7 +63,6 @@ class AxiosService {
           });
         })
         .catch((err) => {
-          console.log(err);
           this.handleError(err);
           reject({
             err: err,

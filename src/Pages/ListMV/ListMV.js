@@ -6,9 +6,11 @@ import httpService from "../../Services/http.service";
 import styles from "./ListMV.module.scss";
 import { Loading, Mv } from "../../components";
 import { actions } from "../../store";
+import { memo } from "react";
 
 function ListMV() {
-  const { idCurrentSong } = useSelector((state) => state.song);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
 
   const stateNav = useRef([
     {
@@ -88,10 +90,10 @@ function ListMV() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!idCurrentSong) {
-      document.title = "List MV";
+    if (!playing) {
+      document.title = "Video-Tuyển tập nhạc hay";
     }
-  }, [idCurrentSong]);
+  }, [playing, currentSong]);
 
   useEffect(() => {
     const fetchNextMV = () => {
@@ -163,4 +165,4 @@ function ListMV() {
   );
 }
 
-export default ListMV;
+export default memo(ListMV);

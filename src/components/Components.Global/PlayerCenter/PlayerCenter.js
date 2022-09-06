@@ -10,7 +10,7 @@ import { BiShuffle } from "react-icons/bi";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { MdOutlineRepeat, MdOutlineRepeatOne } from "react-icons/md";
 import { BsPlayCircle, BsPauseCircle } from "react-icons/bs";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 
@@ -19,20 +19,19 @@ import { actions } from "../../../store";
 import ButtonIcon from "../ButtonIcon/ButtonIcon";
 import PlayingIcon from "../PlayingIcon/PlayingIcon";
 import { ultils } from "../../../Share";
+import localStorageServ from "../../../Services/localStorage";
 
 function PlayerCenter({ volume = 50 }) {
-  const {
-    playing,
-    randomSong,
-    repeatSong,
-    currentSong,
-    songCurrentTime,
-    songLoading,
-    song,
-    listSong,
-    currentAlbum,
-    currentSinger,
-  } = useSelector((state) => state.song);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
+  const randomSong = useSelector((state) => state.song.randomSong);
+  const repeatSong = useSelector((state) => state.song.repeatSong);
+  const songCurrentTime = useSelector((state) => state.song.songCurrentTime);
+  const songLoading = useSelector((state) => state.song.songLoading);
+  const song = useSelector((state) => state.song.song);
+  const listSong = useSelector((state) => state.song.listSong);
+  const currentAlbum = useSelector((state) => state.song.currentAlbum);
+  const currentSinger = useSelector((state) => state.song.currentSinger);
 
   const baseInfoRepeatSong = () => {
     if (repeatSong === 1) {
@@ -88,10 +87,6 @@ function PlayerCenter({ volume = 50 }) {
       dispatch(actions.setRepeatSong(1));
     } else dispatch(actions.setRepeatSong(0));
   };
-
-  const handlePause = useCallback(() => {
-    dispatch(actions.setSongCurrentTime(currentTime));
-  }, [currentTime, dispatch]);
 
   const handleBackSong = () => {
     setTimeout(() => {
@@ -203,6 +198,25 @@ function PlayerCenter({ volume = 50 }) {
     audioRef.current.currentTime = songCurrentTime;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    localStorageServ.infoSong.set({
+      currentAlbum,
+      currentSinger,
+      songCurrentTime,
+      currentSong,
+      listSong,
+      song,
+    });
+  }, [
+    currentAlbum,
+    currentSinger,
+    songCurrentTime,
+    currentSong,
+    listSong,
+    song,
+  ]);
+
   return (
     <div className={clsx(styles.wrap)} onClick={handleToAlbum}>
       <div className={styles.playFeatures}>
@@ -284,12 +298,7 @@ function PlayerCenter({ volume = 50 }) {
           })}
         </p>
       </div>
-      <audio
-        src={song}
-        autoPlay={false}
-        ref={audioRef}
-        onPause={handlePause}
-      ></audio>
+      <audio src={song} autoPlay={false} ref={audioRef}></audio>
     </div>
   );
 }

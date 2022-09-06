@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { memo } from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading, SongItem } from "../../components";
@@ -6,9 +7,11 @@ import httpService from "../../Services/http.service";
 import { actions } from "../../store";
 import styles from "./NewSong.module.scss";
 
-export default function NewSong() {
+function NewSong() {
   const dispatch = useDispatch();
-  const { blackHeader } = useSelector((state) => state.root);
+  const blackHeader = useSelector((state) => state.root.blackHeader);
+  const currentSong = useSelector((state) => state.song.currentSong);
+  const playing = useSelector((state) => state.song.playing);
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -36,6 +39,13 @@ export default function NewSong() {
     axiosNewSong();
     dispatch(actions.setBGHeader(false));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!playing) {
+      document.title = "#zingchart tuần, #zingchart Zing - Bài hát";
+    }
+  }, [playing, currentSong]);
+
   if (loading) {
     return <Loading size={50} />;
   }
@@ -74,3 +84,5 @@ export default function NewSong() {
     </div>
   );
 }
+
+export default memo(NewSong);

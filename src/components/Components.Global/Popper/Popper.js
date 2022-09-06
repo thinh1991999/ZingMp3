@@ -4,11 +4,10 @@ import styles from "./Popper.module.scss";
 import { useSelector } from "react-redux";
 
 function Popper() {
-  const {
-    popperInfo: { top, left, right, width, height, position },
-    popperMess,
-  } = useSelector((state) => state.root);
-
+  const { top, left, right, width, height, position } = useSelector(
+    (state) => state.root.popperInfo
+  );
+  const popperMess = useSelector((state) => state.root.popperMess);
   const [leftPosition, setLeftPosition] = useState(left);
   const [topPosition, setTopPosition] = useState(top);
   const [rightPosition, setRightPosition] = useState(right);
